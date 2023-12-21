@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<BottomNavigationProvider>(context);
+    final authNavigationProvider = Provider.of<AuthNavigationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
@@ -37,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {});
+          setState(() {
+            authNavigationProvider.logout();
+          });
         },
         child: const Icon(Icons.navigate_next),
       ),

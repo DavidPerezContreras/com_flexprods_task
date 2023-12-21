@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_navigation_page.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_navigation.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      Provider(
-        create: (context) => BottomNavigationProvider(),
+  runApp(
+    ChangeNotifierProvider<BottomNavigationProvider>(
+      create: (context) => BottomNavigationProvider(),
+      child: ChangeNotifierProvider<AuthNavigationProvider>(
+        create: (context) => AuthNavigationProvider(),
+        child: MyApp(),
       ),
-    ],
-    child: const MyApp(),
-  ));
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BottomNavigationPage(),
+      home: AuthNavigation(),
     );
   }
 }

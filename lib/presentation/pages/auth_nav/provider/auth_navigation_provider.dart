@@ -4,20 +4,16 @@ import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/g
 import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/login/login_page.dart';
 
 class AuthNavigationProvider extends ChangeNotifier {
-  late List<MaterialPage> _pages;
   late MaterialPage _activePage;
-  GlobalKey<NavigatorState> authNavigation = GlobalKey<NavigatorState>();
+  late GlobalKey<NavigatorState> authNavigation;
 
   AuthNavigationProvider() {
     init();
   }
 
   void init() {
-    _pages = [
-      const MaterialPage(child: LoginPage()),
-      const MaterialPage(child: ContentPage())
-    ];
-    _activePage = _pages[0];
+    authNavigation = GlobalKey<NavigatorState>();
+    _activePage = const MaterialPage(child: LoginPage());
   }
 
   MaterialPage get activePage => _activePage;
@@ -30,7 +26,7 @@ class AuthNavigationProvider extends ChangeNotifier {
 
   void login() {
     //make http request.
-    navigate(MaterialPage(child: ContentPage()));
+    navigate(const MaterialPage(child: ContentPage()));
     //if correct, call navigate
   }
 

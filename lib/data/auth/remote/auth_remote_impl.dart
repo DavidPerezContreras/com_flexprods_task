@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Add this
 
 class AuthRemoteImpl {
   Dio _dio = Dio();
-  final storage = FlutterSecureStorage(); // Add this line
+  final storage = const FlutterSecureStorage(); // Add this line
 
   //Allow self-signed certificate
   AuthRemoteImpl() {

@@ -5,6 +5,7 @@ import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/s
 class BottomNavigationProvider extends ChangeNotifier {
   late int _selectedIndex;
   late List<MaterialPage> _activePage;
+  late GlobalKey<NavigatorState> nestedNavigation;
   BottomNavigationProvider() {
     init();
   }
@@ -16,9 +17,8 @@ class BottomNavigationProvider extends ChangeNotifier {
         onOffsetChanged(newOffset);
       }))
     ];
+    nestedNavigation = GlobalKey<NavigatorState>();
   }
-
-  GlobalKey<NavigatorState> nestedNavigation = GlobalKey<NavigatorState>();
 
   int get selectedIndex => _selectedIndex;
 
@@ -31,6 +31,6 @@ class BottomNavigationProvider extends ChangeNotifier {
 
   void navigate(MaterialPage newPage) {
     _activePage = [newPage];
-    //notifyListeners();
+    notifyListeners();
   }
 }

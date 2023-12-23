@@ -13,7 +13,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   AuthRemoteImpl authRemoteImpl = AuthRemoteImpl();
+  String? username;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +28,50 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         color: Colors.red,
         child: Center(
-          child: Column(
-            children: [
-              Text("Login Screen"),
-              ElevatedButton(
-                child: Text("Login"),
-                onPressed: () async {
-                  authRemoteImpl.login().then((resourceState) {
-                    if (resourceState.status == Status.SUCCESS) {
-                      authNavigationProvider
-                          .navigate(const MaterialPage(child: ContentPage()));
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                Text("Login Screen"),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Enter your username'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
                     }
-                  });
-                },
-              ),
-              ElevatedButton(
-                child: Text("Login"),
-                onPressed: () {
-                  authNavigationProvider
-                      .navigate(const MaterialPage(child: ContentPage()));
-                },
-              )
-            ],
+                    return null;
+                  },
+                  onSaved: (value) => username = value,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Enter your password'),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => password = value,
+                ),
+                ElevatedButton(
+                  child: Text("Login"),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      authRemoteImpl
+                          .login(username!, password!)
+                          .then((resourceState) {
+                        if (resourceState.status == Status.SUCCESS) {
+                          authNavigationProvider.navigate(
+                              const MaterialPage(child: ContentPage()));
+                        }
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

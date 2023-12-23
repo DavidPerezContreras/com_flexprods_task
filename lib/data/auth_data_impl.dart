@@ -13,10 +13,4 @@ class AuthDataImpl implements AuthRepository {
     // TODO: implement register
     throw UnimplementedError();
   }
-
-  @override
-  Future<ResourceState<bool>> refresh() {
-    // TODO: implement refresh
-    throw UnimplementedError();
-  }
 }

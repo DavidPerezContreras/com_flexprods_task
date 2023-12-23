@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:nested_navigation/config/config.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Add this line
 
@@ -15,11 +16,11 @@ class AuthRemoteImpl {
     };
   }
 
-  Future<ResourceState<bool>> login() async {
+  Future<ResourceState<bool>> login(String username, String password) async {
     try {
       final response = await _dio.post(
-        'https://10.0.2.2:8080/api/auth/login',
-        data: {"username": "username1", "password": "password"},
+        '$baseUrl/auth/login',
+        data: {"username": username, "password": password},
       );
 
       if (response.statusCode == 200) {

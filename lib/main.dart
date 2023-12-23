@@ -10,7 +10,7 @@ void main() {
       create: (context) => BottomNavigationProvider(),
       child: ChangeNotifierProvider<AuthNavigationProvider>(
         create: (context) => AuthNavigationProvider(),
-        child: MyApp(),
+        child: const MyApp(),
       ),
     ),
   );

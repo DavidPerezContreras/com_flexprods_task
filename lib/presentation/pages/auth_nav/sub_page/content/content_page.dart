@@ -34,7 +34,7 @@ class _ContentPageState extends State<ContentPage> {
         return Scaffold(
           body: Navigator(
             key: bottomNavigationProvider!.nestedNavigation,
-            pages: bottomNavigationProvider.activePage,
+            pages: [bottomNavigationProvider.activePage],
             onPopPage: (route, result) {
               if (!route.didPop(result)) {
                 return false;
@@ -46,11 +46,7 @@ class _ContentPageState extends State<ContentPage> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: bottomNavigationProvider.selectedIndex,
             onTap: (newIndex) {
-              setState(() {
-                bottomNavigationProvider
-                    .navigate(MaterialPage(child: pages[newIndex]));
-                bottomNavigationProvider.updateIndex(newIndex);
-              });
+              bottomNavigationProvider.updateIndex(newIndex);
             },
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(

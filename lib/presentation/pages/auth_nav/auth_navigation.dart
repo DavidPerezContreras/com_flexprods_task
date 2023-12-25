@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/domain/model/resource_state.dart';
+import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/content_page.dart';
+import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class AuthNavigation extends StatefulWidget {
@@ -10,28 +14,69 @@ class AuthNavigation extends StatefulWidget {
 }
 
 class _AuthNavigationState extends State<AuthNavigation> {
+  late final AuthProvider _authProvider;
+  late final AuthNavigationProvider _authNavigationProvider;
+
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    _authNavigationProvider =
+        Provider.of<AuthNavigationProvider>(context, listen: false);
+
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    _authProvider.addListener(_handleAuthChange);
+  }
+
+  void _handleAuthChange() {
+    ResourceState<User> _userState = _authProvider.userState;
+
+    switch (_userState.status) {
+      case Status.SUCCESS:
+        setState(() {
+          _isLoading = false;
+          _authNavigationProvider
+              .navigate(const MaterialPage(child: ContentPage()));
+        });
+        break;
+      case Status.LOADING:
+        setState(() {
+          _isLoading = true;
+        });
+        break;
+      default:
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthNavigationProvider>(
-      builder: (BuildContext context, authNavigationProvider, Widget? child) {
-        return Scaffold(
-          body: Navigator(
-            key: authNavigationProvider.authNavigation,
-            pages: [authNavigationProvider.activePage],
-            onPopPage: (route, result) {
-              if (!route.didPop(result)) {
-                return false;
-              }
-              return true;
-            },
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Loading Indicator'),
+        ),
+        body: Center(
+          child: Container(
+            width: 100,
+            height: 100,
+            child: CircularProgressIndicator(),
           ),
-        );
-      },
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: Navigator(
+        key: _authNavigationProvider.authNavigation,
+        pages: [_authNavigationProvider.activePage],
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) {
+            return true;
+          }
+          return true;
+        },
+      ),
     );
   }
 }

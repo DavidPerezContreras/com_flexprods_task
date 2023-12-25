@@ -33,7 +33,7 @@ class _ContentPageState extends State<ContentPage> {
       builder: (BuildContext context, bottomNavigationProvider, Widget? child) {
         return Scaffold(
           body: Navigator(
-            key: bottomNavigationProvider!.nestedNavigation,
+            key: bottomNavigationProvider.nestedNavigation,
             pages: [bottomNavigationProvider.activePage],
             onPopPage: (route, result) {
               if (!route.didPop(result)) {

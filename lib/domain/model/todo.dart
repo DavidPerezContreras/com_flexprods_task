@@ -5,7 +5,7 @@ class Todo {
   final String title;
   final String description;
   final bool isComplete;
-  final DateTime dueDate;
+  final DateTime? dueDate;
   final int userId;
 
   Todo({
@@ -23,7 +23,7 @@ class Todo {
       title: json['title'],
       description: json['description'],
       isComplete: json['isComplete'],
-      dueDate: DateTime.parse(json['dueDate']),
+      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
       userId: json['userId'],
     );
   }

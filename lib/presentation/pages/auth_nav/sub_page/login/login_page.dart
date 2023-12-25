@@ -3,6 +3,7 @@ import 'package:nested_navigation/data/auth/remote/auth_remote_impl.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/content_page.dart';
+import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,14 +15,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  AuthRemoteImpl authRemoteImpl = AuthRemoteImpl();
+
   String? username;
   String? password;
 
   @override
   Widget build(BuildContext context) {
     final authNavigationProvider = Provider.of<AuthNavigationProvider>(context);
-
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -59,14 +60,10 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      authRemoteImpl
-                          .login(username!, password!)
-                          .then((resourceState) {
-                        if (resourceState.status == Status.SUCCESS) {
-                          authNavigationProvider.navigate(
-                              const MaterialPage(child: ContentPage()));
-                        }
-                      });
+
+                      authProvider.login(username!, password!);
+                      //authNavigationProvider
+                      //    .navigate(const MaterialPage(child: ContentPage()));
                     }
                   },
                 ),

@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^9.0.0
+  get_it: ^7.6.4
   provider: ^6.1.1
 
 dev_dependencies:

@@ -5,7 +5,7 @@ class ResourceState<T> {
 
   ResourceState.success(this.data) : status = Status.SUCCESS;
   ResourceState.loading() : status = Status.LOADING;
-  ResourceState.error(Error e) : status = Status.ERROR;
+  ResourceState.error(this.error) : status = Status.ERROR;
   ResourceState.none() : status = Status.NONE;
 }
 

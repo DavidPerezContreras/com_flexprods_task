@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/data/auth/remote/error/auth_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
@@ -45,8 +46,40 @@ class _AuthNavigationState extends State<AuthNavigation> {
           _isLoading = true;
         });
         break;
+      case Status.ERROR:
+        setState(
+          () {
+            _isLoading = false;
+            _showErrorMessage(_userState.error!);
+          },
+        );
+        break;
+      case Status.NONE:
+        setState(
+          () {
+            _isLoading = false;
+            _authNavigationProvider.logout();
+          },
+        );
+        break;
       default:
     }
+  }
+
+  void _showErrorMessage(Error error) async {
+    String errorMessage = "A problem has occurred.";
+
+    if (error is DescriptableError) {
+      errorMessage = error.description;
+    }
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+
+    _authProvider.logout();
   }
 
   @override

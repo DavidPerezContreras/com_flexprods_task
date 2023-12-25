@@ -1,7 +1,9 @@
+import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
+
 class ResourceState<T> {
   T? data;
   Status status;
-  Error? error;
+  DescriptableError? error;
 
   ResourceState.success(this.data) : status = Status.SUCCESS;
   ResourceState.loading() : status = Status.LOADING;

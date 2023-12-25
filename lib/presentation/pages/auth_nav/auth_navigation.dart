@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/data/auth/remote/error/auth_error.dart';
+import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
@@ -66,12 +66,9 @@ class _AuthNavigationState extends State<AuthNavigation> {
     }
   }
 
-  void _showErrorMessage(Error error) async {
-    String errorMessage = "A problem has occurred.";
+  void _showErrorMessage(DescriptableError error) async {
+    String errorMessage = error.description;
 
-    if (error is DescriptableError) {
-      errorMessage = error.description;
-    }
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     scaffoldMessenger.showSnackBar(
       SnackBar(

@@ -1,30 +1,47 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:nested_navigation/config/config.dart';
 import 'package:nested_navigation/data/auth/remote/DTO/auth_request_dto.dart';
 import 'package:nested_navigation/data/auth/remote/DTO/auth_response_dto.dart';
+import 'package:nested_navigation/data/auth/remote/exception/auth_exceptions.dart';
 
 class AuthRemoteImpl {
-  final Dio _dio;
-
-  AuthRemoteImpl(this._dio);
+  AuthRemoteImpl();
 
   Future<LoginResponse> login(LoginRequest request) async {
-    final response = await _dio.post(
-      '$baseUrl/auth/login',
-      data: {"username": request.username, "password": request.password},
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/login'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+          {"username": request.username, "password": request.password}),
     );
 
-    return LoginResponse(token: response.data['token']);
+    switch (response.statusCode) {
+      case 200:
+        return LoginResponse(token: jsonDecode(response.body)['token']);
+      case 401:
+        throw UnauthorizedException();
+      default:
+        throw DefaultException();
+    }
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
-    final response = await _dio.post(
-      '$baseUrl/auth/register',
-      data: {"username": request.username, "password": request.password},
+    final response = await http.post(
+      Uri.parse('$baseUrl/auth/register'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+          {"username": request.username, "password": request.password}),
     );
 
-    return RegisterResponse(token: response.data['token']);
+    switch (response.statusCode) {
+      case 200:
+        return RegisterResponse(token: jsonDecode(response.body)['token']);
+      case 401:
+        throw UnauthorizedException();
+      default:
+        throw DefaultException();
+    }
   }
 }

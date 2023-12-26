@@ -21,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authNavigationProvider = Provider.of<AuthNavigationProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Container(
@@ -62,8 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                       _formKey.currentState!.save();
 
                       authProvider.login(username!, password!);
-                      //authNavigationProvider
-                      //    .navigate(const MaterialPage(child: ContentPage()));
                     }
                   },
                 ),

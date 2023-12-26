@@ -22,13 +22,6 @@ class _ContentPageState extends State<ContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    var pages = [
-      HomeScreen((newOffset) {
-        onOffsetChanged(newOffset);
-      }),
-      const SecondScreen()
-    ];
-
     return Consumer<BottomNavigationProvider>(
       builder: (BuildContext context, bottomNavigationProvider, Widget? child) {
         return Scaffold(
@@ -51,11 +44,11 @@ class _ContentPageState extends State<ContentPage> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
+                label: "Tasks",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.business),
-                label: 'Business',
+                icon: Icon(Icons.settings),
+                label: "Settings",
               ),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:nested_navigation/data/auth/remote/auth_remote_impl.dart';
 import 'package:nested_navigation/domain/repository/auth_repository.dart';
 
 class AuthDataImpl implements AuthRepository {
-  AuthRemoteImpl _authRemoteImpl;
+  final AuthRemoteImpl _authRemoteImpl;
   AuthDataImpl(this._authRemoteImpl);
 
   @override

@@ -18,7 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            authNavigationProvider.navigate(MaterialPage(child: LoginPage()));
+            authNavigationProvider
+                .navigate(const MaterialPage(child: LoginPage()));
           },
         ),
       ),
@@ -26,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
         height: double.infinity,
         width: double.infinity,
         color: Colors.red,
-        child: Center(
+        child: const Center(
           child: Column(
             children: [
               Text("Register Screen"),

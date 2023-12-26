@@ -31,9 +31,9 @@ class _AuthNavigationState extends State<AuthNavigation> {
   }
 
   void _handleAuthChange() {
-    ResourceState<User> _userState = _authProvider.userState;
+    ResourceState<User> userState = _authProvider.userState;
 
-    switch (_userState.status) {
+    switch (userState.status) {
       case Status.SUCCESS:
         setState(() {
           _isLoading = false;
@@ -50,7 +50,7 @@ class _AuthNavigationState extends State<AuthNavigation> {
         setState(
           () {
             _isLoading = false;
-            _showErrorMessage(_userState.error!);
+            _showErrorMessage(userState.error!);
           },
         );
         break;
@@ -84,10 +84,10 @@ class _AuthNavigationState extends State<AuthNavigation> {
     if (_isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Loading Indicator'),
+          title: const Text('Loading Indicator'),
         ),
-        body: Center(
-          child: Container(
+        body: const Center(
+          child: SizedBox(
             width: 100,
             height: 100,
             child: CircularProgressIndicator(),

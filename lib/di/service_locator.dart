@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:nested_navigation/data/auth/remote/auth_remote_impl.dart';
 import 'package:nested_navigation/data/auth/auth_data_impl.dart';

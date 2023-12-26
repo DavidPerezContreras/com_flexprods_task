@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/sub_page/home_screen.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/sub_page/second_screen.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +23,7 @@ class _ContentPageState extends State<ContentPage> {
       builder: (BuildContext context, bottomNavigationProvider, Widget? child) {
         return Scaffold(
           body: Navigator(
-            key: bottomNavigationProvider.nestedNavigation,
+            key: bottomNavigationProvider.bottomNavigation,
             pages: [bottomNavigationProvider.activePage],
             onPopPage: (route, result) {
               if (!route.didPop(result)) {

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen(this.onOffsetChanged, {super.key});
+class TaskListScreen extends StatefulWidget {
+  const TaskListScreen(this.onOffsetChanged, {super.key});
 
   final Function(double) onOffsetChanged;
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TaskListScreen> createState() => _TaskListScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TaskListScreenState extends State<TaskListScreen> {
   late ScrollController scrollController;
+
+  late AuthProvider _authProvider;
+
   @override
   void initState() {
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
     scrollController = ScrollController(initialScrollOffset: offset);
     scrollController.addListener(() {
       widget.onOffsetChanged(scrollController.offset);
@@ -25,9 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final navigationProvider = Provider.of<BottomNavigationProvider>(context);
-    final authNavigationProvider = Provider.of<AuthNavigationProvider>(context);
-
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: ListView.builder(
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            authNavigationProvider.logout();
+            _authProvider.logout();
           });
         },
         child: const Icon(Icons.navigate_next),

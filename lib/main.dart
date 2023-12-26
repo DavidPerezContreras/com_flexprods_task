@@ -6,6 +6,7 @@ import 'package:nested_navigation/di/service_locator.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/auth_navigation.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/sub_page/task_nav/provider/task_navigation_provider.dart';
 import 'package:nested_navigation/presentation/theme/theme.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
@@ -51,6 +52,9 @@ void main() async {
             ),
             ChangeNotifierProvider<BottomNavigationProvider>(
               create: (context) => BottomNavigationProvider(),
+            ),
+            ChangeNotifierProvider<TaskNavigationProvider>(
+              create: (_) => TaskNavigationProvider(),
             ),
             ChangeNotifierProvider<ThemeProvider>(
               create: (_) => ThemeProvider(isLightTheme: false),

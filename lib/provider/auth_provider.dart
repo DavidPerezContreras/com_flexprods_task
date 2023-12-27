@@ -4,6 +4,7 @@ import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
 import 'package:nested_navigation/data/auth/remote/exception/auth_exceptions.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
+import 'package:nested_navigation/usecase/auth/is_logged_in_usecase.dart';
 import 'package:nested_navigation/usecase/auth/login_usercase.dart';
 import 'package:nested_navigation/usecase/auth/register_usecase.dart';
 import 'package:nested_navigation/usecase/user/get_current_user_details_usecase.dart';
@@ -14,10 +15,13 @@ class AuthProvider extends ChangeNotifier {
   final RegisterUsecase _registerUseCase = RegisterUsecase();
   final GetCurrentUserDetailsUsecase _getCurrentUserDetailsUseCase =
       GetCurrentUserDetailsUsecase();
+  final IsLoggedInUseCase isLoggedInUseCase = IsLoggedInUseCase();
 
   AuthProvider() {
     init();
   }
+
+  Future<bool> get isLoggedIn async => await isLoggedInUseCase.isLoggedIn;
 
   void init() {
     _userState = ResourceState.none();

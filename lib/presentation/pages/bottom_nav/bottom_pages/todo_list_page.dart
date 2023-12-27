@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/provider/top_level_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/save_todo/save_todo_page.dart';
+import 'package:nested_navigation/presentation/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/save_todo/save_todo_page.dart';
+import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 class TodoListPage extends StatefulWidget {
@@ -15,6 +15,7 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   late ScrollController scrollController;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
+
   @override
   void initState() {
     _topLevelNavigationProvider =
@@ -40,15 +41,14 @@ class _TodoListPageState extends State<TodoListPage> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Create task",
         child: Icon(Icons.add),
-        onPressed: () {
+        onPressed: () async {
           Navigator.of(_topLevelNavigationProvider
                   .topLevelNavigation.currentState!.context)
-              .push(MaterialPageRoute(
-            builder: (context) {
-              return const SaveTodoPage();
-            },
-          ));
-          //_authProvider.logout();
+              .push(
+            MaterialPageRoute(
+              builder: (context) => SaveTodoPage(),
+            ),
+          );
         },
       ),
     );

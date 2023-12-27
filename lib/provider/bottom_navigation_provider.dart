@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/bottom_pages/todo_list_page.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/bottom_pages/settings_page.dart';
+import 'package:nested_navigation/presentation/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/todo_list_page.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/settings_page.dart';
 
 class BottomNavigationProvider extends ChangeNotifier {
   late int _selectedIndex;

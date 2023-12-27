@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -26,11 +26,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             key: bottomNavigationProvider.nestedNavigation,
             pages: [bottomNavigationProvider.activePage],
             onPopPage: (route, result) {
-              if (!route.didPop(result)) {
-                return false;
-              }
-              // Update the list of pages
-              return true;
+              print("onPopPage BOTTOMNAV");
+              return false;
             },
           ),
           bottomNavigationBar: BottomNavigationBar(

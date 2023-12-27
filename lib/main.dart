@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_navigation.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/provider/top_level_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/login/login_page.dart';
+import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
+import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
+import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
 import 'package:nested_navigation/presentation/theme/theme.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
@@ -47,9 +47,6 @@ void main() async {
             ChangeNotifierProvider<AuthProvider>(
               create: (context) => AuthProvider(),
             ),
-            ChangeNotifierProvider<AuthNavigationProvider>(
-              create: (context) => AuthNavigationProvider(),
-            ),
             ChangeNotifierProvider<TopLevelNavigationProvider>(
               create: (_) => TopLevelNavigationProvider(),
             ),
@@ -57,7 +54,7 @@ void main() async {
               create: (context) => BottomNavigationProvider(),
             ),
             ChangeNotifierProvider<ThemeProvider>(
-              create: (_) => ThemeProvider(isLightTheme: false),
+              create: (_) => ThemeProvider(isLightTheme: true),
             ),
           ],
           child: const MyApp(),
@@ -73,10 +70,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final topLevelNavigationProvider =
+        Provider.of<TopLevelNavigationProvider>(context);
     return MaterialApp(
+      navigatorKey: topLevelNavigationProvider.topLevelNavigation,
       theme: themeProvider.getTheme(),
       debugShowCheckedModeBanner: false,
-      home: const AuthNavigation(),
+      home: SplashPage(),
     );
   }
 }

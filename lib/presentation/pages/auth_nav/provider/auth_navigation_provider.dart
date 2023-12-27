@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/content_page.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/login/login_page.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/login/login_page.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_navigation.dart';
 
 class AuthNavigationProvider extends ChangeNotifier {
   late MaterialPage _activePage;
@@ -26,7 +26,7 @@ class AuthNavigationProvider extends ChangeNotifier {
 
   void login() {
     //make http request.
-    navigate(const MaterialPage(child: ContentPage()));
+    navigate(const MaterialPage(child: TopLevelNavigation()));
     //if correct, call navigate
   }
 

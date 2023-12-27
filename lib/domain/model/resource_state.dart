@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
 
 class ResourceState<T> {

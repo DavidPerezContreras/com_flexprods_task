@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/auth_navigation.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/provider/top_level_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/provider/bottom_navigation_provider.dart';
 import 'package:nested_navigation/presentation/theme/theme.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
@@ -48,6 +49,9 @@ void main() async {
             ),
             ChangeNotifierProvider<AuthNavigationProvider>(
               create: (context) => AuthNavigationProvider(),
+            ),
+            ChangeNotifierProvider<TopLevelNavigationProvider>(
+              create: (_) => TopLevelNavigationProvider(),
             ),
             ChangeNotifierProvider<BottomNavigationProvider>(
               create: (context) => BottomNavigationProvider(),

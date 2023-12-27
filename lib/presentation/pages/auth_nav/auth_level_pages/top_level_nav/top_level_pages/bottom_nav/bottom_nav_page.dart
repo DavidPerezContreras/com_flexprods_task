@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/sub_page/home_screen.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/sub_page/second_screen.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/top_level_nav/top_level_pages/bottom_nav/provider/bottom_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
-class ContentPage extends StatefulWidget {
-  const ContentPage({super.key});
+class BottomNavigationPage extends StatefulWidget {
+  const BottomNavigationPage({super.key});
 
   @override
-  State<ContentPage> createState() => _ContentPageState();
+  State<BottomNavigationPage> createState() => _BottomNavigationPageState();
 }
 
-class _ContentPageState extends State<ContentPage> {
+class _BottomNavigationPageState extends State<BottomNavigationPage> {
   ScrollController scrollController = ScrollController();
 
   @override

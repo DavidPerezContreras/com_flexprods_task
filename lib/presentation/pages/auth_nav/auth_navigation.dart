@@ -3,7 +3,6 @@ import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/content/content_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -37,8 +36,7 @@ class _AuthNavigationState extends State<AuthNavigation> {
       case Status.SUCCESS:
         setState(() {
           _isLoading = false;
-          _authNavigationProvider
-              .navigate(const MaterialPage(child: ContentPage()));
+          _authNavigationProvider.login();
         });
         break;
       case Status.LOADING:

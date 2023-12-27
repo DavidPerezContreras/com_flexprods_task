@@ -20,8 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
 
     bool isLightTheme = themeProvider.isLightTheme;
     Color backgroundColor = isLightTheme
@@ -36,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Form(
             key: _formKey,
             child: Card(
-              margin: EdgeInsets.all(18),
+              margin: const EdgeInsets.all(18),
               color: Theme.of(context).cardColor,
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -66,13 +64,13 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => username = value,
                     ),
-                    Divider(
+                    const Divider(
                       height: 20,
                       color: Colors.transparent,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Enter your username',
+                        labelText: 'Enter your password',
                         labelStyle: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface),
                         enabledBorder: OutlineInputBorder(
@@ -93,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       onSaved: (value) => password = value,
                     ),
-                    Divider(
+                    const Divider(
                       height: 35,
                       thickness: 0,
                     ),
@@ -102,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                         side: const BorderSide(
                             color: Colors.black38,
                             width: 2), // change the color and width as needed
-                        minimumSize: Size(200, 60), // change the size as needed
+                        minimumSize:
+                            const Size(200, 60), // change the size as needed
                       ),
                       child: const Text(
                         "Login",

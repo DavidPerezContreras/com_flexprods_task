@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/presentation/pages/auth_nav/provider/auth_navigation_provider.dart';
-import 'package:nested_navigation/presentation/pages/auth_nav/sub_page/login/login_page.dart';
+import 'package:nested_navigation/presentation/pages/auth_nav/auth_level_pages/login/login_page.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {

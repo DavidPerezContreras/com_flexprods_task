@@ -21,8 +21,19 @@ class Todo {
       title: json['title'],
       description: json['description'],
       isComplete: json['isComplete'],
-      dueDate:  DateTime.parse(json['dueDate']) ,
+      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
       userId: json['userId'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'isComplete': isComplete,
+      'userId': userId,
+      'dueDate': dueDate?.toIso8601String(),
+    };
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
+import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/model/descriptable_error.dart';
-import '../../../domain/model/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _showErrorMessage(DescriptableError error) async {
+  void _showErrorMessage(DescribableError error) async {
     String errorMessage = error.description;
 
     final scaffoldMessenger = ScaffoldMessenger.of(context);

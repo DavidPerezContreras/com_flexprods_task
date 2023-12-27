@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
 import 'package:nested_navigation/presentation/pages/save_todo/save_todo_page.dart';
 import 'package:nested_navigation/presentation/widget/todo_list_card.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/model/todo.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage(this.onOffsetChanged, {super.key});

@@ -5,7 +5,7 @@ import 'package:nested_navigation/domain/repository/auth_repository.dart';
 import 'package:nested_navigation/domain/repository/user_repository.dart';
 import 'package:nested_navigation/service/secure_storage_service.dart';
 
-class LoginUsecase {
+class LoginUseCase {
   final AuthRepository _authRepository = locator<AuthRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
   final SecureStorageService _secureStorageService = locator<SecureStorageService>();

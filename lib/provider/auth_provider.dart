@@ -11,10 +11,10 @@ import 'package:nested_navigation/usecase/user/get_current_user_details_usecase.
 
 class AuthProvider extends ChangeNotifier {
   late ResourceState<User> _userState;
-  final LoginUsecase _loginUseCase = LoginUsecase();
-  final RegisterUsecase _registerUseCase = RegisterUsecase();
-  final GetCurrentUserDetailsUsecase _getCurrentUserDetailsUseCase =
-      GetCurrentUserDetailsUsecase();
+  final LoginUseCase _loginUseCase = LoginUseCase();
+  final RegisterUseCase _registerUseCase = RegisterUseCase();
+  final GetCurrentUserDetailsUseCase _getCurrentUserDetailsUseCase =
+      GetCurrentUserDetailsUseCase();
   final IsLoggedInUseCase isLoggedInUseCase = IsLoggedInUseCase();
 
   AuthProvider() {

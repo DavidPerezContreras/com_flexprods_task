@@ -1,10 +1,10 @@
-import '../../../../domain/model/descriptable_error.dart';
+import '../../../../domain/model/describable_error.dart';
 
-class UnauthorizedLoginError extends DescriptableError {
+class UnauthorizedLoginError extends DescribableError {
   UnauthorizedLoginError() : super("Incorrect username or password.");
 }
 
-class DefaultLoginError extends DescriptableError {
+class DefaultLoginError extends DescribableError {
   DefaultLoginError()
       : super(
             "There was a problem logging in. Check your connection and try again.");

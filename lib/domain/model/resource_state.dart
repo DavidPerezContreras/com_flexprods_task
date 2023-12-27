@@ -1,13 +1,9 @@
-// ignore_for_file: constant_identifier_names
-
-import 'package:nested_navigation/data/auth/remote/error/login_errors.dart';
-
-import 'descriptable_error.dart';
+import 'describable_error.dart';
 
 class ResourceState<T> {
   T? data;
   Status status;
-  DescriptableError? error;
+  DescribableError? error;
 
   ResourceState.success(this.data) : status = Status.SUCCESS;
   ResourceState.loading() : status = Status.LOADING;

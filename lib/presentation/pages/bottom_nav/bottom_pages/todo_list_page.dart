@@ -50,7 +50,7 @@ class _TodoListPageState extends State<TodoListPage> {
               todo: Todo(
                   id: index,
                   title: "This is the item number $index",
-                  description: "This is the description of the item $index aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  description: "This is the description of the item $index aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                   isComplete: false,
                   userId: 1),
             );

@@ -10,4 +10,8 @@ class SecureStorageService {
   Future<String?> getToken() async {
     return _storage.read(key: 'jwt');
   }
+
+  Future<void> removeToken() async {
+    await _storage.delete(key: 'jwt');
+  }
 }

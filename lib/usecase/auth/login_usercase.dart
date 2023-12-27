@@ -8,13 +8,13 @@ import 'package:nested_navigation/service/secure_storage_service.dart';
 class LoginUsecase {
   final AuthRepository _authRepository = locator<AuthRepository>();
   final UserRepository _userRepository = locator<UserRepository>();
-  final SecureStorageService _storageService = locator<SecureStorageService>();
+  final SecureStorageService _secureStorageService = locator<SecureStorageService>();
 
   Future<User> login(LoginRequest request) async {
     final response = await _authRepository.login(request);
-    await _storageService.saveToken(response.token!);
+    await _secureStorageService.saveToken(response.token!);
     final user = await _userRepository
-        .getCurrentUserDetails(await _storageService.getToken() ?? "");
+        .getCurrentUserDetails(await _secureStorageService.getToken() ?? "");
     return user;
   }
 }

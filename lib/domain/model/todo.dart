@@ -36,4 +36,24 @@ class Todo {
       'dueDate': dueDate?.toIso8601String(),
     };
   }
+
+  Todo copyWith({
+    int? id,
+    String? title,
+    String? description,
+    bool? isComplete,
+    int? userId,
+    DateTime? dueDate,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      isComplete: isComplete ?? this.isComplete,
+      userId: userId ?? this.userId,
+      dueDate: dueDate ?? this.dueDate,
+    );
+  }
+
+
 }

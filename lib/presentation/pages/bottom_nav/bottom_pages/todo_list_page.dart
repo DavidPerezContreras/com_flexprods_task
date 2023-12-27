@@ -6,7 +6,6 @@ import 'package:nested_navigation/presentation/widget/todo_list_card.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
-
 class TodoListPage extends StatefulWidget {
   const TodoListPage(this.onOffsetChanged, {super.key});
 
@@ -22,42 +21,57 @@ class _TodoListPageState extends State<TodoListPage> {
 
   @override
   void initState() {
+    super.initState();
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     scrollController = ScrollController(initialScrollOffset: offset);
     scrollController.addListener(() {
       widget.onOffsetChanged(scrollController.offset);
     });
-    super.initState();
+    todoList=List.generate(todoListLength, (index) => Todo(
+        id: index,
+        title: "This is the item number $index",
+        description:
+        "This is the description of the item $index aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        isComplete: false,
+        userId: 1),
+
+    );
   }
 
-  int todoListLength=100;
+  void _onIsCompleteChanged(Todo todo, bool newIsCompleteValue) {
+    setState(() {
+      todoList = todoList.map((item) {
+        if (item.id == todo.id) {
+          return item.copyWith(isComplete: newIsCompleteValue);
+        }
+        return item;
+      }).toList();
+    });
+
+  }
+  late List<Todo> todoList;
+  int todoListLength = 100;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body:
-        ListView.builder(
-          controller: scrollController,
-          itemCount: todoListLength+1,
-          itemBuilder: (context, index) {
-            if(index==todoListLength){
-              return const SizedBox(height: 100,);
-            }
-
-            return TodoListCard(
-              todo: Todo(
-                  id: index,
-                  title: "This is the item number $index",
-                  description: "This is the description of the item $index aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  isComplete: false,
-                  userId: 1),
+      body: ListView.builder(
+        controller: scrollController,
+        itemCount: todoListLength + 1,
+        itemBuilder: (context, index) {
+          if (index == todoListLength) {
+            return const SizedBox(
+              height: 100,
             );
-          },
-        ),
+          }
 
-
+          return TodoListCard(
+            todo: todoList[index], onIsCompleteChanged: _onIsCompleteChanged,);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Create task",
         child: const Icon(Icons.add),

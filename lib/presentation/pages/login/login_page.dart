@@ -6,6 +6,9 @@ import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../domain/model/descriptable_error.dart';
+import '../../../domain/model/user.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -17,10 +20,12 @@ class _LoginPageState extends State<LoginPage> {
   late final ThemeProvider _themeProvider;
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? username;
   String? password;
+
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -34,31 +39,88 @@ class _LoginPageState extends State<LoginPage> {
     _authProvider.addListener(
       () {
         WidgetsBinding.instance.addPostFrameCallback(
-          (_) {
-            if (_authProvider.userState.status == Status.SUCCESS) {
-              Navigator.of(_topLevelNavigationProvider
-                      .topLevelNavigation.currentState!.context)
-                  .pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => BottomNavigationPage(),
-                ),
-              );
-            }
-          },
+          (_) {},
         );
       },
     );
+    _authProvider.addListener(_handleAuthChange);
   }
+
+  void _handleAuthChange() {
+    ResourceState<User> userState = _authProvider.userState;
+
+    switch (userState.status) {
+      case Status.SUCCESS:
+        setState(() {
+          _isLoading = false;
+          Navigator.of(_topLevelNavigationProvider
+                  .topLevelNavigation.currentState!.context)
+              .pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const BottomNavigationPage(),
+            ),
+          );
+        });
+        break;
+      case Status.LOADING:
+        setState(() {
+          _isLoading = true;
+        });
+        break;
+      case Status.ERROR:
+        setState(
+          () {
+            _isLoading = false;
+            _showErrorMessage(userState.error!);
+          },
+        );
+        break;
+      case Status.NONE:
+        setState(() {
+          _isLoading = false;
+          _formKey = GlobalKey<FormState>();
+        });
+        break;
+      default:
+    }
+  }
+
+  void _showErrorMessage(DescriptableError error) async {
+    String errorMessage = error.description;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+
+    _authProvider.logout();
+  }
+
+  init() {}
 
   @override
   Widget build(BuildContext context) {
-    bool isLightTheme = _themeProvider.isLightTheme;
-    Color backgroundColor = isLightTheme
-        ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.background;
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        appBar: AppBar(
+          title: const Text('Loading Indicator'),
+        ),
+        body: const Center(
+          child: SizedBox(
+            width: 100,
+            height: 100,
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: Container(
-        color: backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         height: double.infinity,
         width: double.infinity,
         child: Center(

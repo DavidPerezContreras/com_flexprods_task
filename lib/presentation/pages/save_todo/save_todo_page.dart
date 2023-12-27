@@ -11,10 +11,12 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.red));
+      appBar: AppBar(),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: Colors.red,
+      ),
+    );
   }
 }

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:nested_navigation/config/config.dart';
 import 'package:nested_navigation/data/auth/remote/DTO/auth_request_dto.dart';
 import 'package:nested_navigation/data/auth/remote/DTO/auth_response_dto.dart';
-import 'package:nested_navigation/data/auth/remote/exception/auth_exceptions.dart';
+import 'package:nested_navigation/data/auth/remote/exception/login_exceptions.dart';
 
 class AuthRemoteImpl {
   AuthRemoteImpl();
@@ -20,9 +20,9 @@ class AuthRemoteImpl {
       case 200:
         return LoginResponse(token: jsonDecode(response.body)['token']);
       case 401:
-        throw UnauthorizedException();
+        throw UnauthorizedLoginException();
       default:
-        throw DefaultException();
+        throw DefaultLoginException();
     }
   }
 
@@ -38,9 +38,9 @@ class AuthRemoteImpl {
       case 200:
         return RegisterResponse(token: jsonDecode(response.body)['token']);
       case 401:
-        throw UnauthorizedException();
+        throw UnauthorizedLoginException();
       default:
-        throw DefaultException();
+        throw DefaultLoginException();
     }
   }
 }

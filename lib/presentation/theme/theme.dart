@@ -4,8 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:json_theme/json_theme.dart';
 
-late final ThemeData lightTheme;
-late final ThemeData darkTheme;
+ final ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.light,
+    seedColor: Colors.blue,
+  ),
+);
+ final ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: Colors.blue,
+  ),
+);
 
 //Theme is loaded from json asset I created with https://appainter.dev/
 Future<ThemeData> loadThemeData(String path) async {

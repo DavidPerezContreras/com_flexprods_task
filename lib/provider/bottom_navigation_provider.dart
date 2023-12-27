@@ -7,6 +7,7 @@ class BottomNavigationProvider extends ChangeNotifier {
   late int _selectedIndex;
   late MaterialPage _activePage;
   late GlobalKey<NavigatorState> nestedNavigation;
+
   BottomNavigationProvider() {
     init();
   }

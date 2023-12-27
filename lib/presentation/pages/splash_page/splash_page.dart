@@ -11,43 +11,39 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   late final AuthProvider _authProvider;
+
   @override
   void initState() {
     super.initState();
-
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    _authProvider.isLoggedIn.then(((isLoggedIn) {
-      if (isLoggedIn) {
-        // If the user is logged in, navigate to the BottomNavigationPage
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavigationPage()),
-          );
-        });
-      } else {
-        // If the user is not logged in, navigate to the LoginPage
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-          );
-        });
-      }
-    }));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _redirect();
+    });
   }
 
+  void _redirect() async {
+    await Future.delayed(Duration(seconds: 2));
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    bool isLoggedIn = await _authProvider.isLoggedIn;
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavigationPage()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    // Replace AuthProvider with your actual authentication provider
-
-    // While the decision is being made, show a loading indicator
     return const Scaffold(
       body: Center(
         child: SizedBox(
           height: 100,
           width: 100,
-          child: CircularProgressIndicator(),
+          child: Image(image: AssetImage("assets/logo/flex.jpg")),
         ),
       ),
     );

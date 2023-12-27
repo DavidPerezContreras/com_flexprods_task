@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
 import 'package:nested_navigation/presentation/pages/save_todo/save_todo_page.dart';
+import 'package:nested_navigation/presentation/widget/todo_list_card.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../domain/model/todo.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage(this.onOffsetChanged, {super.key});
 
   final Function(double) onOffsetChanged;
+
   @override
   State<TodoListPage> createState() => _TodoListPageState();
 }
@@ -27,26 +31,42 @@ class _TodoListPageState extends State<TodoListPage> {
     super.initState();
   }
 
+  int todoListLength=100;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body: ListView.builder(
-        controller: scrollController,
-        itemCount: 100,
-        itemBuilder: (context, index) {
-          return ListTile(title: Text('Item $index'));
-        },
-      ),
+      body:
+        ListView.builder(
+          controller: scrollController,
+          itemCount: todoListLength+1,
+          itemBuilder: (context, index) {
+            if(index==todoListLength){
+              return const SizedBox(height: 100,);
+            }
+
+            return TodoListCard(
+              todo: Todo(
+                  id: index,
+                  title: "This is the item number $index",
+                  description: "This is the description of the item $index aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  isComplete: false,
+                  userId: 1),
+            );
+          },
+        ),
+
+
       floatingActionButton: FloatingActionButton(
         tooltip: "Create task",
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () async {
           Navigator.of(_topLevelNavigationProvider
                   .topLevelNavigation.currentState!.context)
               .push(
             MaterialPageRoute(
-              builder: (context) => SaveTodoPage(),
+              builder: (context) => const SaveTodoPage(),
             ),
           );
         },

@@ -3,16 +3,16 @@ class Todo {
   final String title;
   final String description;
   final bool isComplete;
-  final DateTime? dueDate;
   final int userId;
+  final DateTime? dueDate;
 
   Todo({
     required this.id,
     required this.title,
     required this.description,
     required this.isComplete,
-    required this.dueDate,
     required this.userId,
+    this.dueDate,
   });
 
   factory Todo.fromJson(Map<String, dynamic> json) {
@@ -21,7 +21,7 @@ class Todo {
       title: json['title'],
       description: json['description'],
       isComplete: json['isComplete'],
-      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
+      dueDate:  DateTime.parse(json['dueDate']) ,
       userId: json['userId'],
     );
   }

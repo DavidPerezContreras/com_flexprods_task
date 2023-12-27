@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/data/auth/remote/DTO/auth_request_dto.dart';
-import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
-import 'package:nested_navigation/data/auth/remote/exception/auth_exceptions.dart';
+import 'package:nested_navigation/data/auth/remote/error/login_errors.dart';
+import 'package:nested_navigation/data/auth/remote/exception/login_exceptions.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/usecase/auth/is_logged_in_usecase.dart';
@@ -32,16 +32,16 @@ class AuthProvider extends ChangeNotifier {
   void login(String username, String password) async {
     _userState = ResourceState.loading();
     notifyListeners();
-    //await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       User user = await _loginUseCase
           .login(LoginRequest(username: username, password: password));
       _userState = ResourceState.success(user);
-    } on UnauthorizedException {
-      _userState = ResourceState.error(UnauthorizedError());
+    } on UnauthorizedLoginException {
+      _userState = ResourceState.error(UnauthorizedLoginError());
     } catch (exception) {
-      _userState = ResourceState.error(DefaultError());
+      _userState = ResourceState.error(DefaultLoginError());
     }
 
     notifyListeners();

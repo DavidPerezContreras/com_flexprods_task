@@ -33,8 +33,8 @@ void main() async {
   setupLocator();
 
   WidgetsFlutterBinding.ensureInitialized();
-  lightTheme = await loadThemeData('assets/theme/light_theme.json');
-  darkTheme = await loadThemeData('assets/theme/dark_theme.json');
+  //lightTheme = await loadThemeData('assets/theme/light_theme.json');
+  //darkTheme = await loadThemeData('assets/theme/dark_theme.json');
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -54,7 +54,7 @@ void main() async {
               create: (context) => BottomNavigationProvider(),
             ),
             ChangeNotifierProvider<ThemeProvider>(
-              create: (_) => ThemeProvider(isLightTheme: true),
+              create: (_) => ThemeProvider(isLightTheme: false),
             ),
           ],
           child: const MyApp(),

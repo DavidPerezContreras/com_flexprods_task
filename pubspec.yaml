@@ -29,6 +29,8 @@ flutter:
   assets:
     - assets/theme/light_theme.json
     - assets/theme/dark_theme.json
+    - assets/logo/flex.jpg
+
 flutter_icons:
   android: true
   ios: true

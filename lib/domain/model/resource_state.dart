@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:nested_navigation/data/auth/remote/error/auth_errors.dart';
+import 'package:nested_navigation/data/auth/remote/error/login_errors.dart';
+
+import 'descriptable_error.dart';
 
 class ResourceState<T> {
   T? data;

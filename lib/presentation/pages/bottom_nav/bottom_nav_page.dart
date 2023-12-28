@@ -32,7 +32,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavigationProvider.selectedIndex,
-        onTap: (newIndex) {
+        onTap: (newIndex) async {
           setState(() {
             _bottomNavigationProvider.updateIndex(newIndex);
           });
@@ -53,7 +53,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         iconSize: 24, // You can adjust the icon size here
         selectedFontSize: 14, // Adjust selected font size
         unselectedFontSize: 12, // Adjust unselected font size
-        selectedIconTheme: IconThemeData(
+        selectedIconTheme: const IconThemeData(
             size:
                 28), // This will give a slight zoom effect to the selected item's icon
       ),

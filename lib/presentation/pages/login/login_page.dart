@@ -8,7 +8,6 @@ import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -36,13 +35,6 @@ class _LoginPageState extends State<LoginPage> {
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
 
-    _authProvider.addListener(
-      () {
-        WidgetsBinding.instance.addPostFrameCallback(
-          (_) {},
-        );
-      },
-    );
     _authProvider.addListener(_handleAuthChange);
   }
 

@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _redirect() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(milliseconds: 1500));
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
     bool isLoggedIn = await _authProvider.isLoggedIn;
     if (isLoggedIn) {
@@ -36,6 +36,7 @@ class _SplashPageState extends State<SplashPage> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

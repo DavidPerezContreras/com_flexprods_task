@@ -2,7 +2,7 @@ class UnauthorizedLoginException implements Exception {
   final String message = "Incorrect username or password.";
 
   @override
-  String toString() => "UnauthorizedException: $message";
+  String toString() => "UnauthorizedLoginException: $message";
 }
 
 class DefaultLoginException implements Exception {
@@ -10,5 +10,5 @@ class DefaultLoginException implements Exception {
       "There was a problem logging in. Check your connection and try again.";
 
   @override
-  String toString() => "DefaultException: $message";
+  String toString() => "DefaultLoginException: $message";
 }

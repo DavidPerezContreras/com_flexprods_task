@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
-import 'package:nested_navigation/presentation/pages/login/login_page.dart';
 import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
+import 'package:nested_navigation/provider/todo_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
-import 'package:nested_navigation/presentation/theme/theme.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +32,6 @@ void main() async {
   setupLocator();
 
   WidgetsFlutterBinding.ensureInitialized();
-  //lightTheme = await loadThemeData('assets/theme/light_theme.json');
-  //darkTheme = await loadThemeData('assets/theme/dark_theme.json');
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -46,6 +42,9 @@ void main() async {
           providers: [
             ChangeNotifierProvider<AuthProvider>(
               create: (context) => AuthProvider(),
+            ),
+            ChangeNotifierProvider<TodoProvider>(
+              create: (context) => TodoProvider(),
             ),
             ChangeNotifierProvider<TopLevelNavigationProvider>(
               create: (_) => TopLevelNavigationProvider(),

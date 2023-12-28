@@ -17,7 +17,7 @@ class UserRemoteImpl {
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
-      return User(id: responseBody['id'], username: responseBody['username']);
+      return User.fromJson(responseBody);
     } else {
       throw Exception('Failed to get user details');
     }

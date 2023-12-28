@@ -3,7 +3,7 @@ class UnauthorizedRegisterException implements Exception {
       "There's already an user with that username. Please choose another one.";
 
   @override
-  String toString() => "UnauthorizedException: $message";
+  String toString() => "UnauthorizedRegisterException: $message";
 }
 
 class DefaultRegisterException implements Exception {
@@ -11,5 +11,5 @@ class DefaultRegisterException implements Exception {
       "There was a problem logging in. Check your connection and try again.";
 
   @override
-  String toString() => "DefaultException: $message";
+  String toString() => "DefaultRegisterException: $message";
 }

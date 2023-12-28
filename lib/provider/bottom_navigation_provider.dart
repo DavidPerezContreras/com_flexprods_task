@@ -24,7 +24,7 @@ class BottomNavigationProvider extends ChangeNotifier {
 
   MaterialPage get activePage => _activePage;
 
-  void updateIndex(int newIndex) {
+  Future<void> updateIndex(int newIndex) async {
     _selectedIndex = newIndex;
     switch (newIndex) {
       case 0:

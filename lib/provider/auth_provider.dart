@@ -9,7 +9,6 @@ import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/usecase/auth/is_logged_in_usecase.dart';
 import 'package:nested_navigation/usecase/auth/login_usercase.dart';
 import 'package:nested_navigation/usecase/auth/register_usecase.dart';
-import 'package:nested_navigation/usecase/user/get_current_user_details_usecase.dart';
 
 class AuthProvider extends ChangeNotifier {
   late ResourceState<User> _userState;
@@ -29,10 +28,10 @@ class AuthProvider extends ChangeNotifier {
 
   ResourceState<User> get userState => _userState;
 
-  void login(String username, String password) async {
+  Future<void> login(String username, String password) async {
     _userState = ResourceState.loading();
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 1));
+    //await Future.delayed(const Duration(seconds: 1));
 
     try {
       User user = await _loginUseCase
@@ -47,10 +46,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void register(String username, String password) async {
+  Future<void> register(String username, String password) async {
     _userState = ResourceState.loading();
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 1));
+    //await Future.delayed(const Duration(seconds: 1));
 
     try {
       User user = await _registerUseCase

@@ -10,7 +10,7 @@ class TodoListCard extends StatefulWidget {
   });
 
   final Todo todo;
-  final Function(Todo,bool) onIsCompleteChanged;
+  final Function(Todo, bool) onIsCompleteChanged;
 
   @override
   State<TodoListCard> createState() => _TodoListCardState();
@@ -23,14 +23,16 @@ class _TodoListCardState extends State<TodoListCard> {
       height: 90,
       child: Card(
         child: ListTile(
-          onTap:(){},
+          onTap: () {},
           title: Text(widget.todo.title, overflow: TextOverflow.ellipsis),
-          subtitle: Text(widget.todo.description, overflow: TextOverflow.ellipsis),
+          subtitle:
+              Text(widget.todo.description, overflow: TextOverflow.ellipsis),
           trailing: Transform.scale(
             scale: 1.5, // Adjust the scale to make the checkbox larger
             child: Checkbox(
               value: widget.todo.isComplete,
-              onChanged: (newValue) => widget.onIsCompleteChanged(widget.todo, newValue!),
+              onChanged: (newValue) =>
+                  widget.onIsCompleteChanged(widget.todo, newValue!),
             ),
           ),
         ),

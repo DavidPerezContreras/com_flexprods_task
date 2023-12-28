@@ -19,7 +19,7 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 } /*TODO SECURITY RIST!!! YOU MUST VALIDATE THE CERTIFICATE BINARY MANUALLY!!
-CURRENTLY IT ALLOWS ALL CERTIFICATES, LEADING TO MAN-IN-THE-MIDDLE ATTACKS */
+CURRENTLY IT ALLOWS ALL CERTIFICATES, ALLOWING MAN-IN-THE-MIDDLE ATTACKS  !!!!!!L*/
 
 //Es problema del backend, que me den un certificado firmado por una CA authority y ya.
 //Como yo he hecho el backend pues no quiero perder tiempo en eso :)

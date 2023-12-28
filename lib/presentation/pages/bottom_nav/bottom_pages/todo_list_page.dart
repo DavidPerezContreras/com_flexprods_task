@@ -91,6 +91,9 @@ class _TodoListPageState extends State<TodoListPage> {
         tooltip: "Create task",
         child: const Icon(Icons.add),
         onPressed: () async {
+
+          _todoList.add(await _todoProvider.);
+
           Navigator.of(_topLevelNavigationProvider
                   .topLevelNavigation.currentState!.context)
               .push(

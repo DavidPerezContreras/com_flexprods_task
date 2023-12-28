@@ -54,6 +54,4 @@ class Todo {
       dueDate: dueDate ?? this.dueDate,
     );
   }
-
-
 }

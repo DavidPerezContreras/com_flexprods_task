@@ -27,9 +27,62 @@ class TodoProvider extends ChangeNotifier {
       List<Todo> todoList = await _getTodoListUseCase.getTodoList();
       _todoListState = ResourceState.success(todoList);
     } catch (exception) {
-      _todoListState = ResourceState.error(DefaultTodoError());
+      _todoListState = ResourceState.error(DefaultGetTodoListError());
     }
 
     notifyListeners();
   }
+
+  Future<void> createTodo() async {
+    _todoListState = ResourceState.loading();
+    notifyListeners();
+    //await Future.delayed(const Duration(seconds: 1));
+
+    try {
+      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
+      _todoListState = ResourceState.success(todoList);
+    } catch (exception) {
+      _todoListState = ResourceState.error(DefaultGetTodoListError());
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> updateTodo() async {
+    _todoListState = ResourceState.loading();
+    notifyListeners();
+    //await Future.delayed(const Duration(seconds: 1));
+
+    try {
+      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
+      _todoListState = ResourceState.success(todoList);
+    } catch (exception) {
+      _todoListState = ResourceState.error(DefaultGetTodoListError());
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> deleteTodo() async {
+    _todoListState = ResourceState.loading();
+    notifyListeners();
+    //await Future.delayed(const Duration(seconds: 1));
+
+    try {
+      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
+      _todoListState = ResourceState.success(todoList);
+    } catch (exception) {
+      _todoListState = ResourceState.error(DefaultGetTodoListError());
+    }
+
+    notifyListeners();
+  }
+
 }
+
+
+
+
+
+
+

@@ -8,7 +8,22 @@ class TodoDataImpl extends TodoRepository {
   TodoDataImpl(this._todoRemoteImpl);
 
   @override
-  Future<List<Todo>> getTodoList(String token) {
+  Future<List<Todo>> getTodoList(String token) async {
     return _todoRemoteImpl.getTodoList(token);
+  }
+
+  @override
+  Future<Todo> createTodo(Todo todo, String token) async {
+    return _todoRemoteImpl.createTodo(todo, token);
+  }
+
+  @override
+  Future<Todo> updateTodo(Todo todo, String token) async {
+    return _todoRemoteImpl.updateTodo(todo, token);
+  }
+
+  @override
+  Future<Todo> deleteTodo(Todo todo, String token) {
+    return _todoRemoteImpl.deleteTodo(todo, token);
   }
 }

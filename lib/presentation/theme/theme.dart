@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:json_theme/json_theme.dart';
 
- final ThemeData lightTheme = ThemeData(
+final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.light,
     seedColor: Colors.blue,
   ),
 );
- final ThemeData darkTheme = ThemeData(
+final ThemeData darkTheme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.dark,

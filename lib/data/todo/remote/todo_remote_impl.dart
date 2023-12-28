@@ -21,7 +21,58 @@ class TodoRemoteImpl {
       final responseBody = jsonDecode(response.body) as List;
       return responseBody.map((json) => Todo.fromJson(json)).toList();
     } else {
-      throw DefaultTodoException();
+      throw DefaultGetTodoListException();
+    }
+  }
+
+  Future<Todo> createTodo(Todo todo, String token) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/api/todos'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      return Todo.fromJson(responseBody);
+    } else {
+      throw DefaultCreateTodoException();
+    }
+  }
+
+  Future<Todo> updateTodo(Todo todo, String token) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/api/todos/${todo.id}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      return Todo.fromJson(responseBody);
+    } else {
+      throw DefaultUpdateTodoException();
+    }
+  }
+
+  Future<Todo> deleteTodo(Todo todo, String token) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/api/todos/${todo.id}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      return Todo.fromJson(responseBody);
+    } else {
+      throw DefaultDeleteTodoException();
     }
   }
 }

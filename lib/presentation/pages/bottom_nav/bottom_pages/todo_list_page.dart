@@ -81,7 +81,7 @@ class _TodoListPageState extends State<TodoListPage> {
             }
 
             return TodoListCard(
-              todo: _todoList[index],
+              todo: _todoList[_todoList.length - index - 1],
               onIsCompleteChanged: _onIsCompleteChanged,
             );
           },

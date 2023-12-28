@@ -21,8 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String? username;
-  String? password;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoading = false;
 
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
       case Status.NONE:
         setState(() {
           _isLoading = false;
-          _formKey = GlobalKey<FormState>();
+          _clearFields();
         });
         break;
       default:
@@ -90,7 +90,10 @@ class _LoginPageState extends State<LoginPage> {
     _authProvider.logout();
   }
 
-  init() {}
+  void _clearFields() {
+    _usernameController.clear();
+    _passwordController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextFormField(
+                      controller: _usernameController,
                       decoration: InputDecoration(
                         labelText: 'Enter your username',
                         labelStyle: TextStyle(
@@ -147,13 +151,15 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      onSaved: (value) => username = value,
+                      onSaved: (value) =>
+                          _usernameController.text = value ?? "",
                     ),
                     const Divider(
                       height: 20,
                       color: Colors.transparent,
                     ),
                     TextFormField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         labelText: 'Enter your password',
                         labelStyle: TextStyle(
@@ -174,7 +180,8 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
-                      onSaved: (value) => password = value,
+                      onSaved: (value) =>
+                          _passwordController.text = value ?? "",
                     ),
                     const Divider(
                       height: 35,
@@ -197,7 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          _authProvider.login(username!, password!);
+                          _authProvider.login(_usernameController.text,
+                              _passwordController.text);
                         }
                       },
                     )

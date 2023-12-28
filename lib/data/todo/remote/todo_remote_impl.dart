@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:nested_navigation/config/config.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/todo_request_dto.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
 import 'package:nested_navigation/data/todo/remote/exception/todo_exception.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:http/http.dart' as http;

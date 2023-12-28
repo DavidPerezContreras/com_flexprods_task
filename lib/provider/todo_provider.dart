@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/todo_request_dto.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
 import 'package:nested_navigation/data/todo/remote/error/todo_errors.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';

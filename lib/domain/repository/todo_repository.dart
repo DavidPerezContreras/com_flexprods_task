@@ -1,4 +1,4 @@
-import 'package:nested_navigation/data/todo/remote/DTO/todo_request_dto.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 
 abstract class TodoRepository {

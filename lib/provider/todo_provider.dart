@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
 import 'package:nested_navigation/data/todo/remote/error/todo_errors.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
@@ -51,22 +52,22 @@ class TodoProvider extends ChangeNotifier {
       _todoListState = ResourceState.error(DefaultGetTodoListError());
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 
-  Future<void> updateTodo(Todo todo) async {
+  Future<void> updateTodo(UpdateTodoRequest updateTodoRequest) async {
     _todoListState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
-      await _updateTodoUseCase.updateTodo(todo);
+      await _updateTodoUseCase.updateTodo(updateTodoRequest);
       await getTodoList();
     } catch (exception) {
-      _todoListState = ResourceState.error(DefaultGetTodoListError());
+      _todoListState = ResourceState.error(DefaultUpdateTodoError());
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 
   Future<void> deleteTodo(Todo todo) async {
@@ -81,7 +82,7 @@ class TodoProvider extends ChangeNotifier {
       _todoListState = ResourceState.error(DefaultDeleteTodoError());
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 
 }

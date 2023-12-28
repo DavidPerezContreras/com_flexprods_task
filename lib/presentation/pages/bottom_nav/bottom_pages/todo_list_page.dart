@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
@@ -62,6 +63,33 @@ class _TodoListPageState extends State<TodoListPage> {
     });
   }
 
+  void _createOnSave({required String title,
+    required String description,
+    DateTime? dueDate
+  }) {
+    Navigator.of(_topLevelNavigationProvider
+        .topLevelNavigation.currentState!.context).pop<CreateTodoRequest>(
+        CreateTodoRequest(
+          title: title,
+          description: description,
+        ));
+  }
+
+  void _updateOnSave(Todo todo,
+      {required String title, required String description, DateTime? dueDate}) {
+    Navigator.of(_topLevelNavigationProvider
+        .topLevelNavigation.currentState!.context).pop<UpdateTodoRequest>(
+      UpdateTodoRequest(
+        id: todo.id,
+        title: title,
+        description: description,
+        isComplete: todo.isComplete,
+        userId: todo.userId,
+        dueDate: dueDate,
+      ),
+    );
+  }
+
   late List<Todo> _todoList = [];
 
   @override
@@ -73,17 +101,20 @@ class _TodoListPageState extends State<TodoListPage> {
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
-          itemCount: _todoList.length + 1,
+          itemCount: _todoList.length+1 ,
           itemBuilder: (context, index) {
+
+
             if (index == _todoList.length) {
               return const SizedBox(
                 height: 100,
               );
             }
-
+            Todo todo = _todoList[_todoList.length -index-1];
             return TodoListCard(
-              todo: _todoList[_todoList.length - index - 1],
-              onIsCompleteChanged: _onIsCompleteChanged,
+                todo: todo,
+                onIsCompleteChanged: _onIsCompleteChanged,
+                onUpdate: _updateOnSave
             );
           },
         ),
@@ -93,17 +124,18 @@ class _TodoListPageState extends State<TodoListPage> {
         child: const Icon(Icons.add),
         onPressed: () {
           Navigator.of(_topLevelNavigationProvider
-                  .topLevelNavigation.currentState!.context)
+              .topLevelNavigation.currentState!.context)
               .push<CreateTodoRequest>(
             MaterialPageRoute(
-              builder: (context) => const SaveTodoPage<CreateTodoRequest>(),
+              builder: (context) =>
+                  SaveTodoPage.create(
+                    onCreate: _createOnSave,
+                  ),
             ),
           )
               .then((createTodoRequest) {
             if (createTodoRequest != null) {
-              _todoProvider.createTodo(
-                  createTodoRequest
-              );
+              _todoProvider.createTodo(createTodoRequest);
             }
           });
         },

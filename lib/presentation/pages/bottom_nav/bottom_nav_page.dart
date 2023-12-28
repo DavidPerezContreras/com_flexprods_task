@@ -10,7 +10,7 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  late final _bottomNavigationProvider;
+  late final BottomNavigationProvider _bottomNavigationProvider;
 
   @override
   void initState() {
@@ -36,8 +36,11 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavigationProvider.selectedIndex,
-        onTap: (newIndex) {
+        onTap: (newIndex) async{
           _bottomNavigationProvider.updateIndex(newIndex);
+          setState(() {
+
+          });
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

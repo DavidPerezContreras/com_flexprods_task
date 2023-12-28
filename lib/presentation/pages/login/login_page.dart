@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   late final ThemeProvider _themeProvider;
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -57,12 +57,14 @@ class _LoginPageState extends State<LoginPage> {
       case Status.LOADING:
         setState(() {
           _isLoading = true;
+          _clearFields();
         });
         break;
       case Status.ERROR:
         setState(
           () {
             _isLoading = false;
+            _clearFields();
             _showErrorMessage(userState.error!);
           },
         );
@@ -87,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    _authProvider.logout();
+    //_authProvider.logout();
   }
 
   void _clearFields() {

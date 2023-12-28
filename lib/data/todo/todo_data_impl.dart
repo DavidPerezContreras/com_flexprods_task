@@ -3,6 +3,8 @@ import 'package:nested_navigation/data/todo/remote/todo_remote_impl.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:nested_navigation/domain/repository/todo_repository.dart';
 
+import 'remote/DTO/update_todo_request_dto.dart';
+
 class TodoDataImpl extends TodoRepository {
   final TodoRemoteImpl _todoRemoteImpl;
 
@@ -19,8 +21,8 @@ class TodoDataImpl extends TodoRepository {
   }
 
   @override
-  Future<Todo> updateTodo(Todo todo, String token) async {
-    return _todoRemoteImpl.updateTodo(todo, token);
+  Future<Todo> updateTodo(UpdateTodoRequest updateTodoRequest, String token) async {
+    return _todoRemoteImpl.updateTodo(updateTodoRequest, token);
   }
 
   @override

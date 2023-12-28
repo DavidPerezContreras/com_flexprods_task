@@ -3,24 +3,39 @@ import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.d
 import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 
-class SaveTodoPage<T> extends StatefulWidget {
-  const SaveTodoPage({
-    this.todo,
+class SaveTodoPage extends StatefulWidget {
+  const SaveTodoPage.create({
+    required this.onCreate,
     super.key,
-  });
+  })  : todo = null,
+        onUpdate = null;
+
+  const SaveTodoPage.update({
+    required this.todo,
+    required this.onUpdate,
+    super.key,
+  }) : onCreate = null;
 
   final Todo? todo;
 
   @override
-  State<SaveTodoPage> createState() => _SaveTodoPageState<T>();
+  State<SaveTodoPage> createState() => _SaveTodoPageState();
+
+  final Function({
+    required String title,
+    required String description,
+    DateTime? dueDate,
+  })? onCreate;
+
+  final Function(
+    Todo todo, {
+    required String title,
+    required String description,
+    DateTime? dueDate,
+  })? onUpdate;
 }
 
-/*If we get a todo in the widget parameters, we load the form with that data,
-*
-* then
-* We will just use Navigator.of(topLevelNavigationContext) with the new todo
-* */
-class _SaveTodoPageState<T> extends State<SaveTodoPage<T>> {
+class _SaveTodoPageState extends State<SaveTodoPage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
@@ -85,23 +100,18 @@ class _SaveTodoPageState<T> extends State<SaveTodoPage<T>> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  if (T is CreateTodoRequest) {
-                    Navigator.of(context)
-                        .pop<CreateTodoRequest>(CreateTodoRequest(
-                      title: _titleController.text,
-                      description: _descriptionController.text,
-                    ));
-                  } else if (T is UpdateTodoRequest) {
-                    Navigator.of(context).pop<UpdateTodoRequest>(
-                      UpdateTodoRequest(
-                        id: widget.todo!.id,
+                  if (widget.onCreate != null) {
+                    widget.onCreate!(
                         title: _titleController.text,
                         description: _descriptionController.text,
-                        isComplete: widget.todo!.isComplete,
-                        userId: widget.todo!.userId,
-                        dueDate: _dueDate,
-                      ),
-                    );
+                        dueDate: _dueDate);
+                  } else {
+                    if (widget.onUpdate != null) {
+                      widget.onUpdate!(widget.todo!,
+                          title: _titleController.text,
+                          description: _descriptionController.text,
+                          dueDate: _dueDate);
+                    }
                   }
                 }
               },

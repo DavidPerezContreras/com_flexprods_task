@@ -8,13 +8,12 @@ class AuthDataImpl implements AuthRepository {
   AuthDataImpl(this._authRemoteImpl);
 
   @override
-  Future<LoginResponse> login(LoginRequest request) async {
-    return _authRemoteImpl.login(request);
+  Future<LoginResponse> login(LoginRequest loginRequest) async {
+    return _authRemoteImpl.login(loginRequest);
   }
 
   @override
   Future<RegisterResponse> register(RegisterRequest registerRequest) async {
-    throw UnimplementedError();
-    /*TODO IMPLEMENT */
+    return _authRemoteImpl.register(registerRequest);
   }
 }

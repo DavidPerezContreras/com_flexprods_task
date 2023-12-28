@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/todo_request_dto.dart';
 import 'package:nested_navigation/data/todo/remote/error/todo_errors.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
+import 'package:nested_navigation/usecase/todo/create_todo_usecase.dart';
+import 'package:nested_navigation/usecase/todo/delete_todo_usecase.dart';
 import 'package:nested_navigation/usecase/todo/get_todo_list_usecase.dart';
+import 'package:nested_navigation/usecase/todo/update_todo_usecase.dart';
 
 class TodoProvider extends ChangeNotifier {
   late ResourceState<List<Todo>> _todoListState;
-  late GetTodoListUseCase _getTodoListUseCase = GetTodoListUseCase();
-
+  late final GetTodoListUseCase _getTodoListUseCase = GetTodoListUseCase();
+  late final CreateTodoUseCase _createTodoUseCase = CreateTodoUseCase();
+  late final UpdateTodoUseCase _updateTodoUseCase = UpdateTodoUseCase();
+  late final DeleteTodoUseCase _deleteTodoUseCase = DeleteTodoUseCase();
   ResourceState<List<Todo>> get todoListState => _todoListState;
 
   TodoProvider() {
@@ -33,14 +39,14 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createTodo() async {
+  Future<void> createTodo(CreateTodoRequest createTodoRequest) async {
     _todoListState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
-      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
-      _todoListState = ResourceState.success(todoList);
+      await _createTodoUseCase.createTodo(createTodoRequest);
+      await getTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultGetTodoListError());
     }
@@ -48,14 +54,14 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateTodo() async {
+  Future<void> updateTodo(Todo todo) async {
     _todoListState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
-      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
-      _todoListState = ResourceState.success(todoList);
+      await _updateTodoUseCase.updateTodo(todo);
+      await getTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultGetTodoListError());
     }
@@ -63,16 +69,16 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTodo() async {
+  Future<void> deleteTodo(Todo todo) async {
     _todoListState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
-      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
-      _todoListState = ResourceState.success(todoList);
+      await _deleteTodoUseCase.deleteTodo(todo);
+      await getTodoList();
     } catch (exception) {
-      _todoListState = ResourceState.error(DefaultGetTodoListError());
+      _todoListState = ResourceState.error(DefaultDeleteTodoError());
     }
 
     notifyListeners();

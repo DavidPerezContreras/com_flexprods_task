@@ -3,6 +3,13 @@ class LoginRequest {
 
   String username;
   String password;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'password': password,
+    };
+  }
 }
 
 class RegisterRequest {
@@ -10,4 +17,11 @@ class RegisterRequest {
 
   String username;
   String password;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'password': password,
+    };
+  }
 }

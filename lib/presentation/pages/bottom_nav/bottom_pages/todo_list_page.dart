@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/data/todo/remote/DTO/todo_request_dto.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
@@ -90,11 +91,11 @@ class _TodoListPageState extends State<TodoListPage> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Create task",
         child: const Icon(Icons.add),
-        onPressed: () async {
+        onPressed: ()  {
+           _todoProvider.createTodo(
+              CreateTodoRequest(title: 'eeeee', description: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',));
 
-          _todoList.add(await _todoProvider.);
-
-          Navigator.of(_topLevelNavigationProvider
+              Navigator.of(_topLevelNavigationProvider
                   .topLevelNavigation.currentState!.context)
               .push(
             MaterialPageRoute(

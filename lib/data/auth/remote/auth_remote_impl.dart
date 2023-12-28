@@ -9,12 +9,12 @@ import 'package:nested_navigation/data/auth/remote/exception/register_exceptions
 class AuthRemoteImpl {
   AuthRemoteImpl();
 
-  Future<LoginResponse> login(LoginRequest request) async {
+  Future<LoginResponse> login(LoginRequest loginRequest) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
-          {"username": request.username, "password": request.password}),
+          loginRequest.toJson()),
     );
 
     switch (response.statusCode) {
@@ -27,12 +27,12 @@ class AuthRemoteImpl {
     }
   }
 
-  Future<RegisterResponse> register(RegisterRequest request) async {
+  Future<RegisterResponse> register(RegisterRequest registerRequest) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/register'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
-          {"username": request.username, "password": request.password}),
+          registerRequest.toJson()),
     );
 
     switch (response.statusCode) {

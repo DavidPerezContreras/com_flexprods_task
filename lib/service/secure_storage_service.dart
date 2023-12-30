@@ -35,4 +35,22 @@ class SecureStorageService {
   Future<void> deleteCurrentUser() async {
     await _storage.delete(key: 'currentUser');
   }
+
+  Future<String> getCurrentTheme() async {
+    String? theme = await _storage.read(key: 'currentTheme');
+    if (theme != null) {
+      return theme;
+    } else {
+      await _storage.write(key: 'currentTheme', value: 'dark');
+      return 'dark';
+    }
+  }
+
+  Future<void> setCurrentTheme(String theme) async {
+    await _storage.write(key: 'currentTheme', value: theme);
+  }
+
+  Future<void> deleteCurrentTheme() async {
+    await _storage.delete(key: 'currentTheme');
+  }
 }

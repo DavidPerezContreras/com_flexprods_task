@@ -47,147 +47,165 @@ class _LoginPageState extends State<LoginPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenHeight,
-          width: screenWidth,
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Center(
-            child: Form(
-              key: _formKey,
-              child: Card(
-                margin: const EdgeInsets.all(18),
-                color: Theme.of(context).cardColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Image(
-                          image: AssetImage(
-                            "assets/banner/flex_task_banner.png",
-                          ),
-                        ),
-                        height: 200,
-                      ),
-                      TextFormField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          labelText: 'Enter your username',
-                          labelStyle: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.secondary),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your username';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) =>
-                            _usernameController.text = value ?? "",
-                      ),
-                      const Divider(
-                        height: 20,
-                        color: Colors.transparent,
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Enter your password',
-                          labelStyle: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.secondary),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-                        ),
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) =>
-                            _passwordController.text = value ?? "",
-                      ),
-                      const Divider(
-                        height: 35,
-                        thickness: 0,
-                      ),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(
-                              color: Colors.black38,
-                              width: 2), // change the color and width as needed
-                          minimumSize:
-                              const Size(200, 60), // change the size as needed
-                        ),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 20, // change the font size as needed
-                          ),
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            _authProvider.login(_usernameController.text,
-                                _passwordController.text);
-                          }
-                        },
-                      ),
-                      Spacer(),
-                      Flexible(child: Text("You don't have an account?")),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Register",
-                            style: TextStyle(fontSize: 20),
-                          )),
-                      Container(
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Image(
-                                  height: 50,
-                                  image: AssetImage(
-                                      'assets/images/linkedin_logo.png')),
-                              onPressed: () => _launchURL(linkedInUrl),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: viewportConstraints.maxHeight,
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            child: Image(
+                              image: AssetImage(
+                                "assets/banner/flex_task_banner.png",
+                              ),
                             ),
-                            SizedBox(width: 10),
-                            IconButton(
-                              icon: Image(
-                                  height: 50,
-                                  image: AssetImage(
-                                      'assets/images/github_logo.png')),
-                              onPressed: () => _launchURL(githubUrl),
+                            height: 200,
+                          ),
+                          TextFormField(
+                            controller: _usernameController,
+                            decoration: InputDecoration(
+                              labelText: 'Enter your username',
+                              labelStyle: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
                             ),
-                          ],
-                        ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your username';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _usernameController.text = value ?? "",
+                          ),
+                          const Divider(
+                            height: 20,
+                            color: Colors.transparent,
+                          ),
+                          TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              labelText: 'Enter your password',
+                              labelStyle: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                            ),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) =>
+                                _passwordController.text = value ?? "",
+                          ),
+                          const Divider(
+                            height: 35,
+                            thickness: 0,
+                          ),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                  color: Colors.black38,
+                                  width:
+                                      2), // change the color and width as needed
+                              minimumSize: const Size(
+                                  200, 60), // change the size as needed
+                            ),
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                fontSize: 20, // change the font size as needed
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                _authProvider.login(_usernameController.text,
+                                    _passwordController.text);
+                              }
+                            },
+                          ),
+                          Divider(
+                            color: Colors.transparent,
+                            height: 2 / 3 * 0.05 * screenHeight,
+                          ),
+                          Flexible(child: Text("You don't have an account?")),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "Register",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                          Container(
+                            height: 100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Image(
+                                      height: 50,
+                                      image: AssetImage(
+                                          'assets/images/linkedin_logo.png')),
+                                  onPressed: () => _launchURL(linkedInUrl),
+                                ),
+                                SizedBox(width: 10),
+                                IconButton(
+                                  icon: Image(
+                                      height: 50,
+                                      image: AssetImage(
+                                          'assets/images/github_logo.png')),
+                                  onPressed: () => _launchURL(githubUrl),
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Spacer(),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

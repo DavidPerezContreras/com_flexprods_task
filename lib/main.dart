@@ -1,8 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
+import 'package:nested_navigation/domain/model/describable_error.dart';
+import 'package:nested_navigation/domain/model/resource_state.dart';
+import 'package:nested_navigation/domain/model/user.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
+import 'package:nested_navigation/presentation/pages/login/login_page.dart';
 import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
 import 'package:nested_navigation/provider/todo_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
@@ -53,7 +57,7 @@ void main() async {
               create: (context) => BottomNavigationProvider(),
             ),
             ChangeNotifierProvider<ThemeProvider>(
-              create: (_) => ThemeProvider(isLightTheme: false),
+              create: (_) => ThemeProvider(isDarkMode: true),
             ),
           ],
           child: const MyApp(),
@@ -63,19 +67,105 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final topLevelNavigationProvider =
-        Provider.of<TopLevelNavigationProvider>(context);
-    return MaterialApp(
-      navigatorKey: topLevelNavigationProvider.topLevelNavigation,
-      theme: themeProvider.getTheme(),
-      debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late final AuthProvider _authProvider;
+  late final TopLevelNavigationProvider _topLevelNavigationProvider;
+
+  late final ThemeProvider _themeProvider;
+  bool _isLoading = false;
+  @override
+  initState() {
+    super.initState();
+    _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    _topLevelNavigationProvider =
+        Provider.of<TopLevelNavigationProvider>(context, listen: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _themeProvider.addListener(() {
+        setState(() {});
+      });
+      _authProvider.addListener(
+        () {
+          //_bottomNavigationProvider.init();
+          ResourceState<User> userState = _authProvider.userState;
+
+          switch (userState.status) {
+            case Status.SUCCESS:
+              setState(() {
+                _isLoading = false;
+              });
+              Navigator.of(_topLevelNavigationProvider
+                      .topLevelNavigation.currentContext!)
+                  .pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const BottomNavigationPage(),
+                ),
+              );
+              break;
+            case Status.LOADING:
+              Navigator.of(_topLevelNavigationProvider
+                      .topLevelNavigation.currentContext!)
+                  .pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => SplashPage(),
+                ),
+              );
+              break;
+            case Status.ERROR:
+              Navigator.of(_topLevelNavigationProvider
+                      .topLevelNavigation.currentContext!)
+                  .pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+              break;
+            case Status.NONE:
+              Navigator.of(_topLevelNavigationProvider
+                      .topLevelNavigation.currentContext!)
+                  .pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
+              break;
+            default:
+          }
+        },
+      );
+      _authProvider.login("", "");
+    });
+  }
+
+  void _showErrorMessage(DescribableError error, BuildContext context) async {
+    String errorMessage = error.description;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        navigatorKey: _topLevelNavigationProvider.topLevelNavigation,
+        theme: _themeProvider.getTheme(),
+        debugShowCheckedModeBanner: false,
+        home: SplashPage());
   }
 }

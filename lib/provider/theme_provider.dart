@@ -1,29 +1,16 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested_navigation/presentation/theme/theme.dart';
 
 class ThemeProvider with ChangeNotifier {
-  bool isLightTheme;
+  bool isDarkMode;
 
-  ThemeProvider({required this.isLightTheme});
+  ThemeProvider({required this.isDarkMode});
 
-  getTheme() => isLightTheme ? lightTheme : darkTheme;
+  getTheme() => isDarkMode ? darkTheme : lightTheme;
 
-  setTheme(bool isLightTheme) {
-    this.isLightTheme = isLightTheme;
+  setTheme(bool isDarkMode) {
+    this.isDarkMode = isDarkMode;
 
     notifyListeners();
   }
-}
-
-Future<ThemeData> initializeThemeData() async {
-  String jsonData = await rootBundle.loadString('assets/theme.json');
-  Map<String, dynamic> data = jsonDecode(jsonData);
-
-  return ThemeData(
-    // Add your theme data here
-    primaryColor: Color(int.parse(data['primaryColor'])),
-    // ...
-  );
 }

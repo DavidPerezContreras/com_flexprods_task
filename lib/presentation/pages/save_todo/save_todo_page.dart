@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 
 class SaveTodoPage extends StatefulWidget {
@@ -79,6 +77,8 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a title';
+                } else if (value.length > 256) {
+                  return 'Title cannot be more than 256 characters';
                 }
                 return null;
               },
@@ -89,6 +89,8 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a description';
+                } else if (value.length > 256) {
+                  return 'Description cannot be more than 256 characters';
                 }
                 return null;
               },

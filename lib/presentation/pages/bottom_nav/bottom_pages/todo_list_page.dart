@@ -35,21 +35,29 @@ class _TodoListPageState extends State<TodoListPage> {
       widget.onOffsetChanged(scrollController.offset);
     });
     _todoList = _todoProvider.todoListState.data ?? [];
-    _todoProvider.addListener(() {
-      ResourceState<List<Todo>> todoListResourceState =
-          _todoProvider.todoListState;
-      switch (todoListResourceState.status) {
-        case Status.SUCCESS:
-          _todoList = todoListResourceState.data!;
-          break;
-        default:
-        //_todoList = [];
-      }
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    _todoProvider.addListener(_handleTodoStateChange);
     Future.microtask(() => _todoProvider.getTodoList());
+  }
+
+  void _handleTodoStateChange() {
+    ResourceState<List<Todo>> todoListResourceState =
+        _todoProvider.todoListState;
+    switch (todoListResourceState.status) {
+      case Status.SUCCESS:
+        _todoList = todoListResourceState.data!;
+        break;
+      default:
+      //_todoList = [];
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _todoProvider.removeListener(_handleTodoStateChange);
+    super.dispose();
   }
 
   void _onIsCompleteChanged(Todo todo, bool newIsCompleteValue) {
@@ -63,22 +71,21 @@ class _TodoListPageState extends State<TodoListPage> {
     });
   }
 
-  void _createOnSave({required String title,
-    required String description,
-    DateTime? dueDate
-  }) {
+  void _createOnSave(
+      {required String title, required String description, DateTime? dueDate}) {
     Navigator.of(_topLevelNavigationProvider
-        .topLevelNavigation.currentState!.context).pop<CreateTodoRequest>(
-        CreateTodoRequest(
-          title: title,
-          description: description,
-        ));
+            .topLevelNavigation.currentState!.context)
+        .pop<CreateTodoRequest>(CreateTodoRequest(
+      title: title,
+      description: description,
+    ));
   }
 
   void _updateOnSave(Todo todo,
       {required String title, required String description, DateTime? dueDate}) {
     Navigator.of(_topLevelNavigationProvider
-        .topLevelNavigation.currentState!.context).pop<UpdateTodoRequest>(
+            .topLevelNavigation.currentState!.context)
+        .pop<UpdateTodoRequest>(
       UpdateTodoRequest(
         id: todo.id,
         title: title,
@@ -101,21 +108,18 @@ class _TodoListPageState extends State<TodoListPage> {
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
-          itemCount: _todoList.length+1 ,
+          itemCount: _todoList.length + 1,
           itemBuilder: (context, index) {
-
-
             if (index == _todoList.length) {
               return const SizedBox(
                 height: 100,
               );
             }
-            Todo todo = _todoList[_todoList.length -index-1];
+            Todo todo = _todoList[_todoList.length - index - 1];
             return TodoListCard(
                 todo: todo,
                 onIsCompleteChanged: _onIsCompleteChanged,
-                onUpdate: _updateOnSave
-            );
+                onUpdate: _updateOnSave);
           },
         ),
       ),
@@ -124,13 +128,12 @@ class _TodoListPageState extends State<TodoListPage> {
         child: const Icon(Icons.add),
         onPressed: () {
           Navigator.of(_topLevelNavigationProvider
-              .topLevelNavigation.currentState!.context)
+                  .topLevelNavigation.currentState!.context)
               .push<CreateTodoRequest>(
             MaterialPageRoute(
-              builder: (context) =>
-                  SaveTodoPage.create(
-                    onCreate: _createOnSave,
-                  ),
+              builder: (context) => SaveTodoPage.create(
+                onCreate: _createOnSave,
+              ),
             ),
           )
               .then((createTodoRequest) {

@@ -13,11 +13,19 @@ class LoginUseCase {
       locator<SecureStorageService>();
 
   Future<User> login(LoginRequest loginRequest) async {
-    final LoginResponse loginResponse =
-        await _authRepository.login(loginRequest);
-    await _secureStorageService.saveToken(loginResponse.token!);
-    final user = await _userRepository
-        .getCurrentUserDetails(await _secureStorageService.getToken() ?? "");
-    return user;
+    String? token = await _secureStorageService.getToken();
+    if (token != null) {
+      // If token exists, get user details directly
+      final user = await _userRepository.getCurrentUserDetails(token);
+      return user;
+    } else {
+      // If no token found, proceed with login
+      final LoginResponse loginResponse =
+          await _authRepository.login(loginRequest);
+      await _secureStorageService.saveToken(loginResponse.token!);
+      final user = await _userRepository
+          .getCurrentUserDetails(await _secureStorageService.getToken() ?? "");
+      return user;
+    }
   }
 }

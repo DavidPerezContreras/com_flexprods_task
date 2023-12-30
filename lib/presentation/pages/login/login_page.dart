@@ -14,9 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late final ThemeProvider _themeProvider;
   late final AuthProvider _authProvider;
-  late final TopLevelNavigationProvider _topLevelNavigationProvider;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -35,17 +33,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    _topLevelNavigationProvider =
-        Provider.of<TopLevelNavigationProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -67,12 +58,18 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            child: Image(
+                            decoration:
+                                BoxDecoration(border: Border.all(width: 8)),
+                            child: const Image(
+                              fit: BoxFit.scaleDown,
                               image: AssetImage(
                                 "assets/banner/flex_task_banner.png",
                               ),
                             ),
-                            height: 200,
+                          ),
+                          Divider(
+                            color: Colors.transparent,
+                            height: 2 / 30 * viewportConstraints.maxHeight,
                           ),
                           TextFormField(
                             controller: _usernameController,
@@ -82,6 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                                   color:
                                       Theme.of(context).colorScheme.onSurface),
                               enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -114,6 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                                   color:
                                       Theme.of(context).colorScheme.onSurface),
                               enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -164,31 +173,32 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Divider(
                             color: Colors.transparent,
-                            height: 2 / 3 * 0.05 * screenHeight,
+                            height: 2 / 30 * viewportConstraints.maxHeight,
                           ),
-                          Flexible(child: Text("You don't have an account?")),
+                          const Flexible(
+                              child: Text("You don't have an account?")),
                           TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               "Register",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
-                          Container(
-                            height: 100,
+                          SizedBox(
+                            height: 70,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 IconButton(
-                                  icon: Image(
+                                  icon: const Image(
                                       height: 50,
                                       image: AssetImage(
                                           'assets/images/linkedin_logo.png')),
                                   onPressed: () => _launchURL(linkedInUrl),
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 IconButton(
-                                  icon: Image(
+                                  icon: const Image(
                                       height: 50,
                                       image: AssetImage(
                                           'assets/images/github_logo.png')),
@@ -197,7 +207,6 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                           ),
-                          //Spacer(),
                         ],
                       ),
                     ),

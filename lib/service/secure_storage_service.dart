@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 
@@ -52,5 +53,24 @@ class SecureStorageService {
 
   Future<void> deleteCurrentTheme() async {
     await _storage.delete(key: 'currentTheme');
+  }
+
+  Future<String> getCurrentSeedColor() async {
+    String? color = await _storage.read(key: 'currentSeedColor');
+    if (color != null) {
+      return color;
+    } else {
+      await _storage.write(
+          key: 'currentSeedColor', value: Colors.blue.value.toRadixString(16));
+      return Colors.blue.value.toRadixString(16);
+    }
+  }
+
+  Future<void> setCurrentSeedColor(String color) async {
+    await _storage.write(key: 'currentSeedColor', value: color);
+  }
+
+  Future<void> deleteCurrentSeedColor() async {
+    await _storage.delete(key: 'currentSeedColor');
   }
 }

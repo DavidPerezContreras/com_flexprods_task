@@ -61,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   trailing: Switch(
                     value: _themeProvider.isDarkMode,
                     onChanged: (newValue) {
-                      _themeProvider.setTheme(newValue);
+                      _themeProvider.setTheme(isDarkMode: newValue);
                     },
                   ),
                 ),

@@ -163,9 +163,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        navigatorKey: _topLevelNavigationProvider.topLevelNavigation,
-        theme: _themeProvider.getTheme(),
-        debugShowCheckedModeBanner: false,
-        home: SplashPage());
+      navigatorKey: _topLevelNavigationProvider.topLevelNavigation,
+      theme: _themeProvider.getTheme(),
+      debugShowCheckedModeBanner: false,
+      home: SplashPage(),
+    );
   }
 }

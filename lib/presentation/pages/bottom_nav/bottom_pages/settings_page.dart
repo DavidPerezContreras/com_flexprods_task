@@ -22,6 +22,16 @@ class _SettingsPageState extends State<SettingsPage> {
   late final BottomNavigationProvider _bottomNavigationProvider;
   late final TodoProvider _todoProvider;
   final double _tileTextSize = 20;
+
+  Color _selectedColor = Colors.blue; // Default selected color is blue
+
+  List<Color> _colors = [
+    Colors.blue,
+    Colors.purple,
+    Colors.pink,
+    Colors.orange
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -66,6 +76,39 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ),
+              Container(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _colors.map((color) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: color,
+                          side: BorderSide(
+                            width: _selectedColor == color
+                                ? 3.0
+                                : 1.0, // Enhance border if selected
+                            color: _selectedColor == color
+                                ? Colors.black
+                                : Colors.grey,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            // This makes the button square
+                            borderRadius: BorderRadius.circular(0.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState() {
+                            _selectedColor = color;
+                          }
+
+                          _themeProvider.setTheme(color: color);
+                        },
+                        child: SizedBox.shrink(),
+                      );
+                    }).toList(),
+                  )),
               const Spacer(),
               Container(
                 color: Theme.of(context).colorScheme.errorContainer,

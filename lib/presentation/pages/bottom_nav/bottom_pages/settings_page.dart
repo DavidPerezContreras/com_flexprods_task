@@ -123,17 +123,18 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   onTap: () {
-                    _authProvider.logout();
-                    _todoProvider.init();
-                    _bottomNavigationProvider.init();
                     resetGlobalAppState();
-                    Navigator.of(_topLevelNavigationProvider
+                    _todoProvider.init();
+                    _authProvider.logout();
+                    _bottomNavigationProvider.init();
+
+                    /*Navigator.of(_topLevelNavigationProvider
                             .topLevelNavigation.currentState!.context)
                         .pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const LoginPage(),
                       ),
-                    );
+                    );*/
                   },
                 ),
               )

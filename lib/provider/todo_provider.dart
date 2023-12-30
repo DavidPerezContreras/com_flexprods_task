@@ -84,12 +84,4 @@ class TodoProvider extends ChangeNotifier {
 
     //notifyListeners();
   }
-
 }
-
-
-
-
-
-
-

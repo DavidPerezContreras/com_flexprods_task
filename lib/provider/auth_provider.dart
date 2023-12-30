@@ -65,5 +65,6 @@ class AuthProvider extends ChangeNotifier {
   void logout() {
     _userState = ResourceState.none();
     _logoutUseCase.logout();
+    notifyListeners();
   }
 }

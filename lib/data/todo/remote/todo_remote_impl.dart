@@ -20,22 +20,24 @@ class TodoRemoteImpl {
     );
 
     if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body) as List;
+      // Decode the response body with UTF-8 encoding
+      String body = utf8.decode(response.bodyBytes);
+      final responseBody = jsonDecode(body) as List;
       return responseBody.map((json) => Todo.fromJson(json)).toList();
     } else {
       throw DefaultGetTodoListException();
     }
   }
 
-  Future<Todo> createTodo(CreateTodoRequest createTodoRequest, String token) async {
+  Future<Todo> createTodo(
+      CreateTodoRequest createTodoRequest, String token) async {
     final response = await http.post(
       Uri.parse('$baseUrl/api/todos'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(
-          createTodoRequest.toJson()),
+      body: jsonEncode(createTodoRequest.toJson()),
     );
 
     if (response.statusCode == 200) {
@@ -46,15 +48,15 @@ class TodoRemoteImpl {
     }
   }
 
-  Future<Todo> updateTodo(UpdateTodoRequest updateTodoRequest, String token) async {
+  Future<Todo> updateTodo(
+      UpdateTodoRequest updateTodoRequest, String token) async {
     final response = await http.put(
       Uri.parse('$baseUrl/api/todos/${updateTodoRequest.id}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(
-          updateTodoRequest.toJson()),
+      body: jsonEncode(updateTodoRequest.toJson()),
     );
 
     if (response.statusCode == 200) {
@@ -72,8 +74,7 @@ class TodoRemoteImpl {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(
-          todo.toJson()),
+      body: jsonEncode(todo.toJson()),
     );
 
     if (response.statusCode == 200) {

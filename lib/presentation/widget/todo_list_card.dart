@@ -45,7 +45,7 @@ class _TodoListCardState extends State<TodoListCard> {
       height: 90,
       child: Card(
         child: ListTile(
-          onTap: () {
+          onTap: () async {
             Navigator.of(_topLevelNavigationProvider
                     .topLevelNavigation.currentState!.context)
                 .push<UpdateTodoRequest>(
@@ -61,6 +61,7 @@ class _TodoListCardState extends State<TodoListCard> {
                 _todoProvider.updateTodo(updateTodoRequest);
               }
             });
+            setState(() {});
           },
           title: Text(widget.todo.title, overflow: TextOverflow.ellipsis),
           subtitle:
@@ -69,7 +70,7 @@ class _TodoListCardState extends State<TodoListCard> {
             scale: 1.5, // Adjust the scale to make the checkbox larger
             child: Checkbox(
               value: widget.todo.isComplete,
-              onChanged: (newValue) =>
+              onChanged: (newValue) async =>
                   widget.onIsCompleteChanged(widget.todo, newValue!),
             ),
           ),

@@ -25,13 +25,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Color _selectedColor = Colors.blue; // Default selected color is blue
 
-  List<Color> _colors = [
-    Colors.blue,
-    Colors.purple,
-    Colors.pink,
-    Colors.orange
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -49,6 +42,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Color> _colors = [
+      Colors.blue,
+      Colors.purple,
+      Colors.pink,
+      Colors.green
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
@@ -99,11 +98,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         onPressed: () {
-                          setState() {
-                            _selectedColor = color;
-                          }
-
                           _themeProvider.setTheme(color: color);
+                          _selectedColor = _themeProvider.seedColor;
                         },
                         child: SizedBox.shrink(),
                       );

@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -84,11 +85,13 @@ class _LoginPageState extends State<LoginPage> {
                                         .colorScheme
                                         .secondary),
                               ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
+                                    color: Theme.of(context).colorScheme.error),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -122,11 +125,13 @@ class _LoginPageState extends State<LoginPage> {
                                         .colorScheme
                                         .secondary),
                               ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
+                                    color: Theme.of(context).colorScheme.error),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(

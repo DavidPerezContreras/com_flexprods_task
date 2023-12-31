@@ -22,25 +22,26 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<BottomNavigationProvider>(
-        builder: (context, provider, child) {
-          return Navigator(
-            key: provider.nestedNavigation,
-            pages: [provider.activePage],
-            onPopPage: (route, result) {
-              print("onPopPage BOTTOMNAV");
-              return false;
-            },
-          );
-        },
+      backgroundColor: Theme.of(context).primaryColor,
+      body: SafeArea(
+        child: Consumer<BottomNavigationProvider>(
+          builder: (context, provider, child) {
+            return Navigator(
+              key: provider.nestedNavigation,
+              pages: [provider.activePage],
+              onPopPage: (route, result) {
+                print("onPopPage BOTTOMNAV");
+                return false;
+              },
+            );
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavigationProvider.selectedIndex,
-        onTap: (newIndex) async{
+        onTap: (newIndex) async {
           _bottomNavigationProvider.updateIndex(newIndex);
-          setState(() {
-
-          });
+          setState(() {});
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

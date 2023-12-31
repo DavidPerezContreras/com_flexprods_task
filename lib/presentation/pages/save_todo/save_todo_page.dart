@@ -64,6 +64,10 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final String selectedDateText = _dueDate == null
+        ? "No date selected"
+        : "Selected date:   ${_dueDate!.day} / ${_dueDate!.month} / ${_dueDate!.year}";
+
     return Scaffold(
       appBar: AppBar(),
       body: Form(
@@ -84,6 +88,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                       padding: const EdgeInsets.all(16.0),
                       children: <Widget>[
                         TextFormField(
+                          maxLength: 256,
                           controller: _titleController,
                           decoration: InputDecoration(
                             labelText: 'Title',
@@ -120,6 +125,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                         Container(
                           height: 100,
                           child: TextFormField(
+                            maxLength: 256,
                             controller: _descriptionController,
                             decoration: InputDecoration(
                               labelText: 'Description',
@@ -161,15 +167,20 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                         Divider(color: Colors.transparent, height: 20),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                          child: ElevatedButton(
-                            onPressed: () => _selectDate(context),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Select due date'),
-                                Icon(Icons.calendar_month)
-                              ],
-                            ),
+                          child: Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () => _selectDate(context),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Select due date'),
+                                    Icon(Icons.calendar_month)
+                                  ],
+                                ),
+                              ),
+                              Text(selectedDateText)
+                            ],
                           ),
                         ),
                         //Divider(

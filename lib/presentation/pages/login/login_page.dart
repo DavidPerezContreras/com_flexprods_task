@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 2 / 30 * viewportConstraints.maxHeight,
                           ),
                           TextFormField(
+                            maxLength: 256,
                             controller: _usernameController,
                             decoration: InputDecoration(
                               labelText: 'Enter your username',
@@ -113,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.transparent,
                           ),
                           TextFormField(
+                            maxLength: 256,
                             controller: _passwordController,
                             decoration: InputDecoration(
                               labelText: 'Enter your password',

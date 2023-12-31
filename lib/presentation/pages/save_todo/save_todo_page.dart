@@ -66,118 +66,141 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: LayoutBuilder(builder: (context, boxConstraints) {
-        return Form(
-          key: _formKey,
-          child: ListView(
-            padding: EdgeInsets.all(16.0),
-            children: <Widget>[
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  labelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.onSurface),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).colorScheme.error),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).colorScheme.error),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  } else if (value.length > 256) {
-                    return 'Title cannot be more than 256 characters';
-                  }
-                  return null;
-                },
-              ),
-              Divider(color: Colors.transparent, height: 20),
-              Container(
-                height: 100,
-                child: TextFormField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    labelStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary),
+      body: Form(
+        key: _formKey,
+        child: SafeArea(
+          child: Column(children: [
+            Flexible(
+              flex: 8,
+              child: LayoutBuilder(builder:
+                  (BuildContext context, BoxConstraints viewportConstraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minHeight: viewportConstraints.maxHeight),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(16.0),
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _titleController,
+                          decoration: InputDecoration(
+                            labelText: 'Title',
+                            labelStyle: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.error),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.error),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a title';
+                            } else if (value.length > 256) {
+                              return 'Title cannot be more than 256 characters';
+                            }
+                            return null;
+                          },
+                        ),
+                        Divider(color: Colors.transparent, height: 20),
+                        Container(
+                          height: 100,
+                          child: TextFormField(
+                            controller: _descriptionController,
+                            decoration: InputDecoration(
+                              labelText: 'Description',
+                              labelStyle: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.error),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a description';
+                              } else if (value.length > 256) {
+                                return 'Description cannot be more than 256 characters';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        Divider(color: Colors.transparent, height: 20),
+                        ElevatedButton(
+                          onPressed: () => _selectDate(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Select due date'),
+                              Icon(Icons.calendar_month)
+                            ],
+                          ),
+                        ),
+                        //Divider(
+                        //    color: Colors.transparent,
+                        //    height: viewportConstraints.maxHeight*0.4),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              if (widget.onCreate != null) {
+                                widget.onCreate!(
+                                    title: _titleController.text,
+                                    description: _descriptionController.text,
+                                    dueDate: _dueDate);
+                              } else {
+                                if (widget.onUpdate != null) {
+                                  widget.onUpdate!(widget.todo!,
+                                      title: _titleController.text,
+                                      description: _descriptionController.text,
+                                      dueDate: _dueDate);
+                                }
+                              }
+                            }
+                          },
+                          child: const Text('Save'),
+                        ),
+                      ],
                     ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.error),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.error),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
                   ),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a description';
-                    } else if (value.length > 256) {
-                      return 'Description cannot be more than 256 characters';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Divider(color: Colors.transparent, height: 20),
-              ElevatedButton(
-                onPressed: () => _selectDate(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Select due date'),
-                    Icon(Icons.calendar_month)
-                  ],
-                ),
-              ),
-              Divider(color: Colors.transparent, height: 100),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    if (widget.onCreate != null) {
-                      widget.onCreate!(
-                          title: _titleController.text,
-                          description: _descriptionController.text,
-                          dueDate: _dueDate);
-                    } else {
-                      if (widget.onUpdate != null) {
-                        widget.onUpdate!(widget.todo!,
-                            title: _titleController.text,
-                            description: _descriptionController.text,
-                            dueDate: _dueDate);
-                      }
-                    }
-                  }
-                },
-                child: const Text('Save'),
-              ),
-            ],
-          ),
-        );
-      }),
+                );
+              }),
+            ),
+          ]),
+        ),
+      ),
     );
   }
 

@@ -13,16 +13,25 @@ class BottomNavigationPage extends StatefulWidget {
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
   late final BottomNavigationProvider _bottomNavigationProvider;
   late final ThemeProvider _themeProvider;
-
+  late VoidCallback setThemeState;
   @override
   void initState() {
     super.initState();
     _bottomNavigationProvider =
         Provider.of<BottomNavigationProvider>(context, listen: false);
     _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    _themeProvider.addListener(() {
+
+    setThemeState = () {
       setState(() {});
-    });
+    };
+
+    _themeProvider.addListener(setThemeState);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _themeProvider.removeListener(setThemeState);
   }
 
   @override

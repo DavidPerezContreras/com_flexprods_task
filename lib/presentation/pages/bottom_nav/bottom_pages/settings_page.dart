@@ -46,25 +46,25 @@ class _SettingsPageState extends State<SettingsPage> {
       Colors.blue,
       Colors.purple,
       Colors.pink,
-      Colors.green
     ];
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onSecondary,
       appBar: AppBar(
         title: Text("Settings"),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 100),
+        padding: const EdgeInsets.fromLTRB(0, 40, 0, 100),
         child: SafeArea(
           child: Column(
             children: [
               Container(
-                color: Theme.of(context).colorScheme.secondaryContainer,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 height: 50,
                 child: ListTile(
                   title: Text(
                     "Dark Mode",
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      color: Theme.of(context).textTheme.bodySmall!.color,
                     ),
                   ),
                   trailing: Switch(
@@ -115,7 +115,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     "Logout",
                     style: TextStyle(
                       fontSize: _tileTextSize,
-                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      color: Theme.of(context).textTheme.bodySmall!.color,
                     ),
                   ),
                   onTap: () {

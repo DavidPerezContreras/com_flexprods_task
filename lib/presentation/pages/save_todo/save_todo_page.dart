@@ -159,38 +159,59 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                           ),
                         ),
                         Divider(color: Colors.transparent, height: 20),
-                        ElevatedButton(
-                          onPressed: () => _selectDate(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Select due date'),
-                              Icon(Icons.calendar_month)
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: ElevatedButton(
+                            onPressed: () => _selectDate(context),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Select due date'),
+                                Icon(Icons.calendar_month)
+                              ],
+                            ),
                           ),
                         ),
                         //Divider(
                         //    color: Colors.transparent,
                         //    height: viewportConstraints.maxHeight*0.4),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              if (widget.onCreate != null) {
-                                widget.onCreate!(
-                                    title: _titleController.text,
-                                    description: _descriptionController.text,
-                                    dueDate: _dueDate);
-                              } else {
-                                if (widget.onUpdate != null) {
-                                  widget.onUpdate!(widget.todo!,
+
+                        Padding(
+                          padding: const EdgeInsets.all(50.0),
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                  color: Colors.black38,
+                                  width:
+                                      2), // change the color and width as needed
+                              minimumSize: const Size(
+                                  200, 60), // change the size as needed
+                            ),
+                            child: const Text(
+                              "Save",
+                              style: TextStyle(
+                                fontSize: 20, // change the font size as needed
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                if (widget.onCreate != null) {
+                                  widget.onCreate!(
                                       title: _titleController.text,
                                       description: _descriptionController.text,
                                       dueDate: _dueDate);
+                                } else {
+                                  if (widget.onUpdate != null) {
+                                    widget.onUpdate!(widget.todo!,
+                                        title: _titleController.text,
+                                        description:
+                                            _descriptionController.text,
+                                        dueDate: _dueDate);
+                                  }
                                 }
                               }
-                            }
-                          },
-                          child: const Text('Save'),
+                            },
+                          ),
                         ),
                       ],
                     ),

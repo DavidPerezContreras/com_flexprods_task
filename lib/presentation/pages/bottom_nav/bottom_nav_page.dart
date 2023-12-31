@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
+import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -11,18 +12,23 @@ class BottomNavigationPage extends StatefulWidget {
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
   late final BottomNavigationProvider _bottomNavigationProvider;
+  late final ThemeProvider _themeProvider;
 
   @override
   void initState() {
     super.initState();
     _bottomNavigationProvider =
         Provider.of<BottomNavigationProvider>(context, listen: false);
+    _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    _themeProvider.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: _themeProvider.seedColor,
       body: SafeArea(
         child: Consumer<BottomNavigationProvider>(
           builder: (context, provider, child) {

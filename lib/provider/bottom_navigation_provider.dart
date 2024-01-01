@@ -26,7 +26,7 @@ class BottomNavigationProvider extends ChangeNotifier {
 
   Future<void> updateIndex(int newIndex) async {
     _selectedIndex = newIndex;
-    //notifyListeners();
+    notifyListeners();
     switch (newIndex) {
       case 0:
         _activePage = MaterialPage(child: TodoListPage((newOffset) {
@@ -38,6 +38,6 @@ class BottomNavigationProvider extends ChangeNotifier {
         break;
     }
 
-    notifyListeners();
+    //notifyListeners();
   }
 }

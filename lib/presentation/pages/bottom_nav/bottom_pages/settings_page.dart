@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
+import 'package:nested_navigation/presentation/theme/color.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
@@ -22,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   late final TodoProvider _todoProvider;
   final double _tileTextSize = 20;
 
-  Color _selectedColor = Colors.blue; // Default selected color is blue
+  late Color _selectedColor; // Default selected color is blue
 
   @override
   void initState() {
@@ -37,15 +38,13 @@ class _SettingsPageState extends State<SettingsPage> {
         Provider.of<BottomNavigationProvider>(context, listen: false);
 
     _todoProvider = Provider.of<TodoProvider>(context, listen: false);
+
+    _selectedColor = Color.fromRGBO(_themeProvider.seedColor.red,
+        _themeProvider.seedColor.green, _themeProvider.seedColor.blue, 1);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Color> _colors = [
-      Colors.blue,
-      Colors.purple,
-      Colors.pink,
-    ];
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       appBar: AppBar(
@@ -79,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _colors.map((color) {
+                    children: colors.map((color) {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: color,
@@ -98,7 +97,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         onPressed: () {
                           _themeProvider.setTheme(color: color);
-                          _selectedColor = _themeProvider.seedColor;
+                          _selectedColor = color;
                         },
                         child: SizedBox.shrink(),
                       );
@@ -118,10 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                   onTap: () {
-                    resetGlobalAppState();
-                    _todoProvider.init();
                     _authProvider.logout();
-                    _bottomNavigationProvider.init();
 
                     /*Navigator.of(_topLevelNavigationProvider
                             .topLevelNavigation.currentState!.context)

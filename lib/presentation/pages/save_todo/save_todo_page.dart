@@ -155,9 +155,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a description';
-                              } else if (value.length > 256) {
+                              if (value!.length > 256) {
                                 return 'Description cannot be more than 256 characters';
                               }
                               return null;

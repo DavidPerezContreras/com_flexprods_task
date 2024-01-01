@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nested_navigation/config/config.dart';
-import 'package:nested_navigation/presentation/pages/login/register_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
+import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   late final AuthProvider _authProvider;
-  late final TopLevelNavigationProvider _topLevelNavigationProvider;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -33,14 +31,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _topLevelNavigationProvider =
-        Provider.of<TopLevelNavigationProvider>(context, listen: false);
+
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Register"),
+      ),
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
         child: LayoutBuilder(
@@ -61,24 +61,8 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            decoration:
-                                BoxDecoration(border: Border.all(width: 8)),
-                            child: const Image(
-                              fit: BoxFit.scaleDown,
-                              image: AssetImage(
-                                "assets/banner/flex_task_banner.png",
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            color: Colors.transparent,
-                            height: 2 / 30 * viewportConstraints.maxHeight,
-                          ),
                           TextFormField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(256),
-                            ],
+                            maxLength: 256,
                             controller: _usernameController,
                             decoration: InputDecoration(
                               labelText: 'Enter your username',
@@ -119,9 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.transparent,
                           ),
                           TextFormField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(256),
-                            ],
+                            maxLength: 256,
                             controller: _passwordController,
                             decoration: InputDecoration(
                               labelText: 'Enter your password',
@@ -172,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                                   200, 60), // change the size as needed
                             ),
                             child: const Text(
-                              "Login",
+                              "Register",
                               style: TextStyle(
                                 fontSize: 20, // change the font size as needed
                               ),
@@ -180,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                _authProvider.login(_usernameController.text,
+                                _authProvider.register(_usernameController.text,
                                     _passwordController.text);
                               }
                             },
@@ -192,15 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                           const Flexible(
                               child: Text("You don't have an account?")),
                           TextButton(
-                            onPressed: () {
-                              Navigator.of(_topLevelNavigationProvider
-                                      .topLevelNavigation.currentContext!)
-                                  .push(
-                                MaterialPageRoute(
-                                  builder: (context) => const RegisterPage(),
-                                ),
-                              );
-                            },
+                            onPressed: () {},
                             child: const Text(
                               "Register",
                               style: TextStyle(fontSize: 20),

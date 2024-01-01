@@ -5,6 +5,7 @@ import 'package:nested_navigation/di/service_locator.dart';
 import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
+import 'package:nested_navigation/presentation/global/offset.dart';
 import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/presentation/pages/login/login_page.dart';
 import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
@@ -77,9 +78,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
+  late final BottomNavigationProvider _bottomNavigationProvider;
 
   late final ThemeProvider _themeProvider;
-  bool _isLoading = false;
+  late final TodoProvider _todoProvider;
+
+  late final VoidCallback setStateCallback;
   @override
   initState() {
     super.initState();
@@ -87,6 +91,18 @@ class _MyAppState extends State<MyApp> {
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
+    _bottomNavigationProvider =
+        Provider.of<BottomNavigationProvider>(context, listen: false);
+    _todoProvider = Provider.of<TodoProvider>(context, listen: false);
+    setStateCallback = () {
+      setState(() {});
+    };
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bottomNavigationProvider.removeListener(setStateCallback);
   }
 
   @override
@@ -96,6 +112,9 @@ class _MyAppState extends State<MyApp> {
       _themeProvider.addListener(() {
         setState(() {});
       });
+
+      _bottomNavigationProvider.addListener(setStateCallback);
+
       _authProvider.addListener(
         () {
           //_bottomNavigationProvider.init();
@@ -103,9 +122,8 @@ class _MyAppState extends State<MyApp> {
 
           switch (userState.status) {
             case Status.SUCCESS:
-              setState(() {
-                _isLoading = false;
-              });
+              //setState(() {
+              //});
               Navigator.of(_topLevelNavigationProvider
                       .topLevelNavigation.currentContext!)
                   .pushReplacement(
@@ -133,6 +151,9 @@ class _MyAppState extends State<MyApp> {
               );
               break;
             case Status.NONE:
+              resetGlobalAppState();
+              _todoProvider.init();
+              _bottomNavigationProvider.init();
               Navigator.of(_topLevelNavigationProvider
                       .topLevelNavigation.currentContext!)
                   .pushReplacement(

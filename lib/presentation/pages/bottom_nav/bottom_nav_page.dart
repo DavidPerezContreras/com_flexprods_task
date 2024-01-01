@@ -62,7 +62,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _themeProvider.seedColor,
-      body: _generateBody(_selectedIndex),
+      body: SafeArea(child: _generateBody(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (newIndex) async {

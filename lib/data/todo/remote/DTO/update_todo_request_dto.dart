@@ -3,7 +3,6 @@ class UpdateTodoRequest {
   final String title;
   final String description;
   final bool isComplete;
-  final int userId;
   final DateTime? dueDate;
 
   UpdateTodoRequest({
@@ -11,7 +10,6 @@ class UpdateTodoRequest {
     required this.title,
     required this.description,
     required this.isComplete,
-    required this.userId,
     this.dueDate,
   });
 
@@ -22,7 +20,6 @@ class UpdateTodoRequest {
       description: json['description'],
       isComplete: json['isComplete'],
       dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
-      userId: json['userId'],
     );
   }
 
@@ -32,7 +29,6 @@ class UpdateTodoRequest {
       'title': title,
       'description': description,
       'isComplete': isComplete,
-      'userId': userId,
       'dueDate': dueDate?.toIso8601String(),
     };
   }
@@ -50,7 +46,6 @@ class UpdateTodoRequest {
       title: title ?? this.title,
       description: description ?? this.description,
       isComplete: isComplete ?? this.isComplete,
-      userId: userId ?? this.userId,
       dueDate: dueDate ?? this.dueDate,
     );
   }

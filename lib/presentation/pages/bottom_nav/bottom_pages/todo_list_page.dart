@@ -74,15 +74,13 @@ class _TodoListPageState extends State<TodoListPage>
     super.dispose();
   }
 
-  void _onIsCompleteChanged(Todo todo, bool newIsCompleteValue) {
-    setState(() {
-      _todoList = _todoList.map((item) {
-        if (item.id == todo.id) {
-          return item.copyWith(isComplete: newIsCompleteValue);
-        }
-        return item;
-      }).toList();
-    });
+  Future<void> _onIsCompleteChanged(Todo todo, bool newIsCompleteValue) async {
+    _todoProvider.updateTodo(UpdateTodoRequest(
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      isComplete: !todo.isComplete,
+    ));
   }
 
   void _createOnSave(
@@ -103,7 +101,6 @@ class _TodoListPageState extends State<TodoListPage>
         title: title,
         description: description,
         isComplete: todo.isComplete,
-        userId: todo.userId,
         dueDate: dueDate,
       ),
     );

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/config/config.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
-import 'package:nested_navigation/provider/theme_provider.dart';
-import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -170,38 +168,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           Divider(
                             color: Colors.transparent,
                             height: 2 / 30 * viewportConstraints.maxHeight,
-                          ),
-                          const Flexible(
-                              child: Text("You don't have an account?")),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: const Image(
-                                      height: 50,
-                                      image: AssetImage(
-                                          'assets/images/linkedin_logo.png')),
-                                  onPressed: () => _launchURL(linkedInUrl),
-                                ),
-                                const SizedBox(width: 10),
-                                IconButton(
-                                  icon: const Image(
-                                      height: 50,
-                                      image: AssetImage(
-                                          'assets/images/github_logo.png')),
-                                  onPressed: () => _launchURL(githubUrl),
-                                ),
-                              ],
-                            ),
                           ),
                         ],
                       ),

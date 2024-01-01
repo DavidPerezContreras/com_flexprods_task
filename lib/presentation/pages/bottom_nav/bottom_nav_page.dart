@@ -33,10 +33,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         });
         break;
       case 1:
-        return SettingsPage();
+        return const SettingsPage();
         break;
       default:
-        return Scaffold();
+        return const Scaffold();
     }
   }
 

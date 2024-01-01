@@ -7,10 +7,10 @@ class DeleteTodoUseCase {
   final TodoRepository _todoRepository = locator<TodoRepository>();
   final SecureStorageService _storageService = locator<SecureStorageService>();
 
-  Future<Todo> deleteTodo(Todo todo) async {
+  Future<void> deleteTodo(Todo todo) async {
     String? token = await _storageService.getToken();
     if (token != null) {
-      return _todoRepository.deleteTodo(todo,token);
+      _todoRepository.deleteTodo(todo, token);
     } else {
       throw Exception('No token found');
     }

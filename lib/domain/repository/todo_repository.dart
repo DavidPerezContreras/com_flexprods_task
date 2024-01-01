@@ -9,5 +9,5 @@ abstract class TodoRepository {
 
   Future<Todo> updateTodo(UpdateTodoRequest updateTodoRequest, String token);
 
-  Future<Todo> deleteTodo(Todo todo, String token);
+  Future<void> deleteTodo(Todo todo, String token);
 }

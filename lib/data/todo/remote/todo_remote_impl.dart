@@ -41,7 +41,8 @@ class TodoRemoteImpl {
     );
 
     if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
+      String body = utf8.decode(response.bodyBytes);
+      final responseBody = jsonDecode(body);
       return Todo.fromJson(responseBody);
     } else {
       throw DefaultCreateTodoException();
@@ -60,26 +61,25 @@ class TodoRemoteImpl {
     );
 
     if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
+      String body = utf8.decode(response.bodyBytes);
+      final responseBody = jsonDecode(body);
       return Todo.fromJson(responseBody);
     } else {
       throw DefaultUpdateTodoException();
     }
   }
 
-  Future<Todo> deleteTodo(Todo todo, String token) async {
+  Future<void> deleteTodo(Todo todo, String token) async {
     final response = await http.delete(
       Uri.parse('$baseUrl/api/todos/${todo.id}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(todo.toJson()),
+      //body: jsonEncode(todo.toJson()),
     );
 
-    if (response.statusCode == 200) {
-      final responseBody = jsonDecode(response.body);
-      return Todo.fromJson(responseBody);
+    if (response.statusCode == 204) {
     } else {
       throw DefaultDeleteTodoException();
     }

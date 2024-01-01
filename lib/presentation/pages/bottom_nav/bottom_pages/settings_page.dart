@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/global/offset.dart';
 import 'package:nested_navigation/presentation/theme/color.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
-import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/todo_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';

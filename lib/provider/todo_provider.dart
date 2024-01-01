@@ -28,7 +28,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> getTodoList() async {
     _todoListState = ResourceState.loading();
     notifyListeners();
-    //await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
       List<Todo> todoList = await _getTodoListUseCase.getTodoList();

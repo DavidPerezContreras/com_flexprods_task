@@ -19,11 +19,13 @@ class TodoListPage extends StatefulWidget {
   State<TodoListPage> createState() => _TodoListPageState();
 }
 
-class _TodoListPageState extends State<TodoListPage> {
+class _TodoListPageState extends State<TodoListPage>
+    with AutomaticKeepAliveClientMixin {
   late ScrollController scrollController;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
   late final TodoProvider _todoProvider;
 
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -43,7 +45,11 @@ class _TodoListPageState extends State<TodoListPage> {
         _todoProvider.todoListState;
     switch (todoListResourceState.status) {
       case Status.SUCCESS:
+        _isLoading = false;
         _todoList = todoListResourceState.data!;
+        break;
+      case Status.LOADING:
+        _isLoading = true;
         break;
       default:
       //_todoList = [];
@@ -56,7 +62,7 @@ class _TodoListPageState extends State<TodoListPage> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       _todoProvider.getTodoList();
       // Your code here
     });
@@ -107,6 +113,17 @@ class _TodoListPageState extends State<TodoListPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        body: Center(
+            child: Container(
+          height: 100,
+          width: 100,
+          child: CircularProgressIndicator(),
+        )),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: RefreshIndicator(
@@ -151,4 +168,8 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

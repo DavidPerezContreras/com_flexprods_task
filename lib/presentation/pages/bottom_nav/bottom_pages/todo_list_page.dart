@@ -49,9 +49,8 @@ class _TodoListPageState extends State<TodoListPage> {
       default:
       //_todoList = [];
     }
-    if (mounted) {
-      setState(() {});
-    }
+
+    setState(() {});
   }
 
   @override
@@ -76,9 +75,7 @@ class _TodoListPageState extends State<TodoListPage> {
     Navigator.of(_topLevelNavigationProvider
             .topLevelNavigation.currentState!.context)
         .pop<CreateTodoRequest>(CreateTodoRequest(
-      title: title,
-      description: description,
-    ));
+            title: title, description: description, dueDate: dueDate));
   }
 
   void _updateOnSave(Todo todo,

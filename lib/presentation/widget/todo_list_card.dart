@@ -42,7 +42,6 @@ class _TodoListCardState extends State<TodoListCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
       child: Card(
         child: ListTile(
           onTap: () async {
@@ -63,15 +62,30 @@ class _TodoListCardState extends State<TodoListCard> {
             });
             setState(() {});
           },
-          title: Text(widget.todo.title, overflow: TextOverflow.ellipsis),
-          subtitle:
-              Text(widget.todo.description, overflow: TextOverflow.ellipsis),
+          title: Text(
+            widget.todo.title,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              // change this to suit your needs
+              fontWeight: FontWeight.bold, // makes the text bold
+              // change this to suit your needs
+            ),
+          ),
+          subtitle: Text(
+            widget.todo.description,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 8,
+          ),
           trailing: Transform.scale(
             scale: 1.5, // Adjust the scale to make the checkbox larger
-            child: Checkbox(
-              value: widget.todo.isComplete,
-              onChanged: (newValue) async =>
-                  widget.onIsCompleteChanged(widget.todo, newValue!),
+            child: Container(
+              color: Colors.red,
+              height: 130,
+              child: Checkbox(
+                value: widget.todo.isComplete,
+                onChanged: (newValue) async =>
+                    widget.onIsCompleteChanged(widget.todo, newValue!),
+              ),
             ),
           ),
         ),

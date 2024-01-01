@@ -36,7 +36,6 @@ class _TodoListPageState extends State<TodoListPage> {
     });
     _todoList = _todoProvider.todoListState.data ?? [];
     _todoProvider.addListener(_handleTodoStateChange);
-    Future.microtask(() => _todoProvider.getTodoList());
   }
 
   void _handleTodoStateChange() {
@@ -51,6 +50,16 @@ class _TodoListPageState extends State<TodoListPage> {
     }
 
     setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _todoProvider.getTodoList();
+      // Your code here
+    });
   }
 
   @override

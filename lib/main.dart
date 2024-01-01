@@ -54,9 +54,6 @@ void main() async {
             ChangeNotifierProvider<TopLevelNavigationProvider>(
               create: (_) => TopLevelNavigationProvider(),
             ),
-            ChangeNotifierProvider<BottomNavigationProvider>(
-              create: (context) => BottomNavigationProvider(),
-            ),
             ChangeNotifierProvider<ThemeProvider>(
               create: (_) => ThemeProvider(isDarkMode: true),
             ),
@@ -78,12 +75,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
-  late final BottomNavigationProvider _bottomNavigationProvider;
 
   late final ThemeProvider _themeProvider;
   late final TodoProvider _todoProvider;
 
-  late final VoidCallback setStateCallback;
   @override
   initState() {
     super.initState();
@@ -91,18 +86,7 @@ class _MyAppState extends State<MyApp> {
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
-    _bottomNavigationProvider =
-        Provider.of<BottomNavigationProvider>(context, listen: false);
     _todoProvider = Provider.of<TodoProvider>(context, listen: false);
-    setStateCallback = () {
-      setState(() {});
-    };
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _bottomNavigationProvider.removeListener(setStateCallback);
   }
 
   @override
@@ -112,8 +96,6 @@ class _MyAppState extends State<MyApp> {
       _themeProvider.addListener(() {
         setState(() {});
       });
-
-      _bottomNavigationProvider.addListener(setStateCallback);
 
       _authProvider.addListener(
         () {
@@ -131,6 +113,9 @@ class _MyAppState extends State<MyApp> {
                   builder: (context) => const BottomNavigationPage(),
                 ),
               );
+              setState(
+                () {},
+              );
               break;
             case Status.LOADING:
               Navigator.of(_topLevelNavigationProvider
@@ -139,6 +124,9 @@ class _MyAppState extends State<MyApp> {
                 MaterialPageRoute(
                   builder: (context) => SplashPage(),
                 ),
+              );
+              setState(
+                () {},
               );
               break;
             case Status.ERROR:
@@ -149,17 +137,22 @@ class _MyAppState extends State<MyApp> {
                   builder: (context) => const LoginPage(),
                 ),
               );
+              setState(
+                () {},
+              );
               break;
             case Status.NONE:
               resetGlobalAppState();
               _todoProvider.init();
-              _bottomNavigationProvider.init();
               Navigator.of(_topLevelNavigationProvider
                       .topLevelNavigation.currentContext!)
                   .pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => const LoginPage(),
                 ),
+              );
+              setState(
+                () {},
               );
               break;
             default:

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/presentation/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/settings_page.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/todo_list_page.dart';
 import 'package:nested_navigation/provider/bottom_navigation_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,14 +14,15 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  late final BottomNavigationProvider _bottomNavigationProvider;
   late final ThemeProvider _themeProvider;
   late VoidCallback setThemeState;
+
+  PageController _pageController = PageController(initialPage: 0);
+  int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _bottomNavigationProvider =
-        Provider.of<BottomNavigationProvider>(context, listen: false);
     _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     setThemeState = () {
@@ -39,24 +43,28 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     return Scaffold(
       backgroundColor: _themeProvider.seedColor,
       body: SafeArea(
-        child: Consumer<BottomNavigationProvider>(
-          builder: (context, provider, child) {
-            return Navigator(
-              key: provider.nestedNavigation,
-              pages: [provider.activePage],
-              onPopPage: (route, result) {
-                print("onPopPage BOTTOMNAV");
-                return false;
-              },
-            );
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (newIndex) {
+            _selectedIndex = newIndex;
+            //setState(() {});
           },
+          children: [
+            TodoListPage((newOffset) {
+              onOffsetChanged(newOffset);
+            }),
+            SettingsPage()
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _bottomNavigationProvider.selectedIndex,
+        currentIndex: _selectedIndex,
         onTap: (newIndex) async {
-          _bottomNavigationProvider.updateIndex(newIndex);
-          setState(() {});
+          _selectedIndex = newIndex;
+          _pageController.animateToPage(newIndex,
+              duration: Duration(milliseconds: 300), curve: Curves.linear);
+
+          //setState(() {});
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

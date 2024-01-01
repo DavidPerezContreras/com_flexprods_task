@@ -19,7 +19,6 @@ class _SettingsPageState extends State<SettingsPage> {
   late final ThemeProvider _themeProvider;
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
-  late final BottomNavigationProvider _bottomNavigationProvider;
   late final TodoProvider _todoProvider;
   final double _tileTextSize = 20;
 
@@ -33,9 +32,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
-
-    _bottomNavigationProvider =
-        Provider.of<BottomNavigationProvider>(context, listen: false);
 
     _todoProvider = Provider.of<TodoProvider>(context, listen: false);
 
@@ -118,14 +114,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   onTap: () {
                     _authProvider.logout();
-
-                    /*Navigator.of(_topLevelNavigationProvider
-                            .topLevelNavigation.currentState!.context)
-                        .pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );*/
                   },
                 ),
               )

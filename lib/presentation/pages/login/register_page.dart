@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
@@ -21,8 +22,12 @@ class _RegisterPageState extends State<RegisterPage> {
   late final VoidCallback onAuthChange;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _isLoading = false;
+  bool _isPasswordTextObscure = true;
+  bool _isConfirmPasswordTextObscure = true;
 
   void _showErrorMessage(DescribableError error, BuildContext context) async {
     String errorMessage = error.description;
@@ -121,10 +126,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             TextFormField(
-                              maxLength: 256,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(256),
+                              ],
                               controller: _usernameController,
                               decoration: InputDecoration(
-                                labelText: "Enter your username",
+                                labelText: "Enter a username",
                                 labelStyle: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -166,10 +173,25 @@ class _RegisterPageState extends State<RegisterPage> {
                               color: Colors.transparent,
                             ),
                             TextFormField(
-                              maxLength: 256,
+                              obscureText: _isPasswordTextObscure,
+                              autocorrect: false,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(256),
+                              ],
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                labelText: "Enter your password",
+                                suffixIcon: IconButton(
+                                  icon: Icon(_isPasswordTextObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordTextObscure =
+                                          !_isPasswordTextObscure;
+                                    });
+                                  },
+                                ),
+                                labelText: "Enter a password",
                                 labelStyle: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -197,10 +219,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                           .primary),
                                 ),
                               ),
-                              obscureText: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter your password";
+                                  return "Please enter a password";
                                 }
                                 if (value.length < 8) {
                                   return "Passwords must be at least 8 characters long";
@@ -209,6 +230,70 @@ class _RegisterPageState extends State<RegisterPage> {
                               },
                               onSaved: (value) =>
                                   _passwordController.text = value ?? "",
+                            ),
+                            const Divider(
+                              height: 20,
+                              color: Colors.transparent,
+                            ),
+                            TextFormField(
+                              obscureText: _isConfirmPasswordTextObscure,
+                              autocorrect: false,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(256),
+                              ],
+                              controller: _confirmPasswordController,
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(_isConfirmPasswordTextObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isConfirmPasswordTextObscure =
+                                          !_isConfirmPasswordTextObscure;
+                                    });
+                                  },
+                                ),
+                                labelText: "Confirm your password",
+                                labelStyle: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "You must confirm your password";
+                                }
+                                if (_passwordController.text !=
+                                    _confirmPasswordController.text) {
+                                  return "Passwords don't match";
+                                }
+                                return null;
+                              },
+                              onSaved: (value) =>
+                                  _confirmPasswordController.text = value ?? "",
                             ),
                             const Divider(
                               height: 35,

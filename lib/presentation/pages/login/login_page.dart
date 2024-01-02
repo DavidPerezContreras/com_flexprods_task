@@ -27,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordTextObscure = true;
   late final VoidCallback onAuthChange;
   bool _isLoading = true;
 
@@ -152,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                               height: 2 / 30 * viewportConstraints.maxHeight,
                             ),
                             TextFormField(
+                              autocorrect: false,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(256),
                               ],
@@ -199,11 +201,24 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.transparent,
                             ),
                             TextFormField(
+                              obscureText: _isPasswordTextObscure,
+                              autocorrect: false,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(256),
                               ],
                               controller: _passwordController,
                               decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(_isPasswordTextObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordTextObscure =
+                                          !_isPasswordTextObscure;
+                                    });
+                                  },
+                                ),
                                 labelText: 'Enter your password',
                                 labelStyle: TextStyle(
                                     color: Theme.of(context)
@@ -232,7 +247,6 @@ class _LoginPageState extends State<LoginPage> {
                                           .primary),
                                 ),
                               ),
-                              obscureText: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';

@@ -87,7 +87,6 @@ class _TodoListCardState extends State<TodoListCard> {
             trailing: Transform.scale(
               scale: 1.5, // Adjust the scale to make the checkbox larger
               child: Container(
-                color: Colors.red,
                 height: 130,
                 child: Checkbox(
                   value: widget.todo.isComplete,

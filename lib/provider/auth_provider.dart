@@ -47,6 +47,24 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> fastLogin(String username, String password) async {
+    _loginState = ResourceState.loading();
+    notifyListeners();
+    //await Future.delayed(const Duration(seconds: 1));
+
+    try {
+      User user = await _loginUseCase
+          .login(LoginRequest(username: username, password: password));
+      _loginState = ResourceState.success(user);
+    } on UnauthorizedLoginException {
+      //_loginState = ResourceState.error(UnauthorizedLoginError());
+    } catch (exception) {
+      //_loginState = ResourceState.error(DefaultLoginError());
+    }
+
+    notifyListeners();
+  }
+
   Future<void> register(String username, String password) async {
     _registerState = ResourceState.loading();
     notifyListeners();

@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late final VoidCallback onAuthChange;
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   Future<void> _launchURL(Uri url) async {
     await canLaunchUrl(url)
@@ -50,11 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
-  }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
     onAuthChange = () {
       switch (_authProvider.loginState.status) {
         case Status.SUCCESS:
@@ -67,6 +63,13 @@ class _LoginPageState extends State<LoginPage> {
           );
           break;
         case Status.ERROR:
+          _isLoading = false;
+          setState(() {
+            _showErrorMessage(_authProvider.loginState.error!, context);
+          });
+          break;
+        case Status.ERROR:
+          _isLoading = false;
           setState(() {
             _showErrorMessage(_authProvider.loginState.error!, context);
           });
@@ -74,7 +77,17 @@ class _LoginPageState extends State<LoginPage> {
         default:
       }
     };
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     _authProvider.addListener(onAuthChange);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _authProvider.fastLogin("", "");
+    });
   }
 
   @override

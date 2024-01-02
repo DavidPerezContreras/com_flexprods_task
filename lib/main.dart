@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: _topLevelNavigationProvider.topLevelNavigation,
       theme: _themeProvider.getTheme(),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

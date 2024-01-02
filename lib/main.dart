@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
-import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/user.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
@@ -72,20 +71,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
 
   late final ThemeProvider _themeProvider;
-  late final TodoProvider _todoProvider;
 
   @override
   initState() {
     super.initState();
     _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
-    _todoProvider = Provider.of<TodoProvider>(context, listen: false);
   }
 
   @override
@@ -95,71 +90,6 @@ class _MyAppState extends State<MyApp> {
       _themeProvider.addListener(() {
         setState(() {});
       });
-
-      _authProvider.addListener(
-        () {
-          //_bottomNavigationProvider.init();
-          ResourceState<User> userState = _authProvider.userState;
-
-          switch (userState.status) {
-            case Status.SUCCESS:
-              //setState(() {
-              //});
-              Navigator.of(_topLevelNavigationProvider
-                      .topLevelNavigation.currentContext!)
-                  .pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const BottomNavigationPage(),
-                ),
-              );
-              setState(
-                () {},
-              );
-              break;
-            case Status.LOADING:
-              Navigator.of(_topLevelNavigationProvider
-                      .topLevelNavigation.currentContext!)
-                  .pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => SplashPage(),
-                ),
-              );
-              setState(
-                () {},
-              );
-              break;
-            case Status.ERROR:
-              Navigator.of(_topLevelNavigationProvider
-                      .topLevelNavigation.currentContext!)
-                  .pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-
-              setState(
-                () {},
-              );
-              break;
-            case Status.NONE:
-              resetGlobalAppState();
-              _todoProvider.init();
-              Navigator.of(_topLevelNavigationProvider
-                      .topLevelNavigation.currentContext!)
-                  .pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-              setState(
-                () {},
-              );
-              break;
-            default:
-          }
-        },
-      );
-      _authProvider.login("", "");
     });
   }
 
@@ -169,7 +99,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: _topLevelNavigationProvider.topLevelNavigation,
       theme: _themeProvider.getTheme(),
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      home: LoginPage(),
     );
   }
 }

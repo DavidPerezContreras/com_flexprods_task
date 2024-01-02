@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/config/config.dart';
+import 'package:nested_navigation/domain/model/describable_error.dart';
+import 'package:nested_navigation/domain/model/resource_state.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
+import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,8 +16,9 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   late final AuthProvider _authProvider;
+  late final TopLevelNavigationProvider _topLevelNavigationProvider;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  late final VoidCallback onAuthChange;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -26,11 +30,54 @@ class _RegisterPageState extends State<RegisterPage> {
         : throw 'Could not launch $url';
   }
 
+  void _showErrorMessage(DescribableError error, BuildContext context) async {
+    String errorMessage = error.description;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-
+    _topLevelNavigationProvider =
+        Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    onAuthChange = () {
+      switch (_authProvider.registerState.status) {
+        case Status.SUCCESS:
+          Navigator.of(_topLevelNavigationProvider
+                  .topLevelNavigation.currentContext!)
+              .pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const BottomNavigationPage(),
+            ),
+          );
+          break;
+        case Status.ERROR:
+          setState(() {
+            _showErrorMessage(_authProvider.registerState.error!, context);
+          });
+          break;
+        default:
+      }
+    };
+    _authProvider.addListener(onAuthChange);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _authProvider.removeListener(onAuthChange);
   }
 
   @override

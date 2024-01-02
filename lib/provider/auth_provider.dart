@@ -11,7 +11,8 @@ import 'package:nested_navigation/usecase/auth/logout_usecase.dart';
 import 'package:nested_navigation/usecase/auth/register_usecase.dart';
 
 class AuthProvider extends ChangeNotifier {
-  late ResourceState<User> _userState;
+  late ResourceState<User> _loginState;
+  late ResourceState<User> _registerState;
   final LoginUseCase _loginUseCase = LoginUseCase();
   final RegisterUseCase _registerUseCase = RegisterUseCase();
   final LogoutUseCase _logoutUseCase = LogoutUseCase();
@@ -21,49 +22,51 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void init() {
-    _userState = ResourceState.none();
+    _loginState = ResourceState.none();
+    _registerState = ResourceState.none();
   }
 
-  ResourceState<User> get userState => _userState;
+  ResourceState<User> get loginState => _loginState;
+  ResourceState<User> get registerState => _registerState;
 
   Future<void> login(String username, String password) async {
-    _userState = ResourceState.loading();
+    _loginState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
       User user = await _loginUseCase
           .login(LoginRequest(username: username, password: password));
-      _userState = ResourceState.success(user);
+      _loginState = ResourceState.success(user);
     } on UnauthorizedLoginException {
-      _userState = ResourceState.error(UnauthorizedLoginError());
+      _loginState = ResourceState.error(UnauthorizedLoginError());
     } catch (exception) {
-      _userState = ResourceState.error(DefaultLoginError());
+      _loginState = ResourceState.error(DefaultLoginError());
     }
 
     notifyListeners();
   }
 
   Future<void> register(String username, String password) async {
-    _userState = ResourceState.loading();
+    _registerState = ResourceState.loading();
     notifyListeners();
     //await Future.delayed(const Duration(seconds: 1));
 
     try {
       User user = await _registerUseCase
           .register(RegisterRequest(username: username, password: password));
-      _userState = ResourceState.success(user);
+      _registerState = ResourceState.success(user);
     } on UnauthorizedRegisterException {
-      _userState = ResourceState.error(UnauthorizedRegisterError());
+      _registerState = ResourceState.error(UnauthorizedRegisterError());
     } catch (exception) {
-      _userState = ResourceState.error(DefaultRegisterError());
+      _registerState = ResourceState.error(DefaultRegisterError());
     }
 
     notifyListeners();
   }
 
   void logout() {
-    _userState = ResourceState.none();
+    init();
     _logoutUseCase.logout();
     notifyListeners();
   }

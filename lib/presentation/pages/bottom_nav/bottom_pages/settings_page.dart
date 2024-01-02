@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nested_navigation/presentation/global/offset.dart';
+import 'package:nested_navigation/presentation/pages/login/login_page.dart';
 import 'package:nested_navigation/presentation/theme/color.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
@@ -112,6 +114,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   onTap: () {
                     _authProvider.logout();
+                    resetGlobalAppState();
+                    _todoProvider.init();
+                    Navigator.of(_topLevelNavigationProvider
+                            .topLevelNavigation.currentContext!)
+                        .pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
                   },
                 ),
               )

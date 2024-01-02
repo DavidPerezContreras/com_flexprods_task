@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:nested_navigation/config/config.dart';
 import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
+import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/presentation/pages/login/register_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
@@ -49,19 +50,30 @@ class _LoginPageState extends State<LoginPage> {
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    onAuthChange = () {
-      switch (_authProvider.userState.status) {
-        case Status.ERROR:
-          _showErrorMessage(_authProvider.userState.error!, context);
-          break;
-        default:
-      }
-    };
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    onAuthChange = () {
+      switch (_authProvider.loginState.status) {
+        case Status.SUCCESS:
+          Navigator.of(_topLevelNavigationProvider
+                  .topLevelNavigation.currentContext!)
+              .pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const BottomNavigationPage(),
+            ),
+          );
+          break;
+        case Status.ERROR:
+          setState(() {
+            _showErrorMessage(_authProvider.loginState.error!, context);
+          });
+          break;
+        default:
+      }
+    };
     _authProvider.addListener(onAuthChange);
   }
 
@@ -228,7 +240,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               Navigator.of(_topLevelNavigationProvider
                                       .topLevelNavigation.currentContext!)
-                                  .push(
+                                  .pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => const RegisterPage(),
                                 ),

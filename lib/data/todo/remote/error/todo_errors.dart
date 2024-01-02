@@ -15,11 +15,11 @@ class DefaultCreateTodoError extends DescribableError {
 class DefaultUpdateTodoError extends DescribableError {
   DefaultUpdateTodoError()
       : super(
-            "There was a problem creating your task. Check your connection and try again.");
+            "There was a problem editing your task. Check your connection and try again.");
 }
 
 class DefaultDeleteTodoError extends DescribableError {
   DefaultDeleteTodoError()
       : super(
-            "There was a problem creating your task. Check your connection and try again.");
+            "There was a problem deleting your task. Check your connection and try again.");
 }

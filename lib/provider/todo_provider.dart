@@ -31,8 +31,7 @@ class TodoProvider extends ChangeNotifier {
     Future.delayed(const Duration(seconds: 1));
 
     try {
-      List<Todo> todoList = await _getTodoListUseCase.getTodoList();
-      _todoListState = ResourceState.success(todoList);
+      await fetchTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultGetTodoListError());
     }
@@ -47,12 +46,13 @@ class TodoProvider extends ChangeNotifier {
 
     try {
       await _createTodoUseCase.createTodo(createTodoRequest);
-      await getTodoList();
+      await fetchTodoList();
     } catch (exception) {
-      _todoListState = ResourceState.error(DefaultGetTodoListError());
+      _todoListState = ResourceState.error(DefaultCreateTodoError());
+      notifyListeners();
     }
 
-    //notifyListeners();
+    notifyListeners();
   }
 
   Future<void> updateTodo(UpdateTodoRequest updateTodoRequest) async {
@@ -62,12 +62,12 @@ class TodoProvider extends ChangeNotifier {
 
     try {
       await _updateTodoUseCase.updateTodo(updateTodoRequest);
-      await getTodoList();
+      await fetchTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultUpdateTodoError());
     }
 
-    //notifyListeners();
+    notifyListeners();
   }
 
   Future<void> deleteTodo(Todo todo) async {
@@ -77,11 +77,16 @@ class TodoProvider extends ChangeNotifier {
 
     try {
       await _deleteTodoUseCase.deleteTodo(todo);
-      await getTodoList();
+      await fetchTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultDeleteTodoError());
     }
 
-    //notifyListeners();
+    notifyListeners();
+  }
+
+  Future<void> fetchTodoList() async {
+    List<Todo> todoList = await _getTodoListUseCase.getTodoList();
+    _todoListState = ResourceState.success(todoList);
   }
 }

@@ -10,7 +10,7 @@ class GetCurrentUserDetailsUseCase {
   Future<User> getCurrentUserDetails() async {
     String? token = await _storageService.getToken();
     if (token != null) {
-      return _userRepository.getCurrentUserDetails(token);
+      return await _userRepository.getCurrentUserDetails(token);
     } else {
       throw Exception('No token found');
     }

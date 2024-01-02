@@ -84,6 +84,7 @@ class TodoRemoteImpl {
     ).timeout(Duration(seconds: 6));
 
     if (response.statusCode == 204) {
+      return Future.value(null);
     } else {
       throw DefaultDeleteTodoException();
     }

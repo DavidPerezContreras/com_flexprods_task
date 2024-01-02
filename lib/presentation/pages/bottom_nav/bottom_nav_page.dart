@@ -70,7 +70,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.task),
             label: "Tasks",
           ),
           BottomNavigationBarItem(

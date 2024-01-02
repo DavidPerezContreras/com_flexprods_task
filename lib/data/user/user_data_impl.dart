@@ -9,6 +9,6 @@ class UserDataImpl implements UserRepository {
 
   @override
   Future<User> getCurrentUserDetails(String token) async {
-    return _userRemoteImpl.getCurrentUserDetails(token);
+    return await _userRemoteImpl.getCurrentUserDetails(token);
   }
 }

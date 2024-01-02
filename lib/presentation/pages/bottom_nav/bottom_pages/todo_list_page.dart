@@ -138,7 +138,7 @@ class _TodoListPageState extends State<TodoListPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(title: const Text('Tasks')),
       body: RefreshIndicator(
         onRefresh: _todoProvider.getTodoList,
         child: ListView.builder(

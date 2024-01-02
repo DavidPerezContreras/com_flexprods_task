@@ -12,23 +12,23 @@ class TodoDataImpl implements TodoRepository {
 
   @override
   Future<List<Todo>> getTodoList(String token) async {
-    return _todoRemoteImpl.getTodoList(token);
+    return await _todoRemoteImpl.getTodoList(token);
   }
 
   @override
   Future<Todo> createTodo(
       CreateTodoRequest createTodoRequest, String token) async {
-    return _todoRemoteImpl.createTodo(createTodoRequest, token);
+    return await _todoRemoteImpl.createTodo(createTodoRequest, token);
   }
 
   @override
   Future<Todo> updateTodo(
       UpdateTodoRequest updateTodoRequest, String token) async {
-    return _todoRemoteImpl.updateTodo(updateTodoRequest, token);
+    return await _todoRemoteImpl.updateTodo(updateTodoRequest, token);
   }
 
   @override
   Future<void> deleteTodo(Todo todo, String token) async {
-    _todoRemoteImpl.deleteTodo(todo, token);
+    await _todoRemoteImpl.deleteTodo(todo, token);
   }
 }

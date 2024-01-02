@@ -9,11 +9,11 @@ class AuthDataImpl implements AuthRepository {
 
   @override
   Future<LoginResponse> login(LoginRequest loginRequest) async {
-    return _authRemoteImpl.login(loginRequest);
+    return await _authRemoteImpl.login(loginRequest);
   }
 
   @override
   Future<RegisterResponse> register(RegisterRequest registerRequest) async {
-    return _authRemoteImpl.register(registerRequest);
+    return await _authRemoteImpl.register(registerRequest);
   }
 }

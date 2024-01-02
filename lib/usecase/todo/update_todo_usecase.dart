@@ -11,7 +11,7 @@ class UpdateTodoUseCase {
   Future<Todo> updateTodo(UpdateTodoRequest updateTodoRequest) async {
     String? token = await _storageService.getToken();
     if (token != null) {
-      return _todoRepository.updateTodo(updateTodoRequest,token);
+      return await _todoRepository.updateTodo(updateTodoRequest, token);
     } else {
       throw Exception('No token found');
     }

@@ -44,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text("Settings"),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(0, 40, 0, 100),
@@ -95,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           _themeProvider.setTheme(color: color);
                           _selectedColor = color;
                         },
-                        child: SizedBox.shrink(),
+                        child: const SizedBox.shrink(),
                       );
                     }).toList(),
                   )),

@@ -6,7 +6,6 @@ import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dar
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -25,12 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _isLoading = false;
 
-  Future<void> _launchURL(Uri url) async {
-    await canLaunchUrl(url)
-        ? await launchUrl(url, mode: LaunchMode.externalApplication)
-        : throw 'Could not launch $url';
-  }
-
   void _showErrorMessage(DescribableError error, BuildContext context) async {
     String errorMessage = error.description;
 
@@ -48,7 +41,11 @@ class _RegisterPageState extends State<RegisterPage> {
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     onAuthChange = () {
       switch (_authProvider.registerState.status) {
         case Status.SUCCESS:
@@ -96,11 +93,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Widget body;
     if (_isLoading) {
-      body = SplashPage();
+      body = const SplashPage();
     } else {
       body = Scaffold(
         appBar: AppBar(
-          title: Text("Register"),
+          title: const Text("Register"),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         body: SafeArea(

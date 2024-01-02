@@ -16,7 +16,7 @@ class AuthRemoteImpl {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(loginRequest.toJson()),
         )
-        .timeout(Duration(seconds: 6));
+        .timeout(const Duration(seconds: 6));
 
     switch (response.statusCode) {
       case 200:
@@ -35,7 +35,7 @@ class AuthRemoteImpl {
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(registerRequest.toJson()),
         )
-        .timeout(Duration(seconds: 6));
+        .timeout(const Duration(seconds: 6));
 
     switch (response.statusCode) {
       case 200:

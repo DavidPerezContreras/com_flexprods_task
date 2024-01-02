@@ -13,7 +13,7 @@ class UserRemoteImpl {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    ).timeout(Duration(seconds: 6));
+    ).timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);

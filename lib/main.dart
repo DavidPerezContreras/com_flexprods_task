@@ -2,12 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/di/service_locator.dart';
-import 'package:nested_navigation/domain/model/resource_state.dart';
-import 'package:nested_navigation/domain/model/user.dart';
-import 'package:nested_navigation/presentation/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/presentation/pages/login/login_page.dart';
-import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
 import 'package:nested_navigation/provider/todo_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
@@ -86,11 +81,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _themeProvider.addListener(() {
-        setState(() {});
-      });
+    //WidgetsBinding.instance.addPostFrameCallback((_) {
+    _themeProvider.addListener(() {
+      setState(() {});
     });
+    //});
   }
 
   @override

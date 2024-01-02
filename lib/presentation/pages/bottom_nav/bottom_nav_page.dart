@@ -16,7 +16,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   late final ThemeProvider _themeProvider;
   late VoidCallback setThemeState;
 
-  PageController _pageController = PageController(initialPage: 0);
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -26,25 +25,31 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   }
 
   Widget _generateBody(int index) {
+    Widget body;
     switch (index) {
       case 0:
-        return TodoListPage((newOffset) {
+        body = TodoListPage((newOffset) {
           onOffsetChanged(newOffset);
         });
         break;
       case 1:
-        return const SettingsPage();
+        body = const SettingsPage();
         break;
       default:
-        return const Scaffold();
+        body = const Scaffold();
     }
+    return body;
   }
 
   @override
   void initState() {
     super.initState();
     _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     setThemeState = () {
       setState(() {});
     };

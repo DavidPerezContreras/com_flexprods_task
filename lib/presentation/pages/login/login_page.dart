@@ -7,6 +7,7 @@ import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.
 import 'package:nested_navigation/presentation/pages/login/register_page.dart';
 import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
+import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late final AuthProvider _authProvider;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
+  late final ThemeProvider _themeProvider;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -51,6 +53,12 @@ class _LoginPageState extends State<LoginPage> {
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     onAuthChange = () {
       switch (_authProvider.loginState.status) {
@@ -86,16 +94,11 @@ class _LoginPageState extends State<LoginPage> {
         default:
       }
     };
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
 
     _authProvider.addListener(onAuthChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       _authProvider.fastLogin("", "");
     });
   }
@@ -110,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Widget body;
     if (_isLoading) {
-      body = SplashPage();
+      body = const SplashPage();
     } else {
       body = Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
@@ -302,10 +305,13 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   const SizedBox(width: 10),
                                   IconButton(
-                                    icon: const Image(
+                                    icon: Image(
                                         height: 50,
-                                        image: AssetImage(
-                                            'assets/images/github_logo.png')),
+                                        image: _themeProvider.isDarkMode
+                                            ? const AssetImage(
+                                                'assets/images/github_logo_light.png')
+                                            : const AssetImage(
+                                                'assets/images/github_logo.png')),
                                     onPressed: () => _launchURL(githubUrl),
                                   ),
                                 ],

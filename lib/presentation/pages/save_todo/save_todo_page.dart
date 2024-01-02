@@ -121,8 +121,8 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                             return null;
                           },
                         ),
-                        Divider(color: Colors.transparent, height: 20),
-                        Container(
+                        const Divider(color: Colors.transparent, height: 20),
+                        SizedBox(
                           height: 100,
                           child: TextFormField(
                             maxLength: 256,
@@ -162,14 +162,14 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                             },
                           ),
                         ),
-                        Divider(color: Colors.transparent, height: 20),
+                        const Divider(color: Colors.transparent, height: 20),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                           child: Column(
                             children: [
                               ElevatedButton(
                                 onPressed: () => _selectDate(context),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text('Select due date'),

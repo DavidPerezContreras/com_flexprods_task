@@ -17,7 +17,7 @@ class TodoRemoteImpl {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    ).timeout(Duration(seconds: 6));
+    ).timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       // Decode the response body with UTF-8 encoding
@@ -40,7 +40,7 @@ class TodoRemoteImpl {
           },
           body: jsonEncode(createTodoRequest.toJson()),
         )
-        .timeout(Duration(seconds: 6));
+        .timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
@@ -62,7 +62,7 @@ class TodoRemoteImpl {
           },
           body: jsonEncode(updateTodoRequest.toJson()),
         )
-        .timeout(Duration(seconds: 6));
+        .timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
@@ -81,7 +81,7 @@ class TodoRemoteImpl {
         'Authorization': 'Bearer $token',
       },
       //body: jsonEncode(todo.toJson()),
-    ).timeout(Duration(seconds: 6));
+    ).timeout(const Duration(seconds: 6));
 
     if (response.statusCode == 204) {
       return Future.value(null);

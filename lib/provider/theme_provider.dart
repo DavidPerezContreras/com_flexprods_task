@@ -20,7 +20,7 @@ class ThemeProvider with ChangeNotifier {
       await secureStorageService.setCurrentTheme(isDarkMode ? 'dark' : 'light');
     }
     if (color != null) {
-      this.seedColor = color;
+      seedColor = color;
       await secureStorageService
           .setCurrentSeedColor(color.value.toRadixString(16));
     }

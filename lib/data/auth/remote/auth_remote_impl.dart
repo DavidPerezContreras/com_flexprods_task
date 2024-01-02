@@ -10,12 +10,13 @@ class AuthRemoteImpl {
   AuthRemoteImpl();
 
   Future<LoginResponse> login(LoginRequest loginRequest) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/login'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(
-          loginRequest.toJson()),
-    );
+    final response = await http
+        .post(
+          Uri.parse('$baseUrl/auth/login'),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(loginRequest.toJson()),
+        )
+        .timeout(Duration(seconds: 6));
 
     switch (response.statusCode) {
       case 200:
@@ -28,12 +29,13 @@ class AuthRemoteImpl {
   }
 
   Future<RegisterResponse> register(RegisterRequest registerRequest) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(
-          registerRequest.toJson()),
-    );
+    final response = await http
+        .post(
+          Uri.parse('$baseUrl/auth/register'),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(registerRequest.toJson()),
+        )
+        .timeout(Duration(seconds: 6));
 
     switch (response.statusCode) {
       case 200:

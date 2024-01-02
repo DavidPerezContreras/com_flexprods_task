@@ -136,6 +136,7 @@ class _MyAppState extends State<MyApp> {
                   builder: (context) => const LoginPage(),
                 ),
               );
+
               setState(
                 () {},
               );
@@ -160,17 +161,6 @@ class _MyAppState extends State<MyApp> {
       );
       _authProvider.login("", "");
     });
-  }
-
-  void _showErrorMessage(DescribableError error, BuildContext context) async {
-    String errorMessage = error.description;
-
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Text(errorMessage),
-      ),
-    );
   }
 
   @override

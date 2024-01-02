@@ -17,7 +17,7 @@ class TodoRemoteImpl {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    );
+    ).timeout(Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       // Decode the response body with UTF-8 encoding
@@ -31,14 +31,16 @@ class TodoRemoteImpl {
 
   Future<Todo> createTodo(
       CreateTodoRequest createTodoRequest, String token) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/api/todos'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(createTodoRequest.toJson()),
-    );
+    final response = await http
+        .post(
+          Uri.parse('$baseUrl/api/todos'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode(createTodoRequest.toJson()),
+        )
+        .timeout(Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
@@ -51,14 +53,16 @@ class TodoRemoteImpl {
 
   Future<Todo> updateTodo(
       UpdateTodoRequest updateTodoRequest, String token) async {
-    final response = await http.put(
-      Uri.parse('$baseUrl/api/todos/${updateTodoRequest.id}'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(updateTodoRequest.toJson()),
-    );
+    final response = await http
+        .put(
+          Uri.parse('$baseUrl/api/todos/${updateTodoRequest.id}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode(updateTodoRequest.toJson()),
+        )
+        .timeout(Duration(seconds: 6));
 
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
@@ -77,7 +81,7 @@ class TodoRemoteImpl {
         'Authorization': 'Bearer $token',
       },
       //body: jsonEncode(todo.toJson()),
-    );
+    ).timeout(Duration(seconds: 6));
 
     if (response.statusCode == 204) {
     } else {

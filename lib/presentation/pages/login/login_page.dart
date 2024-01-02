@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nested_navigation/config/config.dart';
+import 'package:nested_navigation/domain/model/describable_error.dart';
+import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/presentation/pages/login/register_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
@@ -21,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  late final VoidCallback onAuthChange;
   bool _isLoading = false;
 
   Future<void> _launchURL(Uri url) async {
@@ -30,12 +32,43 @@ class _LoginPageState extends State<LoginPage> {
         : throw 'Could not launch $url';
   }
 
+  void _showErrorMessage(DescribableError error, BuildContext context) async {
+    String errorMessage = error.description;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _topLevelNavigationProvider =
         Provider.of<TopLevelNavigationProvider>(context, listen: false);
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    onAuthChange = () {
+      switch (_authProvider.userState.status) {
+        case Status.ERROR:
+          _showErrorMessage(_authProvider.userState.error!, context);
+          break;
+        default:
+      }
+    };
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _authProvider.addListener(onAuthChange);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _authProvider.removeListener(onAuthChange);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
 import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
+import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/domain/model/todo.dart';
 import 'package:nested_navigation/presentation/global/offset.dart';
@@ -19,13 +20,24 @@ class TodoListPage extends StatefulWidget {
   State<TodoListPage> createState() => _TodoListPageState();
 }
 
-class _TodoListPageState extends State<TodoListPage>
-    with AutomaticKeepAliveClientMixin {
+class _TodoListPageState extends State<TodoListPage> {
   late ScrollController scrollController;
   late final TopLevelNavigationProvider _topLevelNavigationProvider;
   late final TodoProvider _todoProvider;
 
   bool _isLoading = true;
+
+  void _showErrorMessage(DescribableError error, BuildContext context) async {
+    String errorMessage = error.description;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +49,6 @@ class _TodoListPageState extends State<TodoListPage>
       widget.onOffsetChanged(scrollController.offset);
     });
     _todoList = _todoProvider.todoListState.data ?? [];
-    _todoProvider.addListener(_handleTodoStateChange);
   }
 
   void _handleTodoStateChange() {
@@ -51,6 +62,10 @@ class _TodoListPageState extends State<TodoListPage>
       case Status.LOADING:
         _isLoading = true;
         break;
+      case Status.ERROR:
+        _isLoading = false;
+        _showErrorMessage(_todoProvider.todoListState.error!, context);
+        break;
       default:
       //_todoList = [];
     }
@@ -60,11 +75,12 @@ class _TodoListPageState extends State<TodoListPage>
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+
+    _todoProvider.addListener(_handleTodoStateChange);
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _todoProvider.getTodoList();
-      // Your code here
     });
   }
 
@@ -165,8 +181,4 @@ class _TodoListPageState extends State<TodoListPage>
       ),
     );
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

@@ -127,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               maxLength: 256,
                               controller: _usernameController,
                               decoration: InputDecoration(
-                                labelText: 'Enter your username',
+                                labelText: "Enter your username",
                                 labelStyle: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -157,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your username';
+                                  return "You must enter a username";
                                 }
                                 return null;
                               },
@@ -172,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               maxLength: 256,
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                labelText: 'Enter your password',
+                                labelText: "Enter your password",
                                 labelStyle: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -203,7 +203,10 @@ class _RegisterPageState extends State<RegisterPage> {
                               obscureText: true,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
+                                  return "Please enter your password";
+                                }
+                                if (value.length < 8) {
+                                  return "Passwords must be at least 8 characters long";
                                 }
                                 return null;
                               },

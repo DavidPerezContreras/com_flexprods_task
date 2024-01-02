@@ -91,7 +91,7 @@ class _TodoListPageState extends State<TodoListPage> {
     _todoProvider.addListener(_handleTodoStateChange);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _todoProvider.getTodoList();
+      _todoProvider.getTodoList(loadAnimation: true);
     });
   }
 
@@ -151,7 +151,9 @@ class _TodoListPageState extends State<TodoListPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Tasks')),
       body: RefreshIndicator(
-        onRefresh: _todoProvider.getTodoList,
+        onRefresh: () async {
+          _todoProvider.getTodoList(loadAnimation: false);
+        },
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,

@@ -25,8 +25,11 @@ class TodoProvider extends ChangeNotifier {
     _todoListState = ResourceState.none();
   }
 
-  Future<void> getTodoList() async {
-    _todoListState = ResourceState.loading();
+  Future<void> getTodoList({required bool loadAnimation}) async {
+    if (loadAnimation) {
+      _todoListState = ResourceState.loading();
+    }
+
     notifyListeners();
     Future.delayed(const Duration(seconds: 1));
 
@@ -49,7 +52,7 @@ class TodoProvider extends ChangeNotifier {
       await fetchTodoList();
     } catch (exception) {
       _todoListState = ResourceState.error(DefaultCreateTodoError());
-      notifyListeners();
+      //notifyListeners();
     }
 
     notifyListeners();

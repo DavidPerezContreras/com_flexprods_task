@@ -41,6 +41,10 @@ class _TodoListCardState extends State<TodoListCard> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime? dueDate = widget.todo.dueDate;
+    final String? dueDateText = dueDate != null
+        ? " ${dueDate.day} / ${dueDate.month} / ${dueDate.year}"
+        : null;
     return Dismissible(
       key: Key(widget.todo.id.toString()),
       onDismissed: (direction) {
@@ -78,10 +82,29 @@ class _TodoListCardState extends State<TodoListCard> {
               // change this to suit your needs
             ),
           ),
-          subtitle: Text(
-            widget.todo.description,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 8,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.todo.description,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 8,
+              ),
+              dueDate != null
+                  ? Row(
+                      children: [
+                        Icon(Icons.calendar_month),
+                        Text(
+                          dueDateText!,
+                          style: TextStyle(
+                              color: DateTime.now().isAfter(dueDate)
+                                  ? Theme.of(context).colorScheme.error
+                                  : Theme.of(context).colorScheme.onSurface),
+                        )
+                      ],
+                    )
+                  : SizedBox.shrink()
+            ],
           ),
           trailing: Transform.scale(
             scale: 1.5, // Adjust the scale to make the checkbox larger

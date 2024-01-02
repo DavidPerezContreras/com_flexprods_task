@@ -123,7 +123,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                         ),
                         const Divider(color: Colors.transparent, height: 20),
                         SizedBox(
-                          height: 100,
+                          height: 225,
                           child: TextFormField(
                             maxLength: 256,
                             controller: _descriptionController,

@@ -56,12 +56,13 @@ class AuthProvider extends ChangeNotifier {
       User user = await _loginUseCase
           .login(LoginRequest(username: username, password: password));
       _loginState = ResourceState.success(user);
+      return;
     } on UnauthorizedLoginException {
       //_loginState = ResourceState.error(UnauthorizedLoginError());
     } catch (exception) {
       //_loginState = ResourceState.error(DefaultLoginError());
     }
-
+    _loginState = ResourceState.none();
     notifyListeners();
   }
 

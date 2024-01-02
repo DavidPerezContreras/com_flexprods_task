@@ -5,6 +5,7 @@ import 'package:nested_navigation/domain/model/describable_error.dart';
 import 'package:nested_navigation/domain/model/resource_state.dart';
 import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
 import 'package:nested_navigation/presentation/pages/login/register_page.dart';
+import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
@@ -63,16 +64,24 @@ class _LoginPageState extends State<LoginPage> {
           );
           break;
         case Status.ERROR:
-          _isLoading = false;
           setState(() {
+            _isLoading = false;
             _showErrorMessage(_authProvider.loginState.error!, context);
           });
           break;
-        case Status.ERROR:
-          _isLoading = false;
-          setState(() {
-            _showErrorMessage(_authProvider.loginState.error!, context);
-          });
+        case Status.LOADING:
+          setState(
+            () {
+              _isLoading = true;
+            },
+          );
+          break;
+        case Status.NONE:
+          setState(
+            () {
+              _isLoading = false;
+            },
+          );
           break;
         default:
       }
@@ -98,6 +107,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return SplashPage();
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(

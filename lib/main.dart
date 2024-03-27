@@ -8,7 +8,7 @@ import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
-
+/*
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -16,7 +16,7 @@ class MyHttpOverrides extends HttpOverrides {
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
   }
-} /*TODO SECURITY RIST!!! YOU MUST VALIDATE THE CERTIFICATE BINARY MANUALLY!!
+}*/ /*TODO SECURITY RIST!!! YOU MUST VALIDATE THE CERTIFICATE BINARY MANUALLY!!
 CURRENTLY IT ALLOWS ALL CERTIFICATES, ALLOWING MAN-IN-THE-MIDDLE ATTACKS  !!!!!!L*/
 
 //Es problema del backend, que me den un certificado firmado por una CA authority y ya.
@@ -26,7 +26,7 @@ CURRENTLY IT ALLOWS ALL CERTIFICATES, ALLOWING MAN-IN-THE-MIDDLE ATTACKS  !!!!!!
 */
 
 void main() async {
-  HttpOverrides.global = MyHttpOverrides();
+  //HttpOverrides.global = MyHttpOverrides();
   setupLocator();
 
   WidgetsFlutterBinding.ensureInitialized();

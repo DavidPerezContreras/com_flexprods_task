@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' show FlutterSecureStorage;
 import 'package:nested_navigation/domain/model/user.dart';
 
 class SecureStorageService {
@@ -21,12 +20,8 @@ class SecureStorageService {
 
   Future<User?> getCurrentUser() async {
     String? userJson = await _storage.read(key: 'currentUser');
-    if (userJson != null) {
-      return User.fromJson(jsonDecode(userJson));
-    } else {
-      return null;
+    return User.fromJson(jsonDecode(userJson??""));
     }
-  }
 
   Future<void> setCurrentUser(User user) async {
     String userJson = jsonEncode(user.toJson());
@@ -39,13 +34,8 @@ class SecureStorageService {
 
   Future<String> getCurrentTheme() async {
     String? theme = await _storage.read(key: 'currentTheme');
-    if (theme != null) {
-      return theme;
-    } else {
-      await _storage.write(key: 'currentTheme', value: 'dark');
-      return 'dark';
+    return theme??"";//revisa estos null checks
     }
-  }
 
   Future<void> setCurrentTheme(String theme) async {
     await _storage.write(key: 'currentTheme', value: theme);
@@ -57,14 +47,8 @@ class SecureStorageService {
 
   Future<String> getCurrentSeedColor() async {
     String? color = await _storage.read(key: 'currentSeedColor');
-    if (color != null) {
-      return color;
-    } else {
-      await _storage.write(
-          key: 'currentSeedColor', value: Colors.blue.value.toRadixString(16));
-      return Colors.blue.value.toRadixString(16);
+    return color??"";
     }
-  }
 
   Future<void> setCurrentSeedColor(String color) async {
     await _storage.write(key: 'currentSeedColor', value: color);

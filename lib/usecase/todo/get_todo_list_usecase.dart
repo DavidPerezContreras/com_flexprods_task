@@ -9,10 +9,6 @@ class GetTodoListUseCase {
 
   Future<List<Todo>> getTodoList() async {
     String? token = await _storageService.getToken();
-    if (token != null) {
-      return await _todoRepository.getTodoList(token);
-    } else {
-      throw Exception('No token found');
+    return await _todoRepository.getTodoList(token??"");
     }
-  }
 }

@@ -10,10 +10,6 @@ class CreateTodoUseCase {
 
   Future<Todo> createTodo(CreateTodoRequest createTodoRequest) async {
     String? token = await _storageService.getToken();
-    if (token != null) {
-      return await _todoRepository.createTodo(createTodoRequest, token);
-    } else {
-      throw Exception('No token found');
+    return await _todoRepository.createTodo(createTodoRequest, token??"");
     }
-  }
 }

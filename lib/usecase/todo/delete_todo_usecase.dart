@@ -9,10 +9,6 @@ class DeleteTodoUseCase {
 
   Future<void> deleteTodo(Todo todo) async {
     String? token = await _storageService.getToken();
-    if (token != null) {
-      await _todoRepository.deleteTodo(todo, token);
-    } else {
-      throw Exception('No token found');
+    await _todoRepository.deleteTodo(todo, token??"");
     }
-  }
 }

@@ -93,7 +93,7 @@ class _TodoListCardState extends State<TodoListCard> {
               dueDate != null
                   ? Row(
                       children: [
-                        Icon(Icons.calendar_month),
+                        const Icon(Icons.calendar_month),
                         Text(
                           dueDateText!,
                           style: TextStyle(
@@ -103,7 +103,7 @@ class _TodoListCardState extends State<TodoListCard> {
                         )
                       ],
                     )
-                  : SizedBox.shrink()
+                  : const SizedBox.shrink()
             ],
           ),
           trailing: Transform.scale(

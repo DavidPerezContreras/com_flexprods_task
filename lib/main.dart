@@ -6,6 +6,7 @@ import 'package:nested_navigation/provider/todo_provider.dart';
 import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
 import 'package:nested_navigation/provider/auth_provider.dart';
 import 'package:nested_navigation/provider/theme_provider.dart';
+import 'package:nested_navigation/service/secure_storage_service.dart';
 import 'package:provider/provider.dart';
 /*
 class MyHttpOverrides extends HttpOverrides {
@@ -24,9 +25,40 @@ CURRENTLY IT ALLOWS ALL CERTIFICATES, ALLOWING MAN-IN-THE-MIDDLE ATTACKS  !!!!!!
 /*La otra opción aunque tampoco esa perfecta, sería comprobar el certificado manualmente.
 */
 
-void main() async {
+class ThemeSettings{
+  ThemeSettings({this.isDarkMode=true, required this.seedColor});
+  bool isDarkMode;
+  Color seedColor;
+}
+
+  Future<ThemeSettings> loadThemeFromStorage(SecureStorageService secureStorageService) async {
+    String theme = await secureStorageService.getCurrentTheme();
+    String colorHex = await secureStorageService.getCurrentSeedColor();
+
+    ThemeSettings settings=ThemeSettings(isDarkMode: theme=="dark",seedColor: Color(int.parse(colorHex, radix: 16)));
+
+
+    return settings;
+  }
+
+Future<void> main() async {
   //HttpOverrides.global = MyHttpOverrides();
   setupLocator();
+  SecureStorageService secureStorageService = locator<SecureStorageService>();
+
+  ThemeSettings? themeSettings;
+
+try {
+  // Parsing operation causing the exception
+  themeSettings=await loadThemeFromStorage(secureStorageService);
+} on FormatException catch (e) {
+  // Handle the format exception
+  print('Error loading theme: ${e.message}. Using default theme.');
+  // Load default theme or handle the error in some appropriate way
+  themeSettings=ThemeSettings(seedColor: Colors.black,isDarkMode: true);
+}
+
+
 
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -47,7 +79,7 @@ void main() async {
               create: (_) => TopLevelNavigationProvider(),
             ),
             ChangeNotifierProvider<ThemeProvider>(
-              create: (_) => ThemeProvider(isDarkMode: true),
+              create: (_) => ThemeProvider(isDarkMode: themeSettings!.isDarkMode,seedColor: themeSettings.seedColor),
             ),
           ],
           child: const MyApp(),

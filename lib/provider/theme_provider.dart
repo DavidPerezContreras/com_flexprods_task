@@ -8,9 +8,7 @@ class ThemeProvider with ChangeNotifier {
   Color seedColor;
   SecureStorageService secureStorageService = locator<SecureStorageService>();
 
-  ThemeProvider({required this.isDarkMode, this.seedColor = Colors.blue}) {
-    loadThemeFromStorage();
-  }
+  ThemeProvider({this.isDarkMode=true, this.seedColor = Colors.blue});
 
   ThemeData getTheme() => _getThemeData(isDarkMode, seedColor);
 
@@ -36,11 +34,5 @@ class ThemeProvider with ChangeNotifier {
     );
   }
 
-  Future<void> loadThemeFromStorage() async {
-    String theme = await secureStorageService.getCurrentTheme();
-    String colorHex = await secureStorageService.getCurrentSeedColor();
-    isDarkMode = theme == 'dark';
-    seedColor = Color(int.parse(colorHex, radix: 16));
-    notifyListeners();
-  }
+
 }

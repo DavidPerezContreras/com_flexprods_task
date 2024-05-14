@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:nested_navigation/config/config.dart';
-import 'package:nested_navigation/domain/model/user.dart';
+import 'package:test/config/config.dart';
+import 'package:test/domain/model/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserRemoteImpl {

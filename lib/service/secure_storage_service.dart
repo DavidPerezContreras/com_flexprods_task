@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' show FlutterSecureStorage;
-import 'package:nested_navigation/domain/model/user.dart';
+import 'package:test/domain/model/user.dart';
 
 class SecureStorageService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();

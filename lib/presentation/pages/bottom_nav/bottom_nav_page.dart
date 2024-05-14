@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/settings_page.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_pages/todo_list_page.dart';
-import 'package:nested_navigation/provider/theme_provider.dart';
+import 'package:test/presentation/global/offset.dart';
+import 'package:test/presentation/pages/bottom_nav/bottom_pages/settings_page.dart';
+import 'package:test/presentation/pages/bottom_nav/bottom_pages/todo_list_page.dart';
+import 'package:test/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigationPage extends StatefulWidget {

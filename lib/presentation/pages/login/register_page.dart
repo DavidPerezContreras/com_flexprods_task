@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nested_navigation/domain/model/describable_error.dart';
-import 'package:nested_navigation/domain/model/resource_state.dart';
-import 'package:nested_navigation/presentation/pages/bottom_nav/bottom_nav_page.dart';
-import 'package:nested_navigation/presentation/pages/splash_page/splash_page.dart';
-import 'package:nested_navigation/provider/auth_provider.dart';
-import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
+import 'package:test/domain/model/describable_error.dart';
+import 'package:test/domain/model/resource_state.dart';
+import 'package:test/presentation/pages/bottom_nav/bottom_nav_page.dart';
+import 'package:test/presentation/pages/splash_page/splash_page.dart';
+import 'package:test/provider/auth_provider.dart';
+import 'package:test/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {

@@ -1,7 +1,7 @@
-import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
-import 'package:nested_navigation/data/todo/remote/todo_remote_impl.dart';
-import 'package:nested_navigation/domain/model/todo.dart';
-import 'package:nested_navigation/domain/repository/todo_repository.dart';
+import 'package:test/data/todo/remote/DTO/create_todo_request_dto.dart';
+import 'package:test/data/todo/remote/todo_remote_impl.dart';
+import 'package:test/domain/model/todo.dart';
+import 'package:test/domain/repository/todo_repository.dart';
 
 import 'remote/DTO/update_todo_request_dto.dart';
 

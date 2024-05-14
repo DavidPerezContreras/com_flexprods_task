@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:nested_navigation/config/config.dart';
-import 'package:nested_navigation/data/auth/remote/DTO/auth_request_dto.dart';
-import 'package:nested_navigation/data/auth/remote/DTO/auth_response_dto.dart';
-import 'package:nested_navigation/data/auth/remote/exception/login_exceptions.dart';
-import 'package:nested_navigation/data/auth/remote/exception/register_exceptions.dart';
+import 'package:test/config/config.dart';
+import 'package:test/data/auth/remote/DTO/auth_request_dto.dart';
+import 'package:test/data/auth/remote/DTO/auth_response_dto.dart';
+import 'package:test/data/auth/remote/exception/login_exceptions.dart';
+import 'package:test/data/auth/remote/exception/register_exceptions.dart';
 
 class AuthRemoteImpl {
   AuthRemoteImpl();

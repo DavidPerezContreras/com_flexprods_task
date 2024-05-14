@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/create_todo_request_dto.dart';
-import 'package:nested_navigation/data/todo/remote/DTO/update_todo_request_dto.dart';
-import 'package:nested_navigation/data/todo/remote/error/todo_errors.dart';
-import 'package:nested_navigation/domain/model/resource_state.dart';
-import 'package:nested_navigation/domain/model/todo.dart';
-import 'package:nested_navigation/usecase/todo/create_todo_usecase.dart';
-import 'package:nested_navigation/usecase/todo/delete_todo_usecase.dart';
-import 'package:nested_navigation/usecase/todo/get_todo_list_usecase.dart';
-import 'package:nested_navigation/usecase/todo/update_todo_usecase.dart';
+import 'package:test/data/todo/remote/DTO/create_todo_request_dto.dart';
+import 'package:test/data/todo/remote/DTO/update_todo_request_dto.dart';
+import 'package:test/data/todo/remote/error/todo_errors.dart';
+import 'package:test/domain/model/resource_state.dart';
+import 'package:test/domain/model/todo.dart';
+import 'package:test/usecase/todo/create_todo_usecase.dart';
+import 'package:test/usecase/todo/delete_todo_usecase.dart';
+import 'package:test/usecase/todo/get_todo_list_usecase.dart';
+import 'package:test/usecase/todo/update_todo_usecase.dart';
 
 class TodoProvider extends ChangeNotifier {
   late ResourceState<List<Todo>> _todoListState;

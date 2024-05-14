@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/presentation/global/offset.dart';
-import 'package:nested_navigation/presentation/pages/login/login_page.dart';
-import 'package:nested_navigation/presentation/theme/color.dart';
-import 'package:nested_navigation/provider/auth_provider.dart';
-import 'package:nested_navigation/provider/theme_provider.dart';
-import 'package:nested_navigation/provider/todo_provider.dart';
-import 'package:nested_navigation/provider/top_level_navigation_provider.dart';
+import 'package:test/presentation/global/offset.dart';
+import 'package:test/presentation/pages/login/login_page.dart';
+import 'package:test/presentation/theme/color.dart';
+import 'package:test/provider/auth_provider.dart';
+import 'package:test/provider/theme_provider.dart';
+import 'package:test/provider/todo_provider.dart';
+import 'package:test/provider/top_level_navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/di/service_locator.dart';
+import 'package:test/di/service_locator.dart';
 
-import 'package:nested_navigation/service/secure_storage_service.dart';
+import 'package:test/service/secure_storage_service.dart';
 
 class ThemeProvider with ChangeNotifier {
   bool isDarkMode;

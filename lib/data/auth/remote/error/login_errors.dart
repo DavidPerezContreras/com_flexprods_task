@@ -1,4 +1,4 @@
-import 'package:nested_navigation/domain/model/describable_error.dart';
+import 'package:test/domain/model/describable_error.dart';
 
 class UnauthorizedLoginError extends DescribableError {
   UnauthorizedLoginError() : super("Incorrect username or password.");

@@ -1,6 +1,6 @@
-import 'package:nested_navigation/data/user/remote/user_remote_impl.dart';
-import 'package:nested_navigation/domain/model/user.dart';
-import 'package:nested_navigation/domain/repository/user_repository.dart';
+import 'package:test/data/user/remote/user_remote_impl.dart';
+import 'package:test/domain/model/user.dart';
+import 'package:test/domain/repository/user_repository.dart';
 
 class UserDataImpl implements UserRepository {
   final UserRemoteImpl _userRemoteImpl;

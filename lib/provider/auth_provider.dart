@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nested_navigation/data/auth/remote/DTO/auth_request_dto.dart';
-import 'package:nested_navigation/data/auth/remote/error/login_errors.dart';
-import 'package:nested_navigation/data/auth/remote/error/register_errors.dart';
-import 'package:nested_navigation/data/auth/remote/exception/login_exceptions.dart';
-import 'package:nested_navigation/data/auth/remote/exception/register_exceptions.dart';
-import 'package:nested_navigation/domain/model/resource_state.dart';
-import 'package:nested_navigation/domain/model/user.dart';
-import 'package:nested_navigation/usecase/auth/login_usercase.dart';
-import 'package:nested_navigation/usecase/auth/logout_usecase.dart';
-import 'package:nested_navigation/usecase/auth/register_usecase.dart';
+import 'package:test/data/auth/remote/DTO/auth_request_dto.dart';
+import 'package:test/data/auth/remote/error/login_errors.dart';
+import 'package:test/data/auth/remote/error/register_errors.dart';
+import 'package:test/data/auth/remote/exception/login_exceptions.dart';
+import 'package:test/data/auth/remote/exception/register_exceptions.dart';
+import 'package:test/domain/model/resource_state.dart';
+import 'package:test/domain/model/user.dart';
+import 'package:test/usecase/auth/login_usercase.dart';
+import 'package:test/usecase/auth/logout_usecase.dart';
+import 'package:test/usecase/auth/register_usecase.dart';
 
 class AuthProvider extends ChangeNotifier {
   late ResourceState<User> _loginState;

@@ -1,4 +1,4 @@
-const baseUrl = "httpS://task.flexprods.com";
+const baseUrl = "https://task.flexprods.com";
 
 final Uri linkedInUrl = Uri.parse(
     'https://es.linkedin.com/in/david-perez-contreras');

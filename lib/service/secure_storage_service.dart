@@ -33,8 +33,15 @@ class SecureStorageService {
   }
 
   Future<String> getCurrentTheme() async {
-    String? theme = await _storage.read(key: 'currentTheme');
-    return theme??"";//revisa estos null checks
+    
+
+      String? theme=await _storage.read(key: 'currentTheme');
+      theme ??= "dark";
+      print("read errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr raaaaaaaaaaaaaaaaaaaaaaaaa");
+    // ignore: empty_catches
+
+     
+    return theme;//revisa estos null checks
     }
 
   Future<void> setCurrentTheme(String theme) async {

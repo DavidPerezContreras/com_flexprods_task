@@ -54,7 +54,7 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       User user = await _loginUseCase
-          .login(LoginRequest(username: username, password: password));
+          .fastLogin();
       _loginState = ResourceState.success(user);
       notifyListeners();
       return;

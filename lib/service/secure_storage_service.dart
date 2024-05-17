@@ -11,7 +11,8 @@ class SecureStorageService {
   }
 
   Future<String?> getToken() async {
-    return _storage.read(key: 'jwt');
+    String? jwt= await _storage.read(key: 'jwt');
+    return jwt;
   }
 
   Future<void> removeToken() async {
@@ -37,7 +38,7 @@ class SecureStorageService {
 
       String? theme=await _storage.read(key: 'currentTheme');
       theme ??= "dark";
-      print("read errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr raaaaaaaaaaaaaaaaaaaaaaaaa");
+      //print("read errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr raaaaaaaaaaaaaaaaaaaaaaaaa");
     // ignore: empty_catches
 
      

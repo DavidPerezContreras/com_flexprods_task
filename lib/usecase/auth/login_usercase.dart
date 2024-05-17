@@ -21,4 +21,11 @@ class LoginUseCase {
     return user;
   }
 
+
+      Future<User> fastLogin() async {
+    final user = await _userRepository
+        .getCurrentUserDetails(await _secureStorageService.getToken() ?? "");
+    return user;
+  }
+
 }

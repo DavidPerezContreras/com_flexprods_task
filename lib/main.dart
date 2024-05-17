@@ -46,6 +46,7 @@ class ThemeSettings{
 Future<void> main() async {
   //HttpOverrides.global = MyHttpOverrides();
   setupLocator();
+    WidgetsFlutterBinding.ensureInitialized();
   SecureStorageService secureStorageService = locator<SecureStorageService>();
 
   ThemeSettings? themeSettings;
@@ -62,7 +63,7 @@ try {
 
 
 
-  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

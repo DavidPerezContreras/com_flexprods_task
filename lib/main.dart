@@ -9,24 +9,6 @@ import 'package:test/provider/auth_provider.dart';
 import 'package:test/provider/theme_provider.dart';
 import 'package:test/service/secure_storage_service.dart';
 
-import 'package:test/service/secure_storage_service.dart';
-/*
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}*/ /*TODO SECURITY RIST!!! YOU MUST VALIDATE THE CERTIFICATE BINARY MANUALLY!!
-CURRENTLY IT ALLOWS ALL CERTIFICATES, ALLOWING MAN-IN-THE-MIDDLE ATTACKS  !!!!!!L*/
-
-//Es problema del backend, que me den un certificado firmado por una CA authority y ya.
-//Como yo he hecho el backend pues no quiero perder tiempo en eso :)
-
-/*La otra opción aunque tampoco esa perfecta, sería comprobar el certificado manualmente.
-*/
-
 class ThemeSettings{
   ThemeSettings({this.isDarkMode=true, required this.seedColor});
   bool isDarkMode;

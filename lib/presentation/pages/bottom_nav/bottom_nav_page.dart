@@ -12,15 +12,16 @@ class BottomNavigationPage extends StatefulWidget {
   State<BottomNavigationPage> createState() => _BottomNavigationPageState();
 }
 
-class _BottomNavigationPageState extends State<BottomNavigationPage> {
+class _BottomNavigationPageState extends State<BottomNavigationPage>
+    with SingleTickerProviderStateMixin {
   late final ThemeProvider _themeProvider;
   late VoidCallback setThemeState;
-
-  int _selectedIndex = 0;
+  late TabController _tabController;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _tabController.index=index;
+
     });
   }
 
@@ -45,6 +46,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   void initState() {
     super.initState();
     _themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -61,34 +63,98 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   void dispose() {
     super.dispose();
     _themeProvider.removeListener(setThemeState);
+    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _themeProvider.seedColor,
-      body: SafeArea(child: _generateBody(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (newIndex) async {
-          _onItemTapped(newIndex);
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 600) {
+              // Wide screen: use top navigation
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 0, 22, 0),
+                        child: IconButton(
+                            icon: Image(
+                                height: 40,
+                                image: _themeProvider.isDarkMode
+                                    ? const AssetImage(
+                                        'assets/logo/bee_task_logo.png')
+                                    : const AssetImage(
+                                        'assets/logo/bee_task_logo.png')),
+                            onPressed: () => {}),
+                      ),
+                      Container(
+                        width: 300,
+                        child: Container(
+                          width: 300,
+                          child: TabBar(
+                            controller: _tabController,
+                            onTap: (index) => _onItemTapped(index),
+                            tabs: const [
+                              Tab(icon: Icon(Icons.task,color: Colors.white,), child: Text("Tasks",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),),
+                              Tab(icon: Icon(Icons.task,color: Colors.white,), child: Text("Settings",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _tabController,
+                      children: [
+                        _generateBody(0),
+                        _generateBody(1),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              // Narrow screen: use bottom navigation
+              return _generateBody(_tabController.index);
+            }
+          },
+        ),
+      ),
+      bottomNavigationBar: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 600) {
+            return SizedBox.shrink(); // Hide bottom navigation on wide screens
+          } else {
+            return BottomNavigationBar(
+              currentIndex: _tabController.index,
+              onTap: (newIndex) async {
+                _onItemTapped(newIndex);
+              },
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.task),
+                  label: "Tasks",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: "Settings",
+                ),
+              ],
+              type: BottomNavigationBarType.fixed,
+              elevation: 8,
+              iconSize: 24,
+              selectedFontSize: 14,
+              unselectedFontSize: 12,
+              selectedIconTheme: const IconThemeData(size: 28),
+            );
+          }
         },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.task),
-            label: "Tasks",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        elevation: 8,
-        iconSize: 24,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
-        selectedIconTheme: const IconThemeData(size: 28),
       ),
     );
   }

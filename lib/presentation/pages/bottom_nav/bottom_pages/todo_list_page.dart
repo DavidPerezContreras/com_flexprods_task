@@ -149,28 +149,48 @@ class _TodoListPageState extends State<TodoListPage> {
     }
 
     return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
       appBar: AppBar(title: const Text('Tasks')),
       body: RefreshIndicator(
         onRefresh: () async {
           _todoProvider.getTodoList(loadAnimation: false);
         },
-        child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          controller: scrollController,
-          itemCount: _todoList.length + 1,
-          itemBuilder: (context, index) {
-            if (index == _todoList.length) {
-              return const SizedBox(
-                height: 100,
-              );
-            }
-            Todo todo = _todoList[_todoList.length - index - 1];
-            return TodoListCard(
-                todo: todo,
-                onIsCompleteChanged: _onIsCompleteChanged,
-                onUpdate: _updateOnSave);
-          },
-        ),
+        child: LayoutBuilder(builder:
+            (BuildContext buildContext, BoxConstraints boxConstraints) {
+              var listwidth=boxConstraints.maxWidth-80;
+              if( boxConstraints.maxWidth>600){
+                listwidth=boxConstraints.maxWidth/1.69+40;
+              }
+
+              
+
+
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: listwidth,
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: scrollController,
+                  itemCount: _todoList.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == _todoList.length) {
+                      return const SizedBox(
+                        height: 100,
+                      );
+                    }
+                    Todo todo = _todoList[_todoList.length - index - 1];
+                    return TodoListCard(
+                        todo: todo,
+                        onIsCompleteChanged: _onIsCompleteChanged,
+                        onUpdate: _updateOnSave);
+                  },
+                ),
+              )
+            ],
+          );
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Create task",

@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
         child: SizedBox(
           height: 100,
           width: 100,
-          child: Image(image: AssetImage("assets/logo/flex.jpg")),
+          child: Image(image: AssetImage("assets/logo/bee_task_logo.png")),
         ),
       ),
     );

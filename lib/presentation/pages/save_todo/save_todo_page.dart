@@ -69,168 +69,180 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
         : "Selected date:   ${_dueDate!.day} / ${_dueDate!.month} / ${_dueDate!.year}";
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text(widget.onCreate==null?"Edit Task":"Create Task",style: TextStyle(fontFamily: ""),), ),
       body: Form(
         key: _formKey,
         child: SafeArea(
-          child: Column(children: [
-            Flexible(
+
+            child:            Flexible(
               flex: 8,
               child: LayoutBuilder(builder:
-                  (BuildContext context, BoxConstraints viewportConstraints) {
+            (BuildContext buildContext, BoxConstraints boxConstraints) {
+              var listwidth=boxConstraints.maxWidth-80;
+              if( boxConstraints.maxWidth>600){
+                listwidth=boxConstraints.maxWidth/1.69+40;
+              }
+
                 return SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minHeight: viewportConstraints.maxHeight),
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16.0),
-                      children: <Widget>[
-                        TextFormField(
-                          maxLength: 256,
-                          controller: _titleController,
-                          decoration: InputDecoration(
-                            labelText: 'Title',
-                            labelStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.error),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.error),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a title';
-                            } else if (value.length > 256) {
-                              return 'Title cannot be more than 256 characters';
-                            }
-                            return null;
-                          },
-                        ),
-                        const Divider(color: Colors.transparent, height: 20),
+
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         SizedBox(
-                          height: 225,
-                          child: TextFormField(
-                            maxLength: 256,
-                            controller: _descriptionController,
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              labelStyle: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
+                          width: listwidth,
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.all(16.0),
+                            children: <Widget>[
+                              TextFormField(
+                                maxLength: 256,
+                                controller: _titleController,
+                                decoration: InputDecoration(
+                                  labelText: 'Title',
+                                  labelStyle: TextStyle(
+                                      color: Theme.of(context).colorScheme.onSurface),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color:
+                                            Theme.of(context).colorScheme.secondary),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.error),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.error),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).colorScheme.primary),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a title';
+                                  } else if (value.length > 256) {
+                                    return 'Title cannot be more than 256 characters';
+                                  }
+                                  return null;
+                                },
                               ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.error),
+                              const Divider(color: Colors.transparent, height: 20),
+                              SizedBox(
+                                height: 225,
+                                child: TextFormField(
+                                  maxLength: 256,
+                                  controller: _descriptionController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Description',
+                                    labelStyle: TextStyle(
+                                        color:
+                                            Theme.of(context).colorScheme.onSurface),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).colorScheme.error),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).colorScheme.error),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.primary),
+                                    ),
+                                  ),
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  validator: (value) {
+                                    if (value!.length > 256) {
+                                      return 'Description cannot be more than 256 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.error),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                              ),
-                            ),
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            validator: (value) {
-                              if (value!.length > 256) {
-                                return 'Description cannot be more than 256 characters';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        const Divider(color: Colors.transparent, height: 20),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                          child: Column(
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => _selectDate(context),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              const Divider(color: Colors.transparent, height: 20),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                                child: Column(
                                   children: [
-                                    Text('Select due date'),
-                                    Icon(Icons.calendar_month)
+                                    ElevatedButton(
+                                      onPressed: () => _selectDate(context),
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text('Select due date'),
+                                          Icon(Icons.calendar_month)
+                                        ],
+                                      ),
+                                    ),
+                                    Text(selectedDateText)
                                   ],
                                 ),
                               ),
-                              Text(selectedDateText)
-                            ],
-                          ),
-                        ),
-                        //Divider(
-                        //    color: Colors.transparent,
-                        //    height: viewportConstraints.maxHeight*0.4),
-
-                        Padding(
-                          padding: const EdgeInsets.all(50.0),
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(
-                                  color: Colors.black38,
-                                  width:
-                                      2), // change the color and width as needed
-                              minimumSize: const Size(
-                                  200, 60), // change the size as needed
-                            ),
-                            child: const Text(
-                              "Save",
-                              style: TextStyle(
-                                fontSize: 20, // change the font size as needed
+                              //Divider(
+                              //    color: Colors.transparent,
+                              //    height: viewportConstraints.maxHeight*0.4),
+                          
+                              Padding(
+                                padding: const EdgeInsets.all(50.0),
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        color: Colors.black38,
+                                        width:
+                                            2), // change the color and width as needed
+                                    minimumSize: const Size(
+                                        200, 60), // change the size as needed
+                                  ),
+                                  child: const Text(
+                                    "Save",
+                                    style: TextStyle(
+                                      fontSize: 20, // change the font size as needed
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      if (widget.onCreate != null) {
+                                        widget.onCreate!(
+                                            title: _titleController.text,
+                                            description: _descriptionController.text,
+                                            dueDate: _dueDate);
+                                      } else {
+                                        if (widget.onUpdate != null) {
+                                          widget.onUpdate!(widget.todo!,
+                                              title: _titleController.text,
+                                              description:
+                                                  _descriptionController.text,
+                                              dueDate: _dueDate);
+                                        }
+                                      }
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                if (widget.onCreate != null) {
-                                  widget.onCreate!(
-                                      title: _titleController.text,
-                                      description: _descriptionController.text,
-                                      dueDate: _dueDate);
-                                } else {
-                                  if (widget.onUpdate != null) {
-                                    widget.onUpdate!(widget.todo!,
-                                        title: _titleController.text,
-                                        description:
-                                            _descriptionController.text,
-                                        dueDate: _dueDate);
-                                  }
-                                }
-                              }
-                            },
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
+                  
                 );
               }),
             ),
-          ]),
+          ),
         ),
-      ),
+      
     );
   }
 

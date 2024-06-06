@@ -46,90 +46,105 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body: Padding(
+      body:  LayoutBuilder(
+          builder: (context, constraints) {
+            var menuWidth=constraints.maxWidth;
+            var logoutButtonWidth=constraints.maxWidth/6;
+            if (constraints.maxWidth > 600) {
+              menuWidth=constraints.maxWidth/2;
+            }
+              // Wide screen: use top navigation
+              return Padding(
         padding: const EdgeInsets.fromLTRB(0, 40, 0, 100),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                height: 50,
-                child: ListTile(
-                  title: Text(
-                    "Dark Mode",
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodySmall!.color,
-                    ),
-                  ),
-                  trailing: Switch(
-                    value: _themeProvider.isDarkMode,
-                    onChanged: (newValue) {
-                      _themeProvider.setTheme(isDarkMode: newValue);
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: colors.map((color) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color,
-                          side: BorderSide(
-                            width: _selectedColor == color
-                                ? 3.0
-                                : 1.0, // Enhance border if selected
-                            color: _selectedColor == color
-                                ? Colors.black
-                                : Colors.grey,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            // This makes the button square
-                            borderRadius: BorderRadius.circular(0.0),
-                          ),
+        child: 
+           Container(
+            alignment: Alignment.center,
+            child: Container(
+              width: menuWidth,
+              child: Column(
+                children: [
+                  Container(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    height: 50,
+                    child: ListTile(
+                      title: Text(
+                        "Dark Mode",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodySmall!.color,
                         ),
-                        onPressed: () {
-                          _themeProvider.setTheme(color: color);
-                          _selectedColor = color;
+                      ),
+                      trailing: Switch(
+                        value: _themeProvider.isDarkMode,
+                        onChanged: (newValue) {
+                          _themeProvider.setTheme(isDarkMode: newValue);
                         },
-                        child: const SizedBox.shrink(),
-                      );
-                    }).toList(),
-                  )),
-              const Spacer(),
-              Container(
-                color: Theme.of(context).colorScheme.errorContainer,
-                height: 50,
-                child: ListTile(
-                  title: Text(
-                    textAlign: TextAlign.center,
-                    "Logout",
-                    style: TextStyle(
-                      fontSize: _tileTextSize,
-                      color: Theme.of(context).textTheme.bodySmall!.color,
+                      ),
                     ),
                   ),
-                  onTap: () {
-                    _authProvider.logout();
-                    resetGlobalAppState();
-                    _todoProvider.init();
-                    Navigator.of(_topLevelNavigationProvider
-                            .topLevelNavigation.currentContext!)
-                        .pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
+                  Container(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: colors.map((color) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: color,
+                              side: BorderSide(
+                                width: _selectedColor == color
+                                    ? 3.0
+                                    : 1.0, // Enhance border if selected
+                                color: _selectedColor == color
+                                    ? Colors.black
+                                    : Colors.grey,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                // This makes the button square
+                                borderRadius: BorderRadius.circular(0.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              _themeProvider.setTheme(color: color);
+                              _selectedColor = color;
+                            },
+                            child: const SizedBox.shrink(),
+                          );
+                        }).toList(),
+                      )),
+                  const Spacer(),
+                  Container(
+                    color: Theme.of(context).colorScheme.errorContainer,
+                    height: 50,
+                    width: 200,
+                    child: ListTile(
+                      title: Text(
+                        textAlign: TextAlign.center,
+                        "Logout",
+                        style: TextStyle(
+                          fontSize: _tileTextSize,
+                          color: Theme.of(context).textTheme.bodySmall!.color,
+                        ),
                       ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+                      onTap: () {
+                        _authProvider.logout();
+                        resetGlobalAppState();
+                        _todoProvider.init();
+                        Navigator.of(_topLevelNavigationProvider
+                                .topLevelNavigation.currentContext!)
+                            .pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+                         ),
+            ),
+           ),
+        );}
+      )
     );
   }
 }

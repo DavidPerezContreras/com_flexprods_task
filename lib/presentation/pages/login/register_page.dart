@@ -106,232 +106,241 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
         body: SafeArea(
-          child: LayoutBuilder(
-            builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
+          child: LayoutBuilder(builder:
+            (BuildContext buildContext, BoxConstraints boxConstraints) {
+              var listwidth=boxConstraints.maxWidth-80;
+              if( boxConstraints.maxWidth>600){
+                listwidth=boxConstraints.maxWidth/2.2;
+              }
+
               return SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    minHeight: viewportConstraints.maxHeight,
                   ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            TextFormField(
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(256),
-                              ],
-                              controller: _usernameController,
-                              decoration: InputDecoration(
-                                labelText: "Enter a username",
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: listwidth,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                TextFormField(
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(256),
+                                  ],
+                                  controller: _usernameController,
+                                  decoration: InputDecoration(
+                                    labelText: "Enter a username",
+                                    labelStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "You must enter a username";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) =>
+                                      _usernameController.text = value ?? "",
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
+                                const Divider(
+                                  height: 20,
+                                  color: Colors.transparent,
                                 ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
+                                TextFormField(
+                                  obscureText: _isPasswordTextObscure,
+                                  autocorrect: false,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(256),
+                                  ],
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                      icon: Icon(_isPasswordTextObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isPasswordTextObscure =
+                                              !_isPasswordTextObscure;
+                                        });
+                                      },
+                                    ),
+                                    labelText: "Enter a password",
+                                    labelStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Please enter a password";
+                                    }
+                                    if (value.length < 8) {
+                                      return "Passwords must be at least 8 characters long";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) =>
+                                      _passwordController.text = value ?? "",
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
+                                const Divider(
+                                  height: 20,
+                                  color: Colors.transparent,
                                 ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "You must enter a username";
-                                }
-                                return null;
-                              },
-                              onSaved: (value) =>
-                                  _usernameController.text = value ?? "",
-                            ),
-                            const Divider(
-                              height: 20,
-                              color: Colors.transparent,
-                            ),
-                            TextFormField(
-                              obscureText: _isPasswordTextObscure,
-                              autocorrect: false,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(256),
-                              ],
-                              controller: _passwordController,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  icon: Icon(_isPasswordTextObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
+                                TextFormField(
+                                  obscureText: _isConfirmPasswordTextObscure,
+                                  autocorrect: false,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(256),
+                                  ],
+                                  controller: _confirmPasswordController,
+                                  decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                      icon: Icon(_isConfirmPasswordTextObscure
+                                          ? Icons.visibility
+                                          : Icons.visibility_off),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isConfirmPasswordTextObscure =
+                                              !_isConfirmPasswordTextObscure;
+                                        });
+                                      },
+                                    ),
+                                    labelText: "Confirm your password",
+                                    labelStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.error),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "You must confirm your password";
+                                    }
+                                    if (_passwordController.text !=
+                                        _confirmPasswordController.text) {
+                                      return "Passwords don't match";
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) =>
+                                      _confirmPasswordController.text = value ?? "",
+                                ),
+                                const Divider(
+                                  height: 35,
+                                  thickness: 0,
+                                ),
+                                OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        color: Colors.black38,
+                                        width:
+                                            2), // change the color and width as needed
+                                    minimumSize: const Size(
+                                        200, 60), // change the size as needed
+                                  ),
+                                  child: const Text(
+                                    "Register",
+                                    style: TextStyle(
+                                      fontSize:
+                                          20, // change the font size as needed
+                                    ),
+                                  ),
                                   onPressed: () {
-                                    setState(() {
-                                      _isPasswordTextObscure =
-                                          !_isPasswordTextObscure;
-                                    });
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      _authProvider.register(
+                                          _usernameController.text,
+                                          _passwordController.text);
+                                    }
                                   },
                                 ),
-                                labelText: "Enter a password",
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary),
+                                Divider(
+                                  color: Colors.transparent,
+                                  height: 2 / 30 * boxConstraints.maxHeight,
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please enter a password";
-                                }
-                                if (value.length < 8) {
-                                  return "Passwords must be at least 8 characters long";
-                                }
-                                return null;
-                              },
-                              onSaved: (value) =>
-                                  _passwordController.text = value ?? "",
-                            ),
-                            const Divider(
-                              height: 20,
-                              color: Colors.transparent,
-                            ),
-                            TextFormField(
-                              obscureText: _isConfirmPasswordTextObscure,
-                              autocorrect: false,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(256),
                               ],
-                              controller: _confirmPasswordController,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  icon: Icon(_isConfirmPasswordTextObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isConfirmPasswordTextObscure =
-                                          !_isConfirmPasswordTextObscure;
-                                    });
-                                  },
-                                ),
-                                labelText: "Confirm your password",
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "You must confirm your password";
-                                }
-                                if (_passwordController.text !=
-                                    _confirmPasswordController.text) {
-                                  return "Passwords don't match";
-                                }
-                                return null;
-                              },
-                              onSaved: (value) =>
-                                  _confirmPasswordController.text = value ?? "",
                             ),
-                            const Divider(
-                              height: 35,
-                              thickness: 0,
-                            ),
-                            OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(
-                                    color: Colors.black38,
-                                    width:
-                                        2), // change the color and width as needed
-                                minimumSize: const Size(
-                                    200, 60), // change the size as needed
-                              ),
-                              child: const Text(
-                                "Register",
-                                style: TextStyle(
-                                  fontSize:
-                                      20, // change the font size as needed
-                                ),
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  _authProvider.register(
-                                      _usernameController.text,
-                                      _passwordController.text);
-                                }
-                              },
-                            ),
-                            Divider(
-                              color: Colors.transparent,
-                              height: 2 / 30 * viewportConstraints.maxHeight,
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               );

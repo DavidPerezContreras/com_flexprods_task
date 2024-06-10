@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://task-api.davidperezcontreras.com";
 
 final Uri linkedInUrl = Uri.parse(
     'https://es.linkedin.com/in/david-perez-contreras');

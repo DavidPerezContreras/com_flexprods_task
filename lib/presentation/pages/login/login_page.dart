@@ -275,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () {
                                     Navigator.of(_topLevelNavigationProvider
                                             .topLevelNavigation.currentContext!)
-                                        .pushReplacement(
+                                        .push(
                                       MaterialPageRoute(
                                         builder: (context) => const RegisterPage(),
                                       ),

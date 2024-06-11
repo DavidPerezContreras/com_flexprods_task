@@ -72,7 +72,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
 
       Scaffold(
         appBar: AppBar(title: Text(widget.onCreate==null?"Edit Task":"Create Task",style: TextStyle(fontFamily: ""),), ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
           body: SafeArea(
             child: LayoutBuilder(
               builder: (context,BoxConstraints) {

@@ -104,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
         appBar: AppBar(
           title: const Text("Register"),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.onSecondary,
         body: SafeArea(
           child: LayoutBuilder(builder:
             (BuildContext buildContext, BoxConstraints boxConstraints) {

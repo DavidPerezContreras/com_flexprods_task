@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
       body = const SplashPage();
     } else {
       body = Scaffold(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
           body: SafeArea(
             child: LayoutBuilder(
               builder: (context,BoxConstraints) {

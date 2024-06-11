@@ -40,7 +40,7 @@ try {
   // Handle the format exception
   print('Error loading theme: ${e.message}. Using default theme.');
   // Load default theme or handle the error in some appropriate way
-  themeSettings=ThemeSettings(seedColor: Colors.black,isDarkMode: true);
+  themeSettings=ThemeSettings(seedColor: Colors.blue,isDarkMode: false);
 }
 
 

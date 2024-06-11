@@ -8,7 +8,7 @@ class ThemeProvider with ChangeNotifier {
   Color seedColor;
   SecureStorageService secureStorageService = locator<SecureStorageService>();
 
-  ThemeProvider({this.isDarkMode=true, this.seedColor = Colors.blue});
+  ThemeProvider({this.isDarkMode=false, this.seedColor = Colors.blue});
 
   ThemeData getTheme() => _getThemeData(isDarkMode, seedColor);
 

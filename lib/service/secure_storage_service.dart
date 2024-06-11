@@ -37,7 +37,7 @@ class SecureStorageService {
     
 
       String? theme=await _storage.read(key: 'currentTheme');
-      theme ??= "dark";
+      theme ??= "light";
       //print("read errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr raaaaaaaaaaaaaaaaaaaaaaaaa");
     // ignore: empty_catches
 

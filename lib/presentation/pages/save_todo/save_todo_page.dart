@@ -68,60 +68,70 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
         ? "No date selected"
         : "Selected date:   ${_dueDate!.day} / ${_dueDate!.month} / ${_dueDate!.year}";
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.onCreate==null?"Edit Task":"Create Task",style: TextStyle(fontFamily: ""),), ),
-      body: Form(
-        key: _formKey,
-        child: SafeArea(
+    return 
 
-            child:            Flexible(
-              flex: 8,
-              child: LayoutBuilder(builder:
-            (BuildContext buildContext, BoxConstraints boxConstraints) {
-              var listwidth=boxConstraints.maxWidth-80;
-              if( boxConstraints.maxWidth>600){
-                listwidth=boxConstraints.maxWidth/1.69+40;
-              }
+      Scaffold(
+        appBar: AppBar(title: Text(widget.onCreate==null?"Edit Task":"Create Task",style: TextStyle(fontFamily: ""),), ),
+          backgroundColor: Theme.of(context).primaryColor,
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context,BoxConstraints) {
+                return Container(
+                  alignment: Alignment.center,
 
-                return SingleChildScrollView(
-
-
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: listwidth,
-                          child: ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.all(16.0),
-                            children: <Widget>[
-                              TextFormField(
-                                maxLength: 256,
-                                controller: _titleController,
-                                decoration: InputDecoration(
-                                  labelText: 'Title',
-                                  labelStyle: TextStyle(
-                                      color: Theme.of(context).colorScheme.onSurface),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color:
-                                            Theme.of(context).colorScheme.secondary),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.error),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.error),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).colorScheme.primary),
+//                  height: double.infinity,
+ //                 width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 500+BoxConstraints.maxHeight/6,
+                        width: 600,
+                        child: Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration:
+                                      BoxDecoration(border: Border.all(width: 8)),
+                                  child: const Image(
+                                    fit: BoxFit.scaleDown,
+                                    image: AssetImage(
+                                      "assets/logo/bee_task_logo.png",
+                                    ),
                                   ),
                                 ),
-                                validator: (value) {
+                                Divider(height: BoxConstraints.maxHeight/6,),
+                                TextFormField(
+                                maxLength: 256,
+                                  controller: _titleController,
+                                  decoration: InputDecoration(
+                                  labelText: 'Title',
+                                    labelStyle: TextStyle(
+                                        color: Theme.of(context).colorScheme.onSurface),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color:
+                                              Theme.of(context).colorScheme.secondary),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).colorScheme.error),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).colorScheme.error),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).colorScheme.primary),
+                                    ),
+                                  ),
+                                  validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter a title';
                                   } else if (value.length > 256) {
@@ -129,11 +139,12 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                                   }
                                   return null;
                                 },
-                              ),
-                              const Divider(color: Colors.transparent, height: 20),
-                              SizedBox(
-                                height: 225,
-                                child: TextFormField(
+                                ),
+                                const Divider(
+                                  height: 20,
+                                  color: Colors.transparent,
+                                ),
+                                TextFormField(
                                   maxLength: 256,
                                   controller: _descriptionController,
                                   decoration: InputDecoration(
@@ -170,9 +181,12 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                                     return null;
                                   },
                                 ),
-                              ),
-                              const Divider(color: Colors.transparent, height: 20),
-                              Padding(
+                              
+                                const Divider(
+                                  height: 35,
+                                  thickness: 0,
+                                ),
+                                Padding(
                                 padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                                 child: Column(
                                   children: [
@@ -190,13 +204,7 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                                   ],
                                 ),
                               ),
-                              //Divider(
-                              //    color: Colors.transparent,
-                              //    height: viewportConstraints.maxHeight*0.4),
-                          
-                              Padding(
-                                padding: const EdgeInsets.all(50.0),
-                                child: OutlinedButton(
+                                OutlinedButton(
                                   style: OutlinedButton.styleFrom(
                                     side: const BorderSide(
                                         color: Colors.black38,
@@ -228,22 +236,21 @@ class _SaveTodoPageState extends State<SaveTodoPage> {
                                         }
                                       }
                                     }
+                                  
                                   },
                                 ),
-                              ),
-                            ],
+                                
+                              ],
+                            ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  
+                  ),
                 );
-              }),
+              }
             ),
-          ),
-        ),
-      
-    );
+          ));
   }
 
   @override

@@ -88,7 +88,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-flutter_icons:
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "assets/logo/bee_task_logo.png"
+    background_color: "#ffffff"
+    theme_color: "#ffffff"
   android: true
   ios: true
   image_path: "assets/logo/bee_task_logo.png"
